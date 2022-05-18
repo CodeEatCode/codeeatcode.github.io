@@ -40,7 +40,7 @@ const config = {
                     // Remove this to remove the "edit this page" links.
                     // editUrl: "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
                     postsPerPage: 10,
-                    blogSidebarTitle: "All posts",
+                    // blogSdebarTitle: "All posts",
                     blogSidebarCount: "ALL",
                 },
                 theme: {
@@ -53,7 +53,11 @@ const config = {
     themeConfig:
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
-            respectPrefersColorScheme: false,
+            colorMode: {
+                defaultMode: "light",
+                disableSwitch: false,
+                respectPrefersColorScheme: true,
+            },
             navbar: {
                 title: "Code Eat Code",
                 logo: {
@@ -63,14 +67,19 @@ const config = {
                 items: [
                     // { to: "/blog", label: "Blog", position: "left" },
                     {
-                        href: "https://github.com/ambersariya",
-                        label: "GitHub Personal",
+                        type: "dropdown",
+                        label: "GitHub",
                         position: "right",
-                    },
-                    {
-                        href: "https://github.com/codeeatcode",
-                        label: "GitHub Org",
-                        position: "right",
+                        items: [
+                            {
+                                href: "https://github.com/ambersariya",
+                                label: "GitHub Personal",
+                            },
+                            {
+                                href: "https://github.com/codeeatcode",
+                                label: "GitHub Org",
+                            },
+                        ],
                     },
                 ],
             },
