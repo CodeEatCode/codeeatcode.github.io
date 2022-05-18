@@ -2,12 +2,9 @@
 title: JSON Web Tokens
 slug: JSON-WEB-TOKEN
 description: Repost from https://medium.com/@ambersariya/jwt-json-web-token-cd90ef7a7a66
-modified: 2022-05-18T11:47:12.433Z
+modified: 2022-05-18T13:04:02.637Z
 date: 2017-02-28T11:45:44.128Z
 ---
-
-# JSON Web Tokens
-
 ## What is it?
 
 > _JSON Web Token (JWT) is a compact, URL-safe means of representing claims to be transferred between two parties. The claims in a JWT are encoded as a JSON object that is used as the payload of a JSON Web Signature (JWS) structure or as the plaintext of a JSON Web Encryption (JWE) structure, enabling the claims to be digitally signed or integrity protected with a Message Authentication Code (MAC) and/or encrypted._

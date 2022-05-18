@@ -7,7 +7,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 /** @type {import('@docusaurus/types').Config} */
 const config = {
     title: "Code Eat Code",
-    tagline: "",
+    tagline: "It's a Code eat Code world",
     url: "https://codeeatcode.github.io",
     baseUrl: "/",
     onBrokenLinks: "throw",
@@ -35,7 +35,7 @@ const config = {
                 docs: false,
                 blog: {
                     showReadingTime: true,
-                    routeBasePath: "/"
+                    // routeBasePath: "/"
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
                     // editUrl: "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
@@ -53,11 +53,11 @@ const config = {
             navbar: {
                 title: "Code Eat Code",
                 logo: {
-                    alt: "Code eat code",
+                    alt: "Code Eat Ccode",
                     src: "img/logo.svg",
                 },
                 items: [
-                    // { to: "/blog", label: "Blog", position: "left" },
+                    { to: "/blog", label: "Blog", position: "left" },
                     {
                         href: "https://github.com/ambersariya",
                         label: "GitHub Personal",
@@ -73,15 +73,6 @@ const config = {
             footer: {
                 style: "dark",
                 links: [
-                    // {
-                    //     title: "Docs",
-                    //     items: [
-                    //         {
-                    //             label: "Tutorial",
-                    //             to: "/docs/intro",
-                    //         },
-                    //     ],
-                    // },
                     {
                         title: "Contact",
                         items: [
