@@ -2,7 +2,7 @@
 title: JSON Web Tokens
 slug: JSON-WEB-TOKEN
 description: Repost from https://medium.com/@ambersariya/jwt-json-web-token-cd90ef7a7a66
-modified: 2022-05-18T14:10:43.137Z
+modified: 2022-05-18T14:13:48.838Z
 date: 2017-02-28T11:45:44.128Z
 ---
 
@@ -49,42 +49,39 @@ So, let’s break it down a little:
     .TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 ```
 
-**# Header**
+### Header
 
     // HS256 indicates that this token is signed using HMAC-SHA256.
 
-```
+```json
 {
     "alg": "HS256",
     "typ": "JWT"
 }
 ```
-
-**# Claims/Payload**
+### Claims/Payload
 
 // The payload contains the claims that we wish to make:
 
-```
+```json
 { "sub": "1234567890", "name": "John Doe", "admin": true}
 ```
+### Signature
 
-**# Signature**
-
-```
+```js
 HMACSHA256(encodeBase64(header) + "." + encodeBase64(payload), secret)
-
 // e.g.Using the formula above we get thiseyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkFzIjoiYWRtaW4iLCJpYXQiOjE0MjI3Nzk2Mzh9.gzSraSYS8EXBxLN_oWnFSRgCzcmJmMjLiuyu5CSpyHI
 ```
 
 Let’s expand on the claims section of JWT. The following claims are part of the RFC document:
 
-    **iss**: who is the issuer of this token auth.example.com
-    **sub**: what is the subject of this token e.g. auth
-    **aud**: who can use this token e.g ['client1.example.com','client2.example.com']
-    **exp**: Defines the expiration time as unix timestamp e.g. 1488192525
-    **nbf**: define how long after the issued token was generated we can use it e.g. 300 seconds (5 minutes)
-    **iat**: issued at is a unix timestamp e.g. 1488192525
-    **jti**: JWT ID unique id. This can be used to prevent a token from being replayed e.g. "xa443D"
+**iss**: who is the issuer of this token auth.example.com
+**sub**: what is the subject of this token e.g. auth
+**aud**: who can use this token e.g ['client1.example.com','client2.example.com']
+**exp**: Defines the expiration time as unix timestamp e.g. 1488192525
+**nbf**: define how long after the issued token was generated we can use it e.g. 300 seconds (5 minutes)
+**iat**: issued at is a unix timestamp e.g. 1488192525
+**jti**: JWT ID unique id. This can be used to prevent a token from being replayed e.g. "xa443D"
 
 The key names are case sensitive and have been kept small to keep the JSON payload compact.
 
@@ -92,15 +89,14 @@ The key names are case sensitive and have been kept small to keep the JSON paylo
 
 In authentication, when the user successfully logs in using their credentials, a JSON Web Token will be returned and must be saved locally (typically in local storage, but cookies can be also used), instead of the traditional approach of creating a session in the server and returning a cookie.
 
-```
+```json
 POST /login
-
 {
     email: "username@example-domain.com"
     password: "5£cUr3PA$$W0rd!"
 }
 
-Response 201 Created
+// Response 201 Created
 {
     token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
 }
@@ -133,13 +129,6 @@ As JWTs are self-contained, all the necessary information is there, reducing the
 - **Self-contained:** The payload contains all the required information about the user, to avoid querying the database more than once.
 - **Control:** Allows fine grained control over types of permissions. You can specify detailed access control information within _the token itself_ as part of its payload. For instance, in the same way that you can create AWS security policies with very specific permissions, you can limit the token to only give read/write access to a single resource. In contrast, API Keys tend to have a coarse all-or-nothing access.
 
-<!-- <p align="center">
-<image src="https://miro.medium.com/max/1460/1*a4E_Zk_pYFWMkmUn29g1lQ.png" width=730 height=641/>
-</p>
-<p align="center">
-Ref: <a href="http://yos.io/2016/01/07/stateless-authentication-with-json-web-tokens">http://yos.io/2016/01/07/stateless-authentication-with-json-web-tokens</a>
-</p> -->
-
 ## Problems with JWT
 
 - Cannot be used in place of Sessions & Cookies. If we want to use them in such a manner, then stick with Sessions and Cookies.
@@ -151,7 +140,6 @@ Ref: <a href="http://yos.io/2016/01/07/stateless-authentication-with-json-web-to
 JSON Web Tokens offer many advantages but not without having some drawbacks. If you work on an extremely large-scale application, sessions could be the appropriate choice. It is completely reasonable to combine sessions and JWT — they each have their own purpose, and sometimes you need both. Just don’t use JWT for _persistent_ data.
 
 ---
-
 ## Further Reading
 
 Thanks to the following:
