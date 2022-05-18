@@ -2,7 +2,7 @@
 title: JSON Web Tokens
 slug: JSON-WEB-TOKEN
 description: Repost from https://medium.com/@ambersariya/jwt-json-web-token-cd90ef7a7a66
-modified: 2022-05-18T14:20:16.740Z
+modified: 2022-05-18T14:41:38.500Z
 date: 2017-02-28T11:45:44.128Z
 ---
 
@@ -51,9 +51,8 @@ So, let’s break it down a little:
 
 ### Header
 
-    // HS256 indicates that this token is signed using HMAC-SHA256.
 
-```json
+```json title="HS256 indicates that this token is signed using HMAC-SHA256."
 {
     "alg": "HS256",
     "typ": "JWT"
@@ -62,17 +61,22 @@ So, let’s break it down a little:
 
 ### Claims/Payload
 
-// The payload contains the claims that we wish to make:
-
-```json
+```json title="The payload contains the claims that we wish to make"
 { "sub": "1234567890", "name": "John Doe", "admin": true}
 ```
 
 ### Signature
 
+We use the following formula to calcalate signature
+
 ```js
 HMACSHA256(encodeBase64(header) + "." + encodeBase64(payload), secret)
-// e.g.Using the formula above we get thiseyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkFzIjoiYWRtaW4iLCJpYXQiOjE0MjI3Nzk2Mzh9.gzSraSYS8EXBxLN_oWnFSRgCzcmJmMjLiuyu5CSpyHI
+```
+
+This then gives us something like:
+
+```
+thiseyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkFzIjoiYWRtaW4iLCJpYXQiOjE0MjI3Nzk2Mzh9.gzSraSYS8EXBxLN_oWnFSRgCzcmJmMjLiuyu5CSpyHI
 ```
 
 Let’s expand on the claims section of JWT. The following claims are part of the RFC document:
@@ -91,14 +95,14 @@ The key names are case sensitive and have been kept small to keep the JSON paylo
 
 In authentication, when the user successfully logs in using their credentials, a JSON Web Token will be returned and must be saved locally (typically in local storage, but cookies can be also used), instead of the traditional approach of creating a session in the server and returning a cookie.
 
-```json
-POST /login
+```json title="POST /login"
 {
     email: "username@example-domain.com"
     password: "5£cUr3PA$$W0rd!"
 }
+```
 
-// Response 201 Created
+```json title="Response 201 Created"
 {
     token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
 }
@@ -107,14 +111,14 @@ POST /login
 Any subsequent calls to the API would typically send the Authorization header using the Bearer schema.
 
 ```js
-Authorization: Bearer myToken
+Authorization: "Bearer myToken"
 ```
 
 Therefore the content of the header should look like the following.
 
-```js
-GET /
-Headers: Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
+```js title="GET /"
+# Headers
+Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
 ```
 
 This is a stateless authentication mechanism as the user state is never saved in the server memory. The server’s protected routes will check for a valid JWT in the Authorization header, and if there is, the user will be allowed.
