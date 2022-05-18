@@ -3,12 +3,10 @@ title: Journey To The Centre Of The Stack
 slug: journey-to-the-centre-of-the-stack
 description: Journey to the Centre of the stack - Dockerising the legacy
 date: 2020-11-30 11:00:00 +0000
-modified: 2022-05-18T11:54:29.251Z
+modified: 2022-05-18T13:30:24.902Z
 ---
 
-# Journey To The Centre Of The Stack
-
-<small>Dockerising the legacy</small>
+#### Dockerising the legacy
 
 Making changes to application infrastructure can be daunting at the best of times so when it was decided that we move to the world of containers, I took on a task I didn’t know the depth of, so I am going to share my experience of getting my hands dirty.
 

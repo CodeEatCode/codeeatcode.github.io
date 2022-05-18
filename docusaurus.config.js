@@ -26,7 +26,7 @@ const config = {
         defaultLocale: "en",
         locales: ["en"],
     },
-
+    // plugins: [MyPlugin],
     presets: [
         [
             "classic",
@@ -35,10 +35,13 @@ const config = {
                 docs: false,
                 blog: {
                     showReadingTime: true,
-                    // routeBasePath: "/"
+                    routeBasePath: "/",
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
                     // editUrl: "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
+                    postsPerPage: 10,
+                    blogSidebarTitle: "All posts",
+                    blogSidebarCount: "ALL",
                 },
                 theme: {
                     customCss: require.resolve("./src/css/custom.css"),
@@ -50,6 +53,7 @@ const config = {
     themeConfig:
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
+            respectPrefersColorScheme: false,
             navbar: {
                 title: "Code Eat Code",
                 logo: {
@@ -57,7 +61,7 @@ const config = {
                     src: "img/logo.svg",
                 },
                 items: [
-                    { to: "/blog", label: "Blog", position: "left" },
+                    // { to: "/blog", label: "Blog", position: "left" },
                     {
                         href: "https://github.com/ambersariya",
                         label: "GitHub Personal",
@@ -74,11 +78,15 @@ const config = {
                 style: "dark",
                 links: [
                     {
-                        title: "Contact",
+                        title: "Find Me",
                         items: [
                             {
                                 label: "Twitter",
                                 href: "https://twitter.com/_ambersariya",
+                            },
+                            {
+                                label: "LinkedIn",
+                                href: "https://www.linkedin.com/in/danish-javed/",
                             },
                         ],
                     },

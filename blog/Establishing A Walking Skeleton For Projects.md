@@ -2,7 +2,7 @@
 title: Establishing A Walking Skeleton For Projects
 slug: establishing-a-walking-skeleton-for-projects
 date: 2021-09-16T11:56:19.338Z
-modified: 2022-05-18T12:01:00.048Z
+modified: 2022-05-18T13:29:31.906Z
 ---
 
 I've been reading the excellent book [Growing Object-Oriented Software, Guided By Tests](https://www.goodreads.com/en/book/show/4268826-growing-object-oriented-software-guided-by-tests "Growing Object-Oriented Software, Guided By Tests") and there's so much that resonated with me about starting work on a new project.
