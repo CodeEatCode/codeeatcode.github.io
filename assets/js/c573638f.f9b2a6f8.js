@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcodeeatcode_github_io=self.webpackChunkcodeeatcode_github_io||[]).push([[964],{8866:function(e){e.exports=JSON.parse('[{"label":"docusaurus","permalink":"/tags/docusaurus","count":1},{"label":"blog","permalink":"/tags/blog","count":1},{"label":"how-to","permalink":"/tags/how-to","count":1}]')}}]);
