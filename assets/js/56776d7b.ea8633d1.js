@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcodeeatcode_github_io=self.webpackChunkcodeeatcode_github_io||[]).push([[846],{6464:function(e){e.exports=JSON.parse('{"label":"how-to","permalink":"/blog/tags/how-to","allTagsPath":"/blog/tags","count":1}')}}]);
