@@ -2,7 +2,7 @@
 title: JSON Web Tokens
 slug: JSON-WEB-TOKEN
 description: Repost from https://medium.com/@ambersariya/jwt-json-web-token-cd90ef7a7a66
-modified: 2022-05-18T14:13:48.838Z
+modified: 2022-05-18T14:20:16.740Z
 date: 2017-02-28T11:45:44.128Z
 ---
 
@@ -40,7 +40,7 @@ Upon closer inspections, you’ll see that this JWT consist of three parts separ
 
 So, let’s break it down a little:
 
-```
+```js
 // header
     eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 // payload
@@ -59,6 +59,7 @@ So, let’s break it down a little:
     "typ": "JWT"
 }
 ```
+
 ### Claims/Payload
 
 // The payload contains the claims that we wish to make:
@@ -66,6 +67,7 @@ So, let’s break it down a little:
 ```json
 { "sub": "1234567890", "name": "John Doe", "admin": true}
 ```
+
 ### Signature
 
 ```js
@@ -104,13 +106,13 @@ POST /login
 
 Any subsequent calls to the API would typically send the Authorization header using the Bearer schema.
 
-```
+```js
 Authorization: Bearer myToken
 ```
 
 Therefore the content of the header should look like the following.
 
-```
+```js
 GET /
 Headers: Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 ```
@@ -140,6 +142,7 @@ As JWTs are self-contained, all the necessary information is there, reducing the
 JSON Web Tokens offer many advantages but not without having some drawbacks. If you work on an extremely large-scale application, sessions could be the appropriate choice. It is completely reasonable to combine sessions and JWT — they each have their own purpose, and sometimes you need both. Just don’t use JWT for _persistent_ data.
 
 ---
+
 ## Further Reading
 
 Thanks to the following:
