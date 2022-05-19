@@ -2,9 +2,15 @@
 title: Links to Test Driven Development Articles & Videos
 slug: links-to-test-driven-development-articles-videos
 description: Repost from https://medium.com/@ambersariya/jwt-json-web-token-cd90ef7a7a66
-modified: 2022-05-19T11:02:15.333Z
+modified: 2022-05-19T11:04:25.564Z
 date: 2022-05-19T11:05:42.005Z
 draft: true
+keywords:
+  - tdd
+  - test driven development
+tags:
+  - tdd
+  - knowledge-base
 ---
 
 # Links to Test Driven Development Articles & Videos

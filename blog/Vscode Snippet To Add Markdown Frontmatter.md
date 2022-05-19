@@ -1,9 +1,13 @@
 ---
-modified: 2022-05-19T11:01:22.954Z
+modified: 2022-05-19T11:05:24.210Z
 date: 2022-05-19T11:46:52.000Z
 title: Vscode Snippet To Add Markdown Frontmatter
 slug: vscode-snippet-to-add-markdown-frontmatter
 draft: false
+tags:
+  - docusaurus
+  - blog
+  - how-to
 ---
 
 1. Click on settings for VSCode
