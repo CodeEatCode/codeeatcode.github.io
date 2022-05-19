@@ -57,7 +57,7 @@ const config = {
                 {
                     name: "keywords",
                     content:
-                        "coding, technology, programming, software development, blog",
+                        "coding, technology, programming, software development, blog, blog with code, coding blog, programming blog, software development blog",
                 },
                 {
                     name: "title",
