@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcodeeatcode_github_io=self.webpackChunkcodeeatcode_github_io||[]).push([[85],{8987:function(e){e.exports=JSON.parse('{"label":"containesization","permalink":"/tags/containesization","allTagsPath":"/tags","count":1}')}}]);

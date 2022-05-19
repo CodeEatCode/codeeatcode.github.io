@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcodeeatcode_github_io=self.webpackChunkcodeeatcode_github_io||[]).push([[881],{4604:function(e){e.exports=JSON.parse('{"permalink":"/tags/containerization","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);
