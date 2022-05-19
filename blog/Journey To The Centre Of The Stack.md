@@ -3,18 +3,18 @@ title: Journey To The Centre Of The Stack
 slug: journey-to-the-centre-of-the-stack
 description: Journey to the Centre of the stack - Dockerising the legacy
 date: 2020-11-30 11:00:00 +0000
-modified: 2022-05-19T11:14:44.023Z
+modified: 2022-05-19T11:20:37.932Z
 keywords:
   - docker
   - legacy-software
   - modernisation
   - containerisation
-  - containerization
+  - containerisation
 tags:
   - docker
   - legacy-software
   - modernisation
-  - containerization
+  - containerisation
 ---
 
 #### Dockerising the legacy
