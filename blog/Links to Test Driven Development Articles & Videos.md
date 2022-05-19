@@ -1,0 +1,29 @@
+---
+title: Links to Test Driven Development Articles & Videos
+slug: links-to-test-driven-development-articles-videos
+description: Repost from https://medium.com/@ambersariya/jwt-json-web-token-cd90ef7a7a66
+modified: 2022-05-19T09:48:22.005Z
+date: 2017-02-28T11:45:44.128Z
+draft: true
+---
+
+Links to Test Driven Development Articles & Videos
+
+TDD Anti-Patterns
+
+- https://www.meetup.com/codurance-craft-events/events/285519249/
+
+First TDD Conference
+
+- https://www.youtube.com/playlist?list=PLJ3Q-TNrdsXi-och0A0PaXKojDlxv4YsB
+
+
+https://testdriven.io/
+https://chemaclass.com/blog/test-driven-development/
+https://github.com/gamontal/awesome-katas
+http://codekata.com/kata/codekata-how-it-started/
+
+
+TDD Knowledge Book
+
+https://www.codurance.com/publications/tdd-knowledge-book-insights-from-the-first-tdd-conference
