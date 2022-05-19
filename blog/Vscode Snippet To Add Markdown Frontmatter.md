@@ -1,5 +1,5 @@
 ---
-modified: 2022-05-19T11:46:52.000Z
+modified: 2022-05-19T11:01:22.954Z
 date: 2022-05-19T11:46:52.000Z
 title: Vscode Snippet To Add Markdown Frontmatter
 slug: vscode-snippet-to-add-markdown-frontmatter
