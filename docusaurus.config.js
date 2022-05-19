@@ -53,6 +53,21 @@ const config = {
     themeConfig:
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
+            metadata: [
+                {
+                    name: "keywords",
+                    content:
+                        "coding, technology, programming, software development, blog",
+                },
+                {
+                    name: "title",
+                    content: "Code Eat Code",
+                },
+                {
+                    name: "description",
+                    content: "It's a Code eat Code world",
+                },
+            ],
             colorMode: {
                 defaultMode: "light",
                 disableSwitch: false,
