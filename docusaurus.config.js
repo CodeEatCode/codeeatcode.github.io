@@ -67,6 +67,10 @@ const config = {
                     name: "description",
                     content: "It's a Code eat Code world",
                 },
+                {
+                    name: "google-site-verification",
+                    content: "4wtMRQYF-x9ALzRmResSAiLkmCMznEP-QzhS4rjsewQ",
+                },
             ],
             colorMode: {
                 defaultMode: "light",
