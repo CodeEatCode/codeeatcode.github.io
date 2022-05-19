@@ -14,8 +14,6 @@ keywords:
 
 #### Dockerising the legacy
 
-<!--truncate-->
-
 Making changes to application infrastructure can be daunting at the best of times so when it was decided that we move to the world of containers, I took on a task I didn’t know the depth of, so I am going to share my experience of getting my hands dirty.
 
 At the time, I was new to docker but very interested in the technology, as technology folks, we all love a shiny new toy to play with. Apart from that the advantages and thus the reasons for so are listed as follows in no particular order:
