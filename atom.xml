@@ -36,7 +36,7 @@
         <category label="docker" term="docker"/>
         <category label="legacy-software" term="legacy-software"/>
         <category label="modernisation" term="modernisation"/>
-        <category label="containerization" term="containerization"/>
+        <category label="containerisation" term="containerisation"/>
     </entry>
     <entry>
         <title type="html"><![CDATA[JSON Web Tokens]]></title>
