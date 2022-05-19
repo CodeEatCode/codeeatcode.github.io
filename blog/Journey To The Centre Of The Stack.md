@@ -23,6 +23,8 @@ At the time, I was new to docker but very interested in the technology, as techn
 - Simplify application/tech stack
 - Be cloud-friendly
 
+<!--truncate-->
+
 ## Legacy Stack
 
 Where working with the difficulty of releasing changes in the current environment that are potentially outdated, have no tests and no real dependency management, installing the dependencies and developing newer features can be a considerable effort.

@@ -12,6 +12,8 @@ date: 2017-02-28T11:45:44.128Z
 
 JSON Web Tokens are an open, industry-standard [**RFC 7519**](https://tools.ietf.org/html/rfc7519) method for representing claims securely between two parties. See here: [https://jwt.io](https://jwt.io "https://jwt.io")
 
+<!--truncate-->
+
 In this context, "claim" can be something like a "command", a one-time authorization, or basically any other scenario that you can word as:
 
 > _Hello Server B, Server A told me that I could "**claim goes here**", and here’s the (cryptographic) proof._
