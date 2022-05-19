@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcodeeatcode_github_io=self.webpackChunkcodeeatcode_github_io||[]).push([[216],{272:function(e){e.exports=JSON.parse('{"label":"legacy-software","permalink":"/tags/legacy-software","allTagsPath":"/tags","count":1}')}}]);
