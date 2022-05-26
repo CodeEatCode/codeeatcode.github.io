@@ -12,7 +12,7 @@ const config = {
     baseUrl: "/",
     onBrokenLinks: "throw",
     onBrokenMarkdownLinks: "warn",
-    favicon: "img/favicon.ico",
+    favicon: "img/logo.gif",
 
     // GitHub pages deployment config.
     // If you aren't using GitHub pages, you don't need these.
@@ -81,7 +81,7 @@ const config = {
                 title: "Code Eat Code",
                 logo: {
                     alt: "Code Eat Ccode",
-                    src: "img/logo.svg",
+                    src: "img/logo.gif",
                 },
                 items: [
                     // { to: "/blog", label: "Blog", position: "left" },
