@@ -83,6 +83,11 @@ module.exports = async function () {
                     },
                     items: [
                         {
+                            type: "html",
+                            position: "left",
+                            value: '<span class="navbar__tagline">Vibe-posted. Fact-checked. Mostly.</span>',
+                        },
+                        {
                             type: "dropdown",
                             label: "GitHub",
                             position: "right",

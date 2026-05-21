@@ -51,6 +51,14 @@
   letter-spacing: -0.02em;
 }
 
+/* ── Navbar tagline ──────────────────────────────────────────────────────── */
+.navbar__tagline {
+  font-size: 0.75rem;
+  color: var(--ifm-color-emphasis-600);
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
+
 /* ── Blog post typography ────────────────────────────────────────────────── */
 .markdown h1 {
   letter-spacing: -0.02em;
