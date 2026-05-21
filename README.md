@@ -1,6 +1,6 @@
 # Website
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+This website is built using [Docusaurus 3](https://docusaurus.io/), a modern static website generator.
 
 ### Installation
 
@@ -21,9 +21,9 @@ $ mise run install
 ```
 
 Review `mise.toml` before the first `mise trust`; Mise requires that trust step
-before it will load project tasks. The toolchain tracks the Node 16 line already
-used by the GitHub Pages workflows. Existing Yarn commands still work directly
-when the pinned tools are already on `PATH`.
+before it will load project tasks. The toolchain tracks the Node 20 line used by
+the GitHub Pages workflows. Existing Yarn commands still work directly when the
+pinned tools are already on `PATH`.
 
 ### Local Development
 

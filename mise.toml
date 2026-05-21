@@ -1,5 +1,5 @@
 [tools]
-node = "16.20.2"
+node = "20.19.2"
 "npm:yarn" = "1.22.22"
 
 [tasks.install]
