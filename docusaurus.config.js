@@ -10,7 +10,7 @@ module.exports = async function () {
     return {
         title: "Mostly Works",
         tagline: "Vibe-posted. Fact-checked. Mostly.",
-        url: "https://codeeatcode.github.io",
+        url: "https://works-in-prod.github.io",
         baseUrl: "/",
         onBrokenLinks: "throw",
         markdown: {
@@ -20,8 +20,8 @@ module.exports = async function () {
         },
         favicon: "img/logo.gif",
 
-        organizationName: "codeeatcode",
-        projectName: "codeeatcode.github.io",
+        organizationName: "works-in-prod",
+        projectName: "works-in-prod.github.io",
         trailingSlash: true,
         i18n: {
             defaultLocale: "en",
