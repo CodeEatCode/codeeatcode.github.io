@@ -1,6 +1,7 @@
 [tools]
 node = "20.19.2"
 "npm:yarn" = "1.22.22"
+"aqua:terrastruct/d2" = "0.7.1"
 
 [tasks.install]
 description = "Install locked JavaScript dependencies"
