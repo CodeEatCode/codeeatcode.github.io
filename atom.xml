@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://codeeatcode.github.io/</id>
+    <id>https://works-in-prod.github.io/</id>
     <title>Mostly Works Blog</title>
     <updated>2026-05-21T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://codeeatcode.github.io/"/>
+    <link rel="alternate" href="https://works-in-prod.github.io/"/>
     <subtitle>Mostly Works Blog</subtitle>
-    <icon>https://codeeatcode.github.io/img/logo.gif</icon>
+    <icon>https://works-in-prod.github.io/img/logo.gif</icon>
     <entry>
         <title type="html"><![CDATA[TDD Was Solving the Agent Problem Before Agents Existed]]></title>
-        <id>https://codeeatcode.github.io/tdd-was-solving-the-agent-problem-before-agents-existed/</id>
-        <link href="https://codeeatcode.github.io/tdd-was-solving-the-agent-problem-before-agents-existed/"/>
+        <id>https://works-in-prod.github.io/tdd-was-solving-the-agent-problem-before-agents-existed/</id>
+        <link href="https://works-in-prod.github.io/tdd-was-solving-the-agent-problem-before-agents-existed/"/>
         <updated>2026-05-21T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[The first time I set an agent loose on a real codebase, it ran out of context before it had done anything useful. That's a clarifying experience.]]></summary>
         <content type="html"><![CDATA[<p>The first time I set an agent loose on a real codebase, it ran out of context before it had done anything useful. That's a clarifying experience.</p>
@@ -37,8 +37,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[The Art of the Architecture Diagram Is Knowing What to Leave Out]]></title>
-        <id>https://codeeatcode.github.io/the-art-of-the-architecture-diagram-is-knowing-what-to-leave-out/</id>
-        <link href="https://codeeatcode.github.io/the-art-of-the-architecture-diagram-is-knowing-what-to-leave-out/"/>
+        <id>https://works-in-prod.github.io/the-art-of-the-architecture-diagram-is-knowing-what-to-leave-out/</id>
+        <link href="https://works-in-prod.github.io/the-art-of-the-architecture-diagram-is-knowing-what-to-leave-out/"/>
         <updated>2026-05-21T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[There's a particular type of diagram that engineers love producing and nobody can read. It has boxes for every service, arrows for every dependency, labels on each arrow explaining the protocol, and a legend in the corner that requires its own legend. It is, technically speaking, accurate. It is also completely useless.]]></summary>
         <content type="html"><![CDATA[<p>There's a particular type of diagram that engineers love producing and nobody can read. It has boxes for every service, arrows for every dependency, labels on each arrow explaining the protocol, and a legend in the corner that requires its own legend. It is, technically speaking, accurate. It is also completely useless.</p>
@@ -46,9 +46,9 @@
 <p>The tooling has always been a headache. I tried a few diagram-as-code options and they all seemed to get in the way more than they helped. Recently switched to <a href="https://d2lang.com/" target="_blank" rel="noopener noreferrer" class="">D2</a> and it's been noticeably better. Minimal syntax, clean output, doesn't try to do seventeen things at once. It renders the diagram and gets out of your way.</p>
 <p>The discipline isn't in drawing the boxes though — it's in deciding what <em>not</em> to draw. Engineers instinctively want to put everything in. Every dependency. Every call. Every integration they personally wired up at 11pm on a Thursday and feel a certain proprietary affection for. The result is a diagram that documents institutional knowledge and communicates nothing.</p>
 <p>Here's the difference in practice. The noisy version — everything that's technically true:</p>
-<img decoding="async" loading="lazy" src="https://codeeatcode.github.io/d2/blog/The%20Art%20of%20the%20Architecture%20Diagram%20Is%20Knowing%20What%20to%20Leave%20Out/0.svg" alt="d2 diagram" class="img_ev3q">
+<img decoding="async" loading="lazy" src="https://works-in-prod.github.io/d2/blog/The%20Art%20of%20the%20Architecture%20Diagram%20Is%20Knowing%20What%20to%20Leave%20Out/0.svg" alt="d2 diagram" class="img_ev3q">
 <p>The clean version — what the Container diagram should actually say:</p>
-<img decoding="async" loading="lazy" src="https://codeeatcode.github.io/d2/blog/The%20Art%20of%20the%20Architecture%20Diagram%20Is%20Knowing%20What%20to%20Leave%20Out/1.svg" alt="d2 diagram" class="img_ev3q">
+<img decoding="async" loading="lazy" src="https://works-in-prod.github.io/d2/blog/The%20Art%20of%20the%20Architecture%20Diagram%20Is%20Knowing%20What%20to%20Leave%20Out/1.svg" alt="d2 diagram" class="img_ev3q">
 <p>Same system. The second one takes thirty seconds to understand. The first takes thirty minutes and a whiteboard session that everyone leaves more confused than when they arrived.</p>
 <p>My preference is top-down layout — things flow downward, dependencies point in one direction, you can scan it. It's a small thing that makes a significant difference to whether a diagram reads as a story or as a pub quiz question.</p>
 <p>AI tools make the arrows problem considerably worse. They're very close to the code — that's their whole thing — and if you ask one to generate an architecture diagram, it will dutifully render every import, every function call, every database relationship it can find. The result looks impressively comprehensive. It communicates approximately nothing.</p>
@@ -66,8 +66,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[The Blockers Don't Care That You're Using AI]]></title>
-        <id>https://codeeatcode.github.io/the-blockers-dont-care-that-youre-using-ai/</id>
-        <link href="https://codeeatcode.github.io/the-blockers-dont-care-that-youre-using-ai/"/>
+        <id>https://works-in-prod.github.io/the-blockers-dont-care-that-youre-using-ai/</id>
+        <link href="https://works-in-prod.github.io/the-blockers-dont-care-that-youre-using-ai/"/>
         <updated>2026-05-21T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[I wrote a post back in 2021 about walking skeletons — the idea that before you go deep on features, you ship something thin and deployable end-to-end. Not because it's useful to users, but because it flushes out the real blockers while the cost of finding them is still low. Permissions. Pipelines. Infrastructure assumptions that looked fine on a whiteboard.]]></summary>
         <content type="html"><![CDATA[<p>I wrote a post back in 2021 about walking skeletons — the idea that before you go deep on features, you ship something thin and deployable end-to-end. Not because it's useful to users, but because it flushes out the real blockers while the cost of finding them is still low. Permissions. Pipelines. Infrastructure assumptions that looked fine on a whiteboard.</p>
@@ -88,16 +88,16 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[The Classic 'Works on My Machine' — Now With Neural Networks]]></title>
-        <id>https://codeeatcode.github.io/the-classic-works-on-my-machine-now-with-neural-networks/</id>
-        <link href="https://codeeatcode.github.io/the-classic-works-on-my-machine-now-with-neural-networks/"/>
+        <id>https://works-in-prod.github.io/the-classic-works-on-my-machine-now-with-neural-networks/</id>
+        <link href="https://works-in-prod.github.io/the-classic-works-on-my-machine-now-with-neural-networks/"/>
         <updated>2026-05-21T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[I built the evaluation harness first. Ten libraries, same documents, same]]></summary>
         <content type="html"><![CDATA[<p>I built the evaluation harness first. Ten libraries, same documents, same
 metrics, timestamped results, HTML report. Proper engineering. And I still
 ended up in a five-week infrastructure nightmare.</p>
 <p>This is about why.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-requirements-were-genuinely-hard">The requirements were genuinely hard<a href="https://codeeatcode.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-requirements-were-genuinely-hard" class="hash-link" aria-label="Direct link to The requirements were genuinely hard" title="Direct link to The requirements were genuinely hard" translate="no">​</a></h2>
-<p>It's easy to read the <a class="" href="https://codeeatcode.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/">Docling post-mortem</a>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-requirements-were-genuinely-hard">The requirements were genuinely hard<a href="https://works-in-prod.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-requirements-were-genuinely-hard" class="hash-link" aria-label="Direct link to The requirements were genuinely hard" title="Direct link to The requirements were genuinely hard" translate="no">​</a></h2>
+<p>It's easy to read the <a class="" href="https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/">Docling post-mortem</a>
 on this blog and conclude that we reached for the wrong tool. But the
 requirements weren't trivial, and I want to be honest about that.</p>
 <p>We needed a parser that could handle:</p>
@@ -114,7 +114,7 @@ clean text, but they're not designed for the document complexity we were
 dealing with. We needed something that understood documents as structured
 objects, not as streams of text.</p>
 <p>Docling handled all of it.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-harness-said-so">The harness said so<a href="https://codeeatcode.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-harness-said-so" class="hash-link" aria-label="Direct link to The harness said so" title="Direct link to The harness said so" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-harness-said-so">The harness said so<a href="https://works-in-prod.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-harness-said-so" class="hash-link" aria-label="Direct link to The harness said so" title="Direct link to The harness said so" translate="no">​</a></h2>
 <p>I built a comparison harness before committing to anything — ten parsers, a
 standardised subprocess-based runner, isolated output per library, metrics
 covering wall-clock time, peak memory, word counts, table detection, heading
@@ -126,7 +126,7 @@ comprehension, image handling. It wasn't close. The other libraries produced
 flat text extractions. Docling produced structured, readable Markdown that
 actually reflected the document's intent.</p>
 <p>The harness was doing its job. The numbers were real.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-problem-was-the-machine">The problem was the machine<a href="https://codeeatcode.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-problem-was-the-machine" class="hash-link" aria-label="Direct link to The problem was the machine" title="Direct link to The problem was the machine" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-problem-was-the-machine">The problem was the machine<a href="https://works-in-prod.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-problem-was-the-machine" class="hash-link" aria-label="Direct link to The problem was the machine" title="Direct link to The problem was the machine" translate="no">​</a></h2>
 <p>I ran all of this on an M4 Pro MacBook. Apple Silicon with MPS
 acceleration — for PyTorch workloads, that's not far off GPU performance.
 Docling's layout models, its table structure analysis, its OCR pipeline — all
@@ -140,7 +140,7 @@ the concurrency tuning, the performance whack-a-mole documented in the
 post-mortem — all of it was a consequence of running local ML inference on
 hardware it wasn't designed for.</p>
 <p>The harness was correct. The harness environment was not representative.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-pressure-factor">The pressure factor<a href="https://codeeatcode.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-pressure-factor" class="hash-link" aria-label="Direct link to The pressure factor" title="Direct link to The pressure factor" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-pressure-factor">The pressure factor<a href="https://works-in-prod.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-pressure-factor" class="hash-link" aria-label="Direct link to The pressure factor" title="Direct link to The pressure factor" translate="no">​</a></h2>
 <p>There's a human element worth naming too. We were under pressure to find a
 solution that met those qualitative requirements, and Docling met them
 convincingly. When you're looking for something specific and you find it, the
@@ -150,7 +150,7 @@ different machine.</p>
 question matters most. The harder the requirements, the more likely you're
 reaching for a heavy tool — and heavy tools are the ones most sensitive to
 the hardware they run on.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-the-evaluation-was-missing">What the evaluation was missing<a href="https://codeeatcode.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#what-the-evaluation-was-missing" class="hash-link" aria-label="Direct link to What the evaluation was missing" title="Direct link to What the evaluation was missing" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-the-evaluation-was-missing">What the evaluation was missing<a href="https://works-in-prod.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#what-the-evaluation-was-missing" class="hash-link" aria-label="Direct link to What the evaluation was missing" title="Direct link to What the evaluation was missing" translate="no">​</a></h2>
 <p>In hindsight, the harness needed one more dimension: a production-equivalent
 environment. Running the same comparison on a CPU-constrained container would
 have surfaced the performance characteristics immediately. The qualitative
@@ -163,7 +163,7 @@ same qualitative bar. In our case, Claude via Bedrock handled rasterised pages,
 tables, merged cells, layout, and picture descriptions — via the same vision
 pipeline we use for everything else. No local models. No infrastructure. We
 didn't know that when we started, but we could have found out faster.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-harness-is-still-worth-building">The harness is still worth building<a href="https://codeeatcode.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-harness-is-still-worth-building" class="hash-link" aria-label="Direct link to The harness is still worth building" title="Direct link to The harness is still worth building" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-harness-is-still-worth-building">The harness is still worth building<a href="https://works-in-prod.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-harness-is-still-worth-building" class="hash-link" aria-label="Direct link to The harness is still worth building" title="Direct link to The harness is still worth building" translate="no">​</a></h2>
 <p>None of this is an argument against evaluation harnesses. Building one before
 committing to a library is still the right instinct — it forces you to define
 what "good" means before you've seen any results, and it makes the comparison
@@ -184,8 +184,8 @@ you wire it into the Dockerfile.</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[The Metric Your Users Feel Before You Measure It]]></title>
-        <id>https://codeeatcode.github.io/the-metric-your-users-feel-before-you-measure-it/</id>
-        <link href="https://codeeatcode.github.io/the-metric-your-users-feel-before-you-measure-it/"/>
+        <id>https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/</id>
+        <link href="https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/"/>
         <updated>2026-05-21T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Working on a streaming chat product taught me something: the standard]]></summary>
         <content type="html"><![CDATA[<p>Working on a streaming chat product taught me something: the standard
@@ -208,7 +208,7 @@ seconds feels fast. A response that sits blank for four seconds then dumps
 everything at once feels broken — even if the total duration is shorter.</p>
 <p>That gap between "request sent" and "first content chunk received" is TTFT,
 and it's the metric that actually describes streaming UX.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="measuring-it">Measuring it<a href="https://codeeatcode.github.io/the-metric-your-users-feel-before-you-measure-it/#measuring-it" class="hash-link" aria-label="Direct link to Measuring it" title="Direct link to Measuring it" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="measuring-it">Measuring it<a href="https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/#measuring-it" class="hash-link" aria-label="Direct link to Measuring it" title="Direct link to Measuring it" translate="no">​</a></h2>
 <p>Standard k6 doesn't parse SSE streams, so you need a custom binary built
 with <a href="https://github.com/phymbert/xk6-sse" target="_blank" rel="noopener noreferrer" class="">xk6-sse</a>:</p>
 <div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">xk6 build --with github.com/phymbert/xk6-sse</span><br></div></code></pre></div></div>
@@ -218,7 +218,7 @@ content event arrives:</p>
 <p>Critically: read the stream to completion even after you've recorded TTFT.
 Dropping the connection early skews the load profile — the server is still
 doing work and your test stops accounting for it.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="load-profile-design">Load profile design<a href="https://codeeatcode.github.io/the-metric-your-users-feel-before-you-measure-it/#load-profile-design" class="hash-link" aria-label="Direct link to Load profile design" title="Direct link to Load profile design" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="load-profile-design">Load profile design<a href="https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/#load-profile-design" class="hash-link" aria-label="Direct link to Load profile design" title="Direct link to Load profile design" translate="no">​</a></h2>
 <p>For observational load testing, a ramp-and-hold pattern gives you clean
 steady-state numbers to actually reason about:</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">VUs</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">100 ┤               ▄▄▄▄▄▄▄</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"> 50 ┤         ▄▄▄▄▄▀       ▀▄▄▄▄▄</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"> 10 ┤   ▄▄▄▄▄▀                   ▀▄▄▄▄▄</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  0 ┤──▀                               ▀──</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      ramp  hold   ramp   hold   ramp  hold</span><br></div></code></pre></div></div>
@@ -229,7 +229,7 @@ so you can filter cleanly in post-processing.</p>
 <p>One request per VU per hold window also gives you deterministic sample
 counts: 50 VUs × 60s hold = exactly 50 requests. Reproducible, comparable
 across runs.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-you-actually-learn">What you actually learn<a href="https://codeeatcode.github.io/the-metric-your-users-feel-before-you-measure-it/#what-you-actually-learn" class="hash-link" aria-label="Direct link to What you actually learn" title="Direct link to What you actually learn" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-you-actually-learn">What you actually learn<a href="https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/#what-you-actually-learn" class="hash-link" aria-label="Direct link to What you actually learn" title="Direct link to What you actually learn" translate="no">​</a></h2>
 <p>Here's where it gets interesting. Once you have TTFT as a real metric, you
 start seeing things that <code>http_req_duration</code> completely hides.</p>
 <p>What we found was that different models have quite different characteristics.
@@ -246,7 +246,7 @@ checking.</p>
 <p>These are the kinds of insights that only exist once you're measuring the
 right thing. Total request duration isn't the wrong metric — it's just the
 wrong <em>first</em> metric for a product where the UX is a stream.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="set-a-concrete-target-before-you-test">Set a concrete target before you test<a href="https://codeeatcode.github.io/the-metric-your-users-feel-before-you-measure-it/#set-a-concrete-target-before-you-test" class="hash-link" aria-label="Direct link to Set a concrete target before you test" title="Direct link to Set a concrete target before you test" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="set-a-concrete-target-before-you-test">Set a concrete target before you test<a href="https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/#set-a-concrete-target-before-you-test" class="hash-link" aria-label="Direct link to Set a concrete target before you test" title="Direct link to Set a concrete target before you test" translate="no">​</a></h2>
 <p>Before running at scale, decide what good looks like. What is an acceptable
 p95 TTFT at your expected concurrency? Write it down before you look at the
 numbers — otherwise you'll rationalise whatever you find.</p>
@@ -268,8 +268,8 @@ directions. Worth measuring separately.</em></p>]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Stop Arguing With Your Terminal About Python Versions]]></title>
-        <id>https://codeeatcode.github.io/stop-arguing-with-your-terminal-about-python-versions/</id>
-        <link href="https://codeeatcode.github.io/stop-arguing-with-your-terminal-about-python-versions/"/>
+        <id>https://works-in-prod.github.io/stop-arguing-with-your-terminal-about-python-versions/</id>
+        <link href="https://works-in-prod.github.io/stop-arguing-with-your-terminal-about-python-versions/"/>
         <updated>2026-05-21T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Project setup should be boring. Not in a "this is beneath me" way — in a]]></summary>
         <content type="html"><![CDATA[<p>Project setup should be boring. Not in a "this is beneath me" way — in a
@@ -342,8 +342,8 @@ painless — <code>mise</code> reads <code>.tool-versions</code> files natively.
     </entry>
     <entry>
         <title type="html"><![CDATA[We Spent Five Weeks Making Docling Work. Then We Deleted It.]]></title>
-        <id>https://codeeatcode.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/</id>
-        <link href="https://codeeatcode.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/"/>
+        <id>https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/</id>
+        <link href="https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/"/>
         <updated>2026-05-21T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[This is a post-mortem on five weeks of infrastructure work that ended with]]></summary>
         <content type="html"><![CDATA[<p>This is a post-mortem on five weeks of infrastructure work that ended with
@@ -354,7 +354,7 @@ tables, figures, DOCX, the lot. On paper it looked like exactly what we needed.
 In practice it turned out to be a small ML platform hiding inside a Python
 package, and we didn't fully appreciate that distinction until we were already
 three acts deep.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="act-i-the-optimistic-beginning">Act I: The Optimistic Beginning<a href="https://codeeatcode.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#act-i-the-optimistic-beginning" class="hash-link" aria-label="Direct link to Act I: The Optimistic Beginning" title="Direct link to Act I: The Optimistic Beginning" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="act-i-the-optimistic-beginning">Act I: The Optimistic Beginning<a href="https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#act-i-the-optimistic-beginning" class="hash-link" aria-label="Direct link to Act I: The Optimistic Beginning" title="Direct link to Act I: The Optimistic Beginning" translate="no">​</a></h2>
 <p>The first pull request adding Docling was merged and reverted on the same day.
 A flag from the universe that was politely ignored.</p>
 <p>A couple of days later it was back in with the proper integration. The
@@ -373,7 +373,7 @@ excluded every time</li>
 </ul>
 <p>None of this is catastrophic. But it's the kind of friction that tells you
 something about what you're dealing with.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="act-ii-the-model-infrastructure-tax">Act II: The Model Infrastructure Tax<a href="https://codeeatcode.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#act-ii-the-model-infrastructure-tax" class="hash-link" aria-label="Direct link to Act II: The Model Infrastructure Tax" title="Direct link to Act II: The Model Infrastructure Tax" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="act-ii-the-model-infrastructure-tax">Act II: The Model Infrastructure Tax<a href="https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#act-ii-the-model-infrastructure-tax" class="hash-link" aria-label="Direct link to Act II: The Model Infrastructure Tax" title="Direct link to Act II: The Model Infrastructure Tax" translate="no">​</a></h2>
 <p>Because Docling models can't be downloaded at cold-start in production — too
 slow, no egress — a CI/CD model sync workflow was introduced to pre-bake them
 into S3. This became its own small project: a GitHub Actions workflow to sync
@@ -385,7 +385,7 @@ OCR engine or parser models meant updating the Dockerfile, updating the sync
 workflow, and triggering the S3 pipeline before deploy — in that order.</p>
 <p>This is the moment where "we added a parsing library" became "we are now
 operating a small model registry."</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="act-iii-the-performance-whack-a-mole">Act III: The Performance Whack-a-Mole<a href="https://codeeatcode.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#act-iii-the-performance-whack-a-mole" class="hash-link" aria-label="Direct link to Act III: The Performance Whack-a-Mole" title="Direct link to Act III: The Performance Whack-a-Mole" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="act-iii-the-performance-whack-a-mole">Act III: The Performance Whack-a-Mole<a href="https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#act-iii-the-performance-whack-a-mole" class="hash-link" aria-label="Direct link to Act III: The Performance Whack-a-Mole" title="Direct link to Act III: The Performance Whack-a-Mole" translate="no">​</a></h2>
 <ul>
 <li class="">OMP thread count reduced from 4 to 2 because Docling was spawning more CPU
 threads than the pod's limit. The pod was being throttled.</li>
@@ -400,12 +400,12 @@ feature wasn't being used for the most common input type</li>
 <p>On the same day as that last round of fixes, a VLM-based parser was added and
 validated in a few hours. It used Bedrock's document API directly. No local
 models. No thread budget. Just an API call.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="act-iv-the-quiet-betrayal">Act IV: The Quiet Betrayal<a href="https://codeeatcode.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#act-iv-the-quiet-betrayal" class="hash-link" aria-label="Direct link to Act IV: The Quiet Betrayal" title="Direct link to Act IV: The Quiet Betrayal" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="act-iv-the-quiet-betrayal">Act IV: The Quiet Betrayal<a href="https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#act-iv-the-quiet-betrayal" class="hash-link" aria-label="Direct link to Act IV: The Quiet Betrayal" title="Direct link to Act IV: The Quiet Betrayal" translate="no">​</a></h2>
 <p>A config change silently disabled Docling routing and enabled the VLM parsers
 by default. Docling was still in the codebase, still in the Docker image, still
 pulling in Torch and Tesseract and RapidOCR and a full HuggingFace model cache.</p>
 <p>It was handling zero traffic.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="act-v-the-purge">Act V: The Purge<a href="https://codeeatcode.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#act-v-the-purge" class="hash-link" aria-label="Direct link to Act V: The Purge" title="Direct link to Act V: The Purge" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="act-v-the-purge">Act V: The Purge<a href="https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#act-v-the-purge" class="hash-link" aria-label="Direct link to Act V: The Purge" title="Direct link to Act V: The Purge" translate="no">​</a></h2>
 <p>Gone. All of it.</p>
 <ul>
 <li class="">The Docling parser and all its tests</li>
@@ -416,7 +416,7 @@ pulling in Torch and Tesseract and RapidOCR and a full HuggingFace model cache.<
 <li class="">The thread-count tuning, the <code>images_scale</code> pin, all of it</li>
 </ul>
 <p>1,452 lines deleted from <code>uv.lock</code> alone.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-replaced-it">What replaced it<a href="https://codeeatcode.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#what-replaced-it" class="hash-link" aria-label="Direct link to What replaced it" title="Direct link to What replaced it" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-replaced-it">What replaced it<a href="https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#what-replaced-it" class="hash-link" aria-label="Direct link to What replaced it" title="Direct link to What replaced it" translate="no">​</a></h2>
 <p>Two parsers, one fallback chain, zero local ML models.</p>
 <p>The primary path sends the raw document bytes directly to Bedrock as a document
 content block — one API call, no pre-processing. Claude handles layout, tables,
@@ -430,7 +430,7 @@ to become a PDF, then hit the same rasterise-and-describe path.</p>
 <table><thead><tr><th>Concern</th><th>Docling</th><th>Now</th></tr></thead><tbody><tr><td>PDF text extraction</td><td>Torch + Tesseract + layout models</td><td>Bedrock document block</td></tr><tr><td>Tables</td><td>Docling HTML table mode</td><td>Claude extracts to HTML natively</td></tr><tr><td>Images / figures</td><td>SmolVLM locally</td><td>Bedrock vision per page</td></tr><tr><td>DOCX</td><td>pydocx parser</td><td>LibreOffice → PDF → same VLM path</td></tr><tr><td>Dependencies</td><td>Torch, Tesseract, RapidOCR, OpenCV, HF models</td><td>pypdfium2, LibreOffice (system)</td></tr><tr><td>Infrastructure</td><td>S3 model sync pipeline, entrypoint bootstrap</td><td>Nothing — models live in Bedrock</td></tr></tbody></table>
 <p>The entire local inference stack is gone. Parsing is now API calls with a
 lightweight rasterisation step as fallback for large files.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-lesson-if-there-is-one">The lesson, if there is one<a href="https://codeeatcode.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#the-lesson-if-there-is-one" class="hash-link" aria-label="Direct link to The lesson, if there is one" title="Direct link to The lesson, if there is one" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-lesson-if-there-is-one">The lesson, if there is one<a href="https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#the-lesson-if-there-is-one" class="hash-link" aria-label="Direct link to The lesson, if there is one" title="Direct link to The lesson, if there is one" translate="no">​</a></h2>
 <p>Docling required bundling a mini ML stack — Torch, Tesseract, RapidOCR,
 HuggingFace models — plus a dedicated S3 sync pipeline and several rounds of
 thread-count tuning, to do PDF parsing that a Bedrock API call does better with
@@ -467,8 +467,8 @@ of the tool. A failure of context.</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[You Can't Debug What Bedrock Swallowed]]></title>
-        <id>https://codeeatcode.github.io/you-cant-debug-what-bedrock-swallowed/</id>
-        <link href="https://codeeatcode.github.io/you-cant-debug-what-bedrock-swallowed/"/>
+        <id>https://works-in-prod.github.io/you-cant-debug-what-bedrock-swallowed/</id>
+        <link href="https://works-in-prod.github.io/you-cant-debug-what-bedrock-swallowed/"/>
         <updated>2026-05-21T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[There's a particular kind of hell reserved for debugging LLM-backed systems that nobody bothered to instrument. You've got a request that took twelve seconds and you don't know if the slow part was your retrieval pipeline, the prompt construction, the Bedrock call itself, or the post-processing that turned the model's output into something you'd actually show a user. You have logs. You have vibes. You have, essentially, nothing.]]></summary>
         <content type="html"><![CDATA[<p>There's a particular kind of hell reserved for debugging LLM-backed systems that nobody bothered to instrument. You've got a request that took twelve seconds and you don't know if the slow part was your retrieval pipeline, the prompt construction, the Bedrock call itself, or the post-processing that turned the model's output into something you'd actually show a user. You have logs. You have vibes. You have, essentially, nothing.</p>
@@ -493,8 +493,8 @@ of the tool. A failure of context.</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Your Codebase Has Rules. Does CI Know That?]]></title>
-        <id>https://codeeatcode.github.io/your-codebase-has-rules-does-ci-know-that/</id>
-        <link href="https://codeeatcode.github.io/your-codebase-has-rules-does-ci-know-that/"/>
+        <id>https://works-in-prod.github.io/your-codebase-has-rules-does-ci-know-that/</id>
+        <link href="https://works-in-prod.github.io/your-codebase-has-rules-does-ci-know-that/"/>
         <updated>2026-05-21T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[There's a particular kind of meeting that happens on mixed teams. Someone's opened a pull request, and two engineers are staring at the same diff with completely different facial expressions. One is confused. The other is quietly furious. Neither is wrong, exactly — they just have entirely different mental models of what the codebase is supposed to look like.]]></summary>
         <content type="html"><![CDATA[<p>There's a particular kind of meeting that happens on mixed teams. Someone's opened a pull request, and two engineers are staring at the same diff with completely different facial expressions. One is confused. The other is quietly furious. Neither is wrong, exactly — they just have entirely different mental models of what the codebase is <em>supposed</em> to look like.</p>
@@ -520,8 +520,8 @@ of the tool. A failure of context.</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Vscode Snippet To Add Markdown Frontmatter]]></title>
-        <id>https://codeeatcode.github.io/vscode-snippet-to-add-markdown-frontmatter/</id>
-        <link href="https://codeeatcode.github.io/vscode-snippet-to-add-markdown-frontmatter/"/>
+        <id>https://works-in-prod.github.io/vscode-snippet-to-add-markdown-frontmatter/</id>
+        <link href="https://works-in-prod.github.io/vscode-snippet-to-add-markdown-frontmatter/"/>
         <updated>2022-05-19T11:46:52.000Z</updated>
         <summary type="html"><![CDATA[1. Click on settings for VSCode]]></summary>
         <content type="html"><![CDATA[<ol>
@@ -537,8 +537,8 @@ of the tool. A failure of context.</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Establishing A Walking Skeleton For Projects]]></title>
-        <id>https://codeeatcode.github.io/establishing-a-walking-skeleton-for-projects/</id>
-        <link href="https://codeeatcode.github.io/establishing-a-walking-skeleton-for-projects/"/>
+        <id>https://works-in-prod.github.io/establishing-a-walking-skeleton-for-projects/</id>
+        <link href="https://works-in-prod.github.io/establishing-a-walking-skeleton-for-projects/"/>
         <updated>2021-09-16T11:56:19.338Z</updated>
         <summary type="html"><![CDATA[I've been reading the excellent book Growing Object-Oriented Software, Guided By Tests and there's so much that resonated with me about starting work on a new project.]]></summary>
         <content type="html"><![CDATA[<p>I've been reading the excellent book <a href="https://www.goodreads.com/en/book/show/4268826-growing-object-oriented-software-guided-by-tests" target="_blank" rel="noopener noreferrer" title="Growing Object-Oriented Software, Guided By Tests" class="">Growing Object-Oriented Software, Guided By Tests</a> and there's so much that resonated with me about starting work on a new project.</p>
@@ -550,8 +550,8 @@ of the tool. A failure of context.</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Journey To The Centre Of The Stack]]></title>
-        <id>https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/</id>
-        <link href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/"/>
+        <id>https://works-in-prod.github.io/journey-to-the-centre-of-the-stack/</id>
+        <link href="https://works-in-prod.github.io/journey-to-the-centre-of-the-stack/"/>
         <updated>2020-11-30T11:00:00.000Z</updated>
         <summary type="html"><![CDATA[Containerising legacy software has always been a journey into the unknown. What's changed is who you take with you.]]></summary>
         <content type="html"><![CDATA[<p>I first wrote this post in 2020 after spending several weeks containerising a
@@ -573,7 +573,7 @@ model of a system from first principles because the person who built it left
 two years ago.</p>
 <p>That part is cheaper now. Not free — cheaper. And for senior engineers in
 particular, that matters more than it might sound.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-cognitive-load-is-the-real-cost">The cognitive load is the real cost<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#the-cognitive-load-is-the-real-cost" class="hash-link" aria-label="Direct link to The cognitive load is the real cost" title="Direct link to The cognitive load is the real cost" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-cognitive-load-is-the-real-cost">The cognitive load is the real cost<a href="https://works-in-prod.github.io/journey-to-the-centre-of-the-stack/#the-cognitive-load-is-the-real-cost" class="hash-link" aria-label="Direct link to The cognitive load is the real cost" title="Direct link to The cognitive load is the real cost" translate="no">​</a></h2>
 <p>When you're working in unfamiliar legacy code, there's a ceiling on how much
 you can think about architecture while simultaneously trying to understand what
 you're looking at. The mental budget goes to comprehension first and decision-
@@ -586,7 +586,7 @@ orientation is the precondition for good architectural thinking.</p>
 <p>The senior engineer's job in a legacy modernisation isn't to read every file —
 it's to understand the system well enough to make the right calls. AI handles
 more of the reading. You do more of the deciding. That's a reasonable trade.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-still-requires-a-human">What still requires a human<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#what-still-requires-a-human" class="hash-link" aria-label="Direct link to What still requires a human" title="Direct link to What still requires a human" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-still-requires-a-human">What still requires a human<a href="https://works-in-prod.github.io/journey-to-the-centre-of-the-stack/#what-still-requires-a-human" class="hash-link" aria-label="Direct link to What still requires a human" title="Direct link to What still requires a human" translate="no">​</a></h2>
 <p>This is the part worth being direct about: you cannot vibe code your way
 through a legacy containerisation.</p>
 <p>Legacy systems have accumulated tradeoffs that aren't visible in the code
@@ -607,7 +607,7 @@ knowledge there is.</p>
 are real, which "quick wins" are landmines with a friendly face — that's the
 work. AI lowers the cost of getting to the point where you can make those calls.
 It doesn't make the calls for you.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-practical-shape-of-it-now">The practical shape of it now<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#the-practical-shape-of-it-now" class="hash-link" aria-label="Direct link to The practical shape of it now" title="Direct link to The practical shape of it now" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-practical-shape-of-it-now">The practical shape of it now<a href="https://works-in-prod.github.io/journey-to-the-centre-of-the-stack/#the-practical-shape-of-it-now" class="hash-link" aria-label="Direct link to The practical shape of it now" title="Direct link to The practical shape of it now" translate="no">​</a></h2>
 <p>For what it's worth, here's roughly how I'd approach a legacy containerisation
 today, with AI tooling in the picture:</p>
 <p><strong>Discovery first.</strong> Ask the agent to map the application — what processes run,
@@ -635,7 +635,7 @@ but you need to know which areas matter enough to test.</p>
 container — a system library, an OCR engine, a local model — is infrastructure
 you're now responsible for. The Docling post on this blog exists because we
 learnt that lesson the long way.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-title-still-fits">The title still fits<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#the-title-still-fits" class="hash-link" aria-label="Direct link to The title still fits" title="Direct link to The title still fits" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-title-still-fits">The title still fits<a href="https://works-in-prod.github.io/journey-to-the-centre-of-the-stack/#the-title-still-fits" class="hash-link" aria-label="Direct link to The title still fits" title="Direct link to The title still fits" translate="no">​</a></h2>
 <p>The journey to the centre of the stack is still a journey. The technology has
 changed, the tooling has improved, and you have better company on the way down
 than you did five years ago. But the stack is still there, and the centre of
@@ -651,11 +651,11 @@ part that actually requires experience to get right.</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[JSON Web Tokens]]></title>
-        <id>https://codeeatcode.github.io/JSON-WEB-TOKEN/</id>
-        <link href="https://codeeatcode.github.io/JSON-WEB-TOKEN/"/>
+        <id>https://works-in-prod.github.io/JSON-WEB-TOKEN/</id>
+        <link href="https://works-in-prod.github.io/JSON-WEB-TOKEN/"/>
         <updated>2017-02-28T11:45:44.128Z</updated>
         <summary type="html"><![CDATA[Repost from https://medium.com/@ambersariya/jwt-json-web-token-cd90ef7a7a66]]></summary>
-        <content type="html"><![CDATA[<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-is-it">What is it?<a href="https://codeeatcode.github.io/JSON-WEB-TOKEN/#what-is-it" class="hash-link" aria-label="Direct link to What is it?" title="Direct link to What is it?" translate="no">​</a></h2>
+        <content type="html"><![CDATA[<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-is-it">What is it?<a href="https://works-in-prod.github.io/JSON-WEB-TOKEN/#what-is-it" class="hash-link" aria-label="Direct link to What is it?" title="Direct link to What is it?" translate="no">​</a></h2>
 <blockquote>
 <p><em>JSON Web Token (JWT) is a compact, URL-safe means of representing claims to be transferred between two parties. The claims in a JWT are encoded as a JSON object that is used as the payload of a JSON Web Signature (JWS) structure or as the plaintext of a JSON Web Encryption (JWE) structure, enabling the claims to be digitally signed or integrity protected with a Message Authentication Code (MAC) and/or encrypted.</em></p>
 </blockquote>
@@ -670,7 +670,7 @@ part that actually requires experience to get right.</p>
 <p><strong><em>Authorization</em></strong> <em>— Being granted access to resources</em></p>
 <p><strong><em>Token</em></strong> <em>— medium used to persist authentication and get authorization</em></p>
 </blockquote>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="so-what-does-it-look-like">So, what does It Look Like?<a href="https://codeeatcode.github.io/JSON-WEB-TOKEN/#so-what-does-it-look-like" class="hash-link" aria-label="Direct link to So, what does It Look Like?" title="Direct link to So, what does It Look Like?" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="so-what-does-it-look-like">So, what does It Look Like?<a href="https://works-in-prod.github.io/JSON-WEB-TOKEN/#so-what-does-it-look-like" class="hash-link" aria-label="Direct link to So, what does It Look Like?" title="Direct link to So, what does It Look Like?" translate="no">​</a></h2>
 <p>Well, it looks like another confusing looking string</p>
 <p>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ</p>
 <p>Upon closer inspections, you’ll see that this JWT consist of three parts separated by dots (<code>.</code>), which are:</p>
@@ -688,11 +688,11 @@ part that actually requires experience to get right.</p>
 </ul>
 <p>So, let’s break it down a little:</p>
 <div class="language-js codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-js codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token comment" style="color:#999988;font-style:italic">// header</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token comment" style="color:#999988;font-style:italic">// payload</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token punctuation" style="color:#393A34">.</span><span class="token property-access">eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token comment" style="color:#999988;font-style:italic">// signature</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token punctuation" style="color:#393A34">.</span><span class="token property-access maybe-class-name">TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ</span><br></div></code></pre></div></div>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="header">Header<a href="https://codeeatcode.github.io/JSON-WEB-TOKEN/#header" class="hash-link" aria-label="Direct link to Header" title="Direct link to Header" translate="no">​</a></h3>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="header">Header<a href="https://works-in-prod.github.io/JSON-WEB-TOKEN/#header" class="hash-link" aria-label="Direct link to Header" title="Direct link to Header" translate="no">​</a></h3>
 <div class="language-json codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockTitle_OeMC">HS256 indicates that this token is signed using HMAC-SHA256.</div><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-json codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token property" style="color:#36acaa">"alg"</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"HS256"</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token property" style="color:#36acaa">"typ"</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"JWT"</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">}</span><br></div></code></pre></div></div>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="claimspayload">Claims/Payload<a href="https://codeeatcode.github.io/JSON-WEB-TOKEN/#claimspayload" class="hash-link" aria-label="Direct link to Claims/Payload" title="Direct link to Claims/Payload" translate="no">​</a></h3>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="claimspayload">Claims/Payload<a href="https://works-in-prod.github.io/JSON-WEB-TOKEN/#claimspayload" class="hash-link" aria-label="Direct link to Claims/Payload" title="Direct link to Claims/Payload" translate="no">​</a></h3>
 <div class="language-json codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockTitle_OeMC">The payload contains the claims that we wish to make</div><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-json codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"> </span><span class="token property" style="color:#36acaa">"sub"</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"1234567890"</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token property" style="color:#36acaa">"name"</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"John Doe"</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token property" style="color:#36acaa">"admin"</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token boolean" style="color:#36acaa">true</span><span class="token punctuation" style="color:#393A34">}</span><br></div></code></pre></div></div>
-<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="signature">Signature<a href="https://codeeatcode.github.io/JSON-WEB-TOKEN/#signature" class="hash-link" aria-label="Direct link to Signature" title="Direct link to Signature" translate="no">​</a></h3>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="signature">Signature<a href="https://works-in-prod.github.io/JSON-WEB-TOKEN/#signature" class="hash-link" aria-label="Direct link to Signature" title="Direct link to Signature" translate="no">​</a></h3>
 <p>We use the following formula to calcalate signature</p>
 <div class="language-js codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-js codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token constant" style="color:#36acaa">HMACSHA256</span><span class="token punctuation" style="color:#393A34">(</span><span class="token function" style="color:#d73a49">encodeBase64</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">header</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">+</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"."</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">+</span><span class="token plain"> </span><span class="token function" style="color:#d73a49">encodeBase64</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">payload</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> secret</span><span class="token punctuation" style="color:#393A34">)</span><br></div></code></pre></div></div>
 <p>This then gives us something like:</p>
@@ -706,7 +706,7 @@ part that actually requires experience to get right.</p>
 <strong>iat</strong>: issued at is a unix timestamp e.g. 1488192525
 <strong>jti</strong>: JWT ID unique id. This can be used to prevent a token from being replayed e.g. "xa443D"</p>
 <p>The key names are case sensitive and have been kept small to keep the JSON payload compact.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-does-the-authentication-flow-work">How does the Authentication Flow work?<a href="https://codeeatcode.github.io/JSON-WEB-TOKEN/#how-does-the-authentication-flow-work" class="hash-link" aria-label="Direct link to How does the Authentication Flow work?" title="Direct link to How does the Authentication Flow work?" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-does-the-authentication-flow-work">How does the Authentication Flow work?<a href="https://works-in-prod.github.io/JSON-WEB-TOKEN/#how-does-the-authentication-flow-work" class="hash-link" aria-label="Direct link to How does the Authentication Flow work?" title="Direct link to How does the Authentication Flow work?" translate="no">​</a></h2>
 <p>In authentication, when the user successfully logs in using their credentials, a JSON Web Token will be returned and must be saved locally (typically in local storage, but cookies can be also used), instead of the traditional approach of creating a session in the server and returning a cookie.</p>
 <div class="language-json codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockTitle_OeMC">POST /login</div><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-json codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    email</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"username@example-domain.com"</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    password</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"5£cUr3PA$$W0rd!"</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">}</span><br></div></code></pre></div></div>
 <div class="language-json codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockTitle_OeMC">Response 201 Created</div><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-json codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    token</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">}</span><br></div></code></pre></div></div>
@@ -720,23 +720,23 @@ part that actually requires experience to get right.</p>
 <li class="">client allowed? aud- expected issuer? iss- can this token be used? nbf</li>
 </ul>
 <p>As JWTs are self-contained, all the necessary information is there, reducing the need of going back and forward to the database. This allows us to fully rely on data APIs that are stateless and even make requests to downstream services. It doesn’t matter which domains are serving the APIs, as Cross-Origin Resource Sharing (CORS) won’t be an issue as it doesn’t use cookies.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="making-a-case-for-jwt">Making a case for JWT<a href="https://codeeatcode.github.io/JSON-WEB-TOKEN/#making-a-case-for-jwt" class="hash-link" aria-label="Direct link to Making a case for JWT" title="Direct link to Making a case for JWT" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="making-a-case-for-jwt">Making a case for JWT<a href="https://works-in-prod.github.io/JSON-WEB-TOKEN/#making-a-case-for-jwt" class="hash-link" aria-label="Direct link to Making a case for JWT" title="Direct link to Making a case for JWT" translate="no">​</a></h2>
 <ul>
 <li class=""><strong>Portability</strong>: they work across many different platforms, having implementations in various programming languages.</li>
 <li class=""><strong>Compact</strong>: Because of its size, it can be sent through an URL, POST parameter, or inside an HTTP header. Additionally, due to its size its transmission is fast.</li>
 <li class=""><strong>Self-contained:</strong> The payload contains all the required information about the user, to avoid querying the database more than once.</li>
 <li class=""><strong>Control:</strong> Allows fine grained control over types of permissions. You can specify detailed access control information within <em>the token itself</em> as part of its payload. For instance, in the same way that you can create AWS security policies with very specific permissions, you can limit the token to only give read/write access to a single resource. In contrast, API Keys tend to have a coarse all-or-nothing access.</li>
 </ul>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="problems-with-jwt">Problems with JWT<a href="https://codeeatcode.github.io/JSON-WEB-TOKEN/#problems-with-jwt" class="hash-link" aria-label="Direct link to Problems with JWT" title="Direct link to Problems with JWT" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="problems-with-jwt">Problems with JWT<a href="https://works-in-prod.github.io/JSON-WEB-TOKEN/#problems-with-jwt" class="hash-link" aria-label="Direct link to Problems with JWT" title="Direct link to Problems with JWT" translate="no">​</a></h2>
 <ul>
 <li class="">Cannot be used in place of Sessions &amp; Cookies. If we want to use them in such a manner, then stick with Sessions and Cookies.</li>
 <li class="">Data goes stale. For instance, an admin with a JWT token has had their access revoked but the token will keep on working because it was generated and verified correctly with the secret key.</li>
 <li class="">There’s a critical vulnerability when using Asymmetric keys. The attackers know which algorithm was used to generate the token. This is open to abuse from the attackers. The server should already know which algorithm was used to generate/verify the integrity of this token.</li>
 </ul>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="conclusion">Conclusion<a href="https://codeeatcode.github.io/JSON-WEB-TOKEN/#conclusion" class="hash-link" aria-label="Direct link to Conclusion" title="Direct link to Conclusion" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="conclusion">Conclusion<a href="https://works-in-prod.github.io/JSON-WEB-TOKEN/#conclusion" class="hash-link" aria-label="Direct link to Conclusion" title="Direct link to Conclusion" translate="no">​</a></h2>
 <p>JSON Web Tokens offer many advantages but not without having some drawbacks. If you work on an extremely large-scale application, sessions could be the appropriate choice. It is completely reasonable to combine sessions and JWT — they each have their own purpose, and sometimes you need both. Just don’t use JWT for <em>persistent</em> data.</p>
 <hr>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="further-reading">Further Reading<a href="https://codeeatcode.github.io/JSON-WEB-TOKEN/#further-reading" class="hash-link" aria-label="Direct link to Further Reading" title="Direct link to Further Reading" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="further-reading">Further Reading<a href="https://works-in-prod.github.io/JSON-WEB-TOKEN/#further-reading" class="hash-link" aria-label="Direct link to Further Reading" title="Direct link to Further Reading" translate="no">​</a></h2>
 <p>Thanks to the following:</p>
 <ul>
 <li class=""><a href="https://tools.ietf.org/html/rfc7519" target="_blank" rel="noopener noreferrer" title="https://tools.ietf.org/html/rfc7519" class="">https://tools.ietf.org/html/rfc7519</a></li>
@@ -753,8 +753,8 @@ part that actually requires experience to get right.</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Blogging Like a Hacker]]></title>
-        <id>https://codeeatcode.github.io/blogging-like-a-hacker/</id>
-        <link href="https://codeeatcode.github.io/blogging-like-a-hacker/"/>
+        <id>https://works-in-prod.github.io/blogging-like-a-hacker/</id>
+        <link href="https://works-in-prod.github.io/blogging-like-a-hacker/"/>
         <updated>2017-01-29T02:01:12.000Z</updated>
         <summary type="html"><![CDATA[First post]]></summary>
         <content type="html"><![CDATA[<p>Hello World <!-- -->🌏</p>
