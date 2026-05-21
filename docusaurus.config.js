@@ -50,7 +50,7 @@ const config = {
     ],
 
     themeConfig:
-        /** @type {import('@docusaurus/theme-classic').ThemeConfig} */
+        /** @type {import('@docusaurus/types').ThemeConfig} */
         ({
             metadata: [
                 {
