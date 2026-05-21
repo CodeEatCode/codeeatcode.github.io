@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkcodeeatcode_github_io=globalThis.webpackChunkcodeeatcode_github_io||[]).push([[7245],{4579(e){e.exports=JSON.parse('{"metadata":{"permalink":"/page/2","page":2,"postsPerPage":10,"totalPages":2,"totalCount":12,"previousPage":"/","blogDescription":"Blog","blogTitle":"Blog"}}')}}]);

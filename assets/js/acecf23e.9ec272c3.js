@@ -1,1 +1,0 @@
-"use strict";(globalThis.webpackChunkcodeeatcode_github_io=globalThis.webpackChunkcodeeatcode_github_io||[]).push([[903],{1912(o){o.exports=JSON.parse('{"blogBasePath":"/","blogTitle":"Blog","authorsListPath":"/authors"}')}}]);
