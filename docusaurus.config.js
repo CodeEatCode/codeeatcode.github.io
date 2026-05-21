@@ -8,7 +8,7 @@ module.exports = async function () {
     const remarkD2 = (await import("remark-d2")).default;
 
     return {
-        title: "Mostly Works",
+        title: "Works in Prod",
         tagline: "Vibe-posted. Fact-checked. Mostly.",
         url: "https://works-in-prod.github.io",
         baseUrl: "/",
@@ -76,9 +76,9 @@ module.exports = async function () {
                     respectPrefersColorScheme: true,
                 },
                 navbar: {
-                    title: "Mostly Works",
+                    title: "Works in Prod",
                     logo: {
-                        alt: "Mostly Works",
+                        alt: "Works in Prod",
                         src: "img/logo.gif",
                     },
                     items: [
@@ -116,7 +116,7 @@ module.exports = async function () {
                             ],
                         },
                     ],
-                    copyright: `Copyright © ${new Date().getFullYear()} Mostly Works`,
+                    copyright: `Copyright © ${new Date().getFullYear()} Works in Prod`,
                 },
                 prism: {
                     theme: prismThemes.github,
