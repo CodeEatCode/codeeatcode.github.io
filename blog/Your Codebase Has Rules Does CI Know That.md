@@ -18,12 +18,12 @@ That's the drift I'm talking about. Not bugs. Not broken tests. Just two people 
 
 It happens a lot when you mix software engineers and AI engineers. Software engineers have typically spent years worrying about layered architecture, separation of concerns, not importing your database layer into your API handler — all the stuff that feels obvious once it's been drilled into you by a senior who winced at your first PR. AI engineers have spent years writing scripts, notebooks, and pipelines that get the job done. Both are legitimate ways to work. They're just not the same way.
 
-The answer, at least in part, is [pytest-arch](https://github.com/jwbargsten/pytest-arch). It lets you write tests that assert structural rules about your codebase. Not "does this function return the right value" — more like "nothing in the API layer should reach directly into the database layer." Rules you'd normally write in a wiki nobody reads, enforced as a test that CI will actually fail on.
+The answer, at least in part, is [pytest-archon](https://github.com/jwbargsten/pytest-archonon). It lets you write tests that assert structural rules about your codebase. Not "does this function return the right value" — more like "nothing in the API layer should reach directly into the database layer." Rules you'd normally write in a wiki nobody reads, enforced as a test that CI will actually fail on.
 
 Here's what that looks like:
 
 ```python
-from pytest_arch import archrule
+from pytest_archon import archrule
 
 def test_api_does_not_import_database():
     (
