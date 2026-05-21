@@ -59,11 +59,11 @@ module.exports = async function () {
                     },
                     {
                         name: "title",
-                        content: "Code Eat Code",
+                        content: "Works in Prod",
                     },
                     {
                         name: "description",
-                        content: "It's a Code eat Code world",
+                        content: "Vibe-posted. Fact-checked. Mostly.",
                     },
                     {
                         name: "google-site-verification",
@@ -97,7 +97,7 @@ module.exports = async function () {
                                     label: "GitHub Personal",
                                 },
                                 {
-                                    href: "https://github.com/codeeatcode",
+                                    href: "https://github.com/works-in-prod",
                                     label: "GitHub Org",
                                 },
                             ],
