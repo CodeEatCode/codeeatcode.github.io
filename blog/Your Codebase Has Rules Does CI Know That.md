@@ -1,7 +1,7 @@
 ---
 title: "Your Codebase Has Rules. Does CI Know That?"
 slug: your-codebase-has-rules-does-ci-know-that
-date: 2026-05-21T00:00:00.000Z
+date: 2026-05-21T06:00:00.000Z
 authors: [ambersariya]
 tags:
   - python

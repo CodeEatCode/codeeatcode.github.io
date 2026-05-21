@@ -1,7 +1,7 @@
 ---
 title: TDD Was Solving the Agent Problem Before Agents Existed
 slug: tdd-was-solving-the-agent-problem-before-agents-existed
-date: 2026-05-21T00:00:00.000Z
+date: 2026-05-21T04:00:00.000Z
 authors: [ambersariya]
 tags:
   - ai-engineering

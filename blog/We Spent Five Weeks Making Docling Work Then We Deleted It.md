@@ -1,7 +1,7 @@
 ---
 title: We Spent Five Weeks Making Docling Work. Then We Deleted It.
 slug: we-spent-five-weeks-making-docling-work-then-we-deleted-it
-date: 2026-05-21T00:00:00.000Z
+date: 2026-05-21T08:00:00.000Z
 authors: [ambersariya]
 tags:
   - ai-engineering

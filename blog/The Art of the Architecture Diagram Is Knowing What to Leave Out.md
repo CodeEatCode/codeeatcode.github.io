@@ -1,7 +1,7 @@
 ---
 title: The Art of the Architecture Diagram Is Knowing What to Leave Out
 slug: the-art-of-the-architecture-diagram-is-knowing-what-to-leave-out
-date: 2026-05-21T00:00:00.000Z
+date: 2026-05-21T07:00:00.000Z
 authors: [ambersariya]
 tags:
   - architecture

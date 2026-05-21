@@ -1,7 +1,7 @@
 ---
 title: Stop Arguing With Your Terminal About Python Versions
 slug: stop-arguing-with-your-terminal-about-python-versions
-date: 2026-05-21T00:00:00.000Z
+date: 2026-05-21T01:00:00.000Z
 authors: [ambersariya]
 tags:
   - tooling

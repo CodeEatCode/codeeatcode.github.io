@@ -1,7 +1,7 @@
 ---
 title: You Can't Debug What Bedrock Swallowed
 slug: you-cant-debug-what-bedrock-swallowed
-date: 2026-05-21T00:00:00.000Z
+date: 2026-05-21T05:00:00.000Z
 authors: [ambersariya]
 tags:
   - ai-engineering

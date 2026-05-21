@@ -1,7 +1,7 @@
 ---
 title: The Metric Your Users Feel Before You Measure It
 slug: the-metric-your-users-feel-before-you-measure-it
-date: 2026-05-21T00:00:00.000Z
+date: 2026-05-21T02:00:00.000Z
 authors: [ambersariya]
 tags:
   - ai-engineering

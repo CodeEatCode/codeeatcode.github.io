@@ -1,7 +1,7 @@
 ---
 title: The Blockers Don't Care That You're Using AI
 slug: the-blockers-dont-care-that-youre-using-ai
-date: 2026-05-21T00:00:00.000Z
+date: 2026-05-21T03:00:00.000Z
 authors: [ambersariya]
 tags:
   - ai-engineering

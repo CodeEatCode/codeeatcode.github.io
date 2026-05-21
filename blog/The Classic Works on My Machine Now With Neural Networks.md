@@ -1,7 +1,7 @@
 ---
 title: "The Classic 'Works on My Machine' — Now With Neural Networks"
 slug: the-classic-works-on-my-machine-now-with-neural-networks
-date: 2026-05-21T00:00:00.000Z
+date: 2026-05-21T09:00:00.000Z
 authors: [ambersariya]
 tags:
   - ai-engineering
