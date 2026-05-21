@@ -19,6 +19,7 @@ on remembered local machine steps.
 - Discoverable tasks
 - Consistent commands for humans, CI, and agents
 - Custom tooling build steps behind stable project commands
+- Chezmoi + mise pairing for machine bootstrap
 
 ## Avoid
 
