@@ -17,9 +17,7 @@
             <content:encoded><![CDATA[<p>I built the evaluation harness first. Ten libraries, same documents, same metrics, timestamped results, HTML report. Proper engineering. And I still ended up in a five-week infrastructure nightmare.</p>
 <p>This is about why.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-requirements-were-genuinely-hard">The requirements were genuinely hard<a href="https://works-in-prod.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-requirements-were-genuinely-hard" class="hash-link" aria-label="Direct link to The requirements were genuinely hard" title="Direct link to The requirements were genuinely hard" translate="no">​</a></h2>
-<p>It's easy to read the <a class="" href="https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/">Docling post-mortem</a>
-on this blog and conclude that we reached for the wrong tool. But the
-requirements weren't trivial, and I want to be honest about that.</p>
+<p>It's easy to read the <a class="" href="https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/">Docling post-mortem</a> on this blog and conclude that we reached for the wrong tool. But the requirements weren't trivial, and I want to be honest about that.</p>
 <p>We needed a parser that could handle:</p>
 <ul>
 <li class=""><strong>Rasterised PDFs</strong> — scanned documents with no embedded text</li>
@@ -28,63 +26,29 @@ requirements weren't trivial, and I want to be honest about that.</p>
 <li class=""><strong>Layout detection</strong> — understanding headings, sections, figures as distinct elements</li>
 <li class=""><strong>Picture descriptions</strong> — extracting meaning from embedded images</li>
 </ul>
-<p>Most PDF parsing libraries handle one or two of these. The lightweight ones
-— pdfplumber, pypdf, PyMuPDF — are excellent for native digital PDFs with
-clean text, but they're not designed for the document complexity we were
-dealing with. We needed something that understood documents as structured
-objects, not as streams of text.</p>
+<p>Most PDF parsing libraries handle one or two of these. The lightweight ones — pdfplumber, pypdf, PyMuPDF — are excellent for native digital PDFs with clean text, but they're not designed for the document complexity we were dealing with. We needed something that understood documents as structured objects, not as streams of text.</p>
 <p>Docling handled all of it.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-harness-said-so">The harness said so<a href="https://works-in-prod.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-harness-said-so" class="hash-link" aria-label="Direct link to The harness said so" title="Direct link to The harness said so" translate="no">​</a></h2>
-<p>I built a comparison harness before committing to anything — ten parsers, a
-standardised subprocess-based runner, isolated output per library, metrics
-covering wall-clock time, peak memory, word counts, table detection, heading
-extraction. You can find it here:
+<p>I built a comparison harness before committing to anything — ten parsers, a standardised subprocess-based runner, isolated output per library, metrics covering wall-clock time, peak memory, word counts, table detection, heading extraction. You can find it here:
 <a href="https://github.com/ambersariya/pdf-parsing-comparison" target="_blank" rel="noopener noreferrer" class="">github.com/ambersariya/pdf-parsing-comparison</a>.
 <em>(I was fairly pleased with how it turned out.)</em></p>
-<p>I ran it against a set of representative documents. Docling won on every
-qualitative dimension that mattered: table structure, merged cells, layout
-comprehension, image handling. It wasn't close. The other libraries produced
-flat text extractions. Docling produced structured, readable Markdown that
-actually reflected the document's intent; the caveat was that it was a memory hog.</p>
+<p>I ran it against a set of representative documents. Docling won on every qualitative dimension that mattered: table structure, merged cells, layout comprehension, image handling. It wasn't close. The other libraries produced flat text extractions. Docling produced structured, readable Markdown that actually reflected the document's intent; the caveat was that it was a memory hog.</p>
 <p>The harness was doing its job. The numbers were real.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-problem-was-the-machine">The problem was the machine<a href="https://works-in-prod.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-problem-was-the-machine" class="hash-link" aria-label="Direct link to The problem was the machine" title="Direct link to The problem was the machine" translate="no">​</a></h2>
 <p>I ran all of this on an M4 Pro MacBook. Apple Silicon with MPS acceleration — for PyTorch workloads, that's not far off GPU performance. Docling's layout models, its table structure analysis, its OCR pipeline — all of it ran fast. Fast enough that performance never became a question worth asking.</p>
 <p>Production ran on CPU-based Kubernetes nodes.</p>
-<p>The gap between those two environments for an ML inference workload is not
-a percentage difference. It's a different order of magnitude. What took
-seconds on the M4 took minutes on a CPU pod. So much that the ALB on AWS cried and killed my requests. The OMP thread throttling, the concurrency tuning, the performance whack-a-mole documented in the post-mortem — all of it was a consequence of running local ML inference on hardware it wasn't designed for.</p>
+<p>The gap between those two environments for an ML inference workload is not a percentage difference. It's a different order of magnitude. What took seconds on the M4 took minutes on a CPU pod. So much that the ALB on AWS cried and killed my requests. The OMP thread throttling, the concurrency tuning, the performance whack-a-mole documented in the post-mortem — all of it was a consequence of running local ML inference on hardware it wasn't designed for.</p>
 <p>The harness was correct. The harness environment was not representative.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-pressure-factor">The pressure factor<a href="https://works-in-prod.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-pressure-factor" class="hash-link" aria-label="Direct link to The pressure factor" title="Direct link to The pressure factor" translate="no">​</a></h2>
-<p>There's a human element worth naming too. We were under pressure to find a
-solution that met those qualitative requirements, and Docling met them
-convincingly. When you're looking for something specific and you find it, the
-instinct is to commit — not to ask what happens when you move it to a
-different machine.</p>
-<p>That instinct is understandable. It's also exactly when the infrastructure
-question matters most. The harder the requirements, the more likely you're
-reaching for a heavy tool — and heavy tools are the ones most sensitive to
-the hardware they run on.</p>
+<p>There's a human element worth naming too. We were under pressure to find a solution that met those qualitative requirements, and Docling met them convincingly. When you're looking for something specific and you find it, the instinct is to commit — not to ask what happens when you move it to a different machine.</p>
+<p>That instinct is understandable. It's also exactly when the infrastructure question matters most. The harder the requirements, the more likely you're reaching for a heavy tool — and heavy tools are the ones most sensitive to the hardware they run on.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-the-evaluation-was-missing">What the evaluation was missing<a href="https://works-in-prod.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#what-the-evaluation-was-missing" class="hash-link" aria-label="Direct link to What the evaluation was missing" title="Direct link to What the evaluation was missing" translate="no">​</a></h2>
-<p>In hindsight, the harness needed one more dimension: a production-equivalent
-environment. Running the same comparison on a CPU-constrained container would
-have surfaced the performance characteristics immediately. The qualitative
-winners would have been the same. The decision might not have been.</p>
-<p>For ML-heavy libraries specifically, the evaluation environment is part of the
-evaluation. A benchmark on Apple Silicon is not a benchmark for a CPU pod.
-That sounds obvious written down. It was not obvious in the moment.</p>
-<p>The other thing worth checking earlier: whether a managed API could meet the
-same qualitative bar. In our case, Claude via Bedrock handled rasterised pages,
-tables, merged cells, layout, and picture descriptions — via the same vision
-pipeline we use for everything else. No local models. No infrastructure. We
-didn't know that when we started, but we could have found out faster.</p>
+<p>In hindsight, the harness needed one more dimension: a production-equivalent environment. Running the same comparison on a CPU-constrained container would have surfaced the performance characteristics immediately. The qualitative winners would have been the same. The decision might not have been.</p>
+<p>For ML-heavy libraries specifically, the evaluation environment is part of the evaluation. A benchmark on Apple Silicon is not a benchmark for a CPU pod. That sounds obvious written down. It was not obvious in the moment.</p>
+<p>The other thing worth checking earlier: whether a managed API could meet the same qualitative bar. In our case, Claude via Bedrock handled rasterised pages, tables, merged cells, layout, and picture descriptions — via the same vision pipeline we use for everything else. No local models. No infrastructure. We didn't know that when we started, but we could have found out faster.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-harness-is-still-worth-building">The harness is still worth building<a href="https://works-in-prod.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-harness-is-still-worth-building" class="hash-link" aria-label="Direct link to The harness is still worth building" title="Direct link to The harness is still worth building" translate="no">​</a></h2>
-<p>None of this is an argument against evaluation harnesses. Building one before
-committing to a library is still the right instinct — it forces you to define
-what "good" means before you've seen any results, and it makes the comparison
-repeatable and shareable.</p>
-<p>The lesson is narrower: for any library that runs local inference, add hardware
-parity to the checklist. Run it on something that resembles production before
-you wire it into the Dockerfile.</p>
+<p>None of this is an argument against evaluation harnesses. Building one before committing to a library is still the right instinct — it forces you to define what "good" means before you've seen any results, and it makes the comparison repeatable and shareable.</p>
+<p>The lesson is narrower: for any library that runs local inference, add hardware parity to the checklist. Run it on something that resembles production before you wire it into the Dockerfile.</p>
 <p>The harness told the truth. We just didn't ask it the right question.</p>]]></content:encoded>
             <category>ai-engineering</category>
             <category>python</category>
@@ -97,20 +61,12 @@ you wire it into the Dockerfile.</p>
             <link>https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/</link>
             <guid>https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/</guid>
             <pubDate>Thu, 21 May 2026 08:00:00 GMT</pubDate>
-            <description><![CDATA[This is a post-mortem on five weeks of infrastructure work that ended with]]></description>
-            <content:encoded><![CDATA[<p>This is a post-mortem on five weeks of infrastructure work that ended with
-<code>git rm</code> and 1,452 lines deleted from the lockfile alone.</p>
-<p>The library in question is <a href="https://github.com/DS4SD/docling" target="_blank" rel="noopener noreferrer" class="">Docling</a>. It's
-a capable open-source document parser from IBM Research — handles PDFs,
-tables, figures, DOCX, the lot. On paper it looked like exactly what we needed.
-In practice it turned out to be a small ML platform hiding inside a Python
-package, and we didn't fully appreciate that distinction until we were already
-three acts deep.</p>
+            <description><![CDATA[This is a post-mortem on five weeks of infrastructure work that ended with git rm and 1,452 lines deleted from the lockfile alone.]]></description>
+            <content:encoded><![CDATA[<p>This is a post-mortem on five weeks of infrastructure work that ended with <code>git rm</code> and 1,452 lines deleted from the lockfile alone.</p>
+<p>The library in question is <a href="https://github.com/DS4SD/docling" target="_blank" rel="noopener noreferrer" class="">Docling</a>. It's a capable open-source document parser from IBM Research — handles PDFs, tables, figures, DOCX, the lot. On paper it looked like exactly what we needed. In practice it turned out to be a small ML platform hiding inside a Python package, and we didn't fully appreciate that distinction until we were already three acts deep.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="act-i-the-optimistic-beginning">Act I: The Optimistic Beginning<a href="https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#act-i-the-optimistic-beginning" class="hash-link" aria-label="Direct link to Act I: The Optimistic Beginning" title="Direct link to Act I: The Optimistic Beginning" translate="no">​</a></h2>
-<p>The first pull request adding Docling was merged and reverted on the same day.
-A flag from the universe that was politely ignored.</p>
-<p>A couple of days later it was back in with the proper integration. The
-complications started immediately:</p>
+<p>The first pull request adding Docling was merged and reverted on the same day. A flag from the universe that was politely ignored.</p>
+<p>A couple of days later it was back in with the proper integration. The complications started immediately:</p>
 <ul>
 <li class="">A Docker entrypoint script was needed to pre-download HuggingFace models at
 container startup</li>
@@ -123,17 +79,11 @@ separate fixes for what should have been a config value</li>
 <li class="">EasyOCR kept sneaking back into the model list and had to be explicitly
 excluded every time</li>
 </ul>
-<p>None of this is catastrophic. But it's the kind of friction that tells you
-something about what you're dealing with.</p>
+<p>None of this is catastrophic. But it's the kind of friction that tells you something about what you're dealing with.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="act-ii-the-model-infrastructure-tax">Act II: The Model Infrastructure Tax<a href="https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#act-ii-the-model-infrastructure-tax" class="hash-link" aria-label="Direct link to Act II: The Model Infrastructure Tax" title="Direct link to Act II: The Model Infrastructure Tax" translate="no">​</a></h2>
-<p>Because Docling models can't be downloaded at cold-start in production — far too
-slow (EKS health checks started failing almost immediately) — a CI/CD model sync workflow was introduced to pre-bake them into the Docker image. The container ballooned from a small fish to a blowfish, which led to caching the models in S3 with an InitContainer. This became its own small project: a GitHub Actions workflow to sync models, config to point Docling at the S3 cache path, and downstream fixes when the sync workflow itself had bugs.</p>
-<p>The application now had an out-of-band model synchronisation pipeline that had
-to be kept in step with the Docling version in <code>pyproject.toml</code>. Updating the
-OCR engine or parser models meant updating the Dockerfile, updating the sync
-workflow, and triggering the S3 pipeline before deploy — in that order.</p>
-<p>This is the moment where "we added a parsing library" became "we are now
-operating a small model registry."</p>
+<p>Because Docling models can't be downloaded at cold-start in production — far too slow (EKS health checks started failing almost immediately) — a CI/CD model sync workflow was introduced to pre-bake them into the Docker image. The container ballooned from a small fish to a blowfish, which led to caching the models in S3 with an InitContainer. This became its own small project: a GitHub Actions workflow to sync models, config to point Docling at the S3 cache path, and downstream fixes when the sync workflow itself had bugs.</p>
+<p>The application now had an out-of-band model synchronisation pipeline that had to be kept in step with the Docling version in <code>pyproject.toml</code>. Updating the OCR engine or parser models meant updating the Dockerfile, updating the sync workflow, and triggering the S3 pipeline before deploy — in that order.</p>
+<p>This is the moment where "we added a parsing library" became "we are now operating a small model registry."</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="act-iii-the-performance-whack-a-mole">Act III: The Performance Whack-a-Mole<a href="https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#act-iii-the-performance-whack-a-mole" class="hash-link" aria-label="Direct link to Act III: The Performance Whack-a-Mole" title="Direct link to Act III: The Performance Whack-a-Mole" translate="no">​</a></h2>
 <ul>
 <li class="">OMP thread count reduced from 4 to 2 because Docling was spawning more CPU
@@ -146,13 +96,9 @@ the model sync workflow and the Docker defaults</li>
 <li class="">OCR skipped entirely for native digital PDFs — meaning Docling's headline
 feature wasn't being used for the most common input type</li>
 </ul>
-<p>On the same day as that last round of fixes, a VLM-based parser was added and
-validated in a few hours. It used Bedrock's document API directly. No local
-models. No thread budget. Just an API call.</p>
+<p>On the same day as that last round of fixes, a VLM-based parser was added and validated in a few hours. It used Bedrock's document API directly. No local models. No thread budget. Just an API call.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="act-iv-the-quiet-betrayal">Act IV: The Quiet Betrayal<a href="https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#act-iv-the-quiet-betrayal" class="hash-link" aria-label="Direct link to Act IV: The Quiet Betrayal" title="Direct link to Act IV: The Quiet Betrayal" translate="no">​</a></h2>
-<p>A config change silently disabled Docling routing and enabled the VLM parsers
-by default. Docling was still in the codebase, still in the Docker image, still
-pulling in Torch and Tesseract and RapidOCR and a full HuggingFace model cache.</p>
+<p>A config change silently disabled Docling routing and enabled the VLM parsers by default. Docling was still in the codebase, still in the Docker image, still pulling in Torch and Tesseract and RapidOCR and a full HuggingFace model cache.</p>
 <p>It was handling zero traffic.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="act-v-the-purge">Act V: The Purge<a href="https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#act-v-the-purge" class="hash-link" aria-label="Direct link to Act V: The Purge" title="Direct link to Act V: The Purge" translate="no">​</a></h2>
 <p>Gone. All of it.</p>
@@ -167,43 +113,16 @@ pulling in Torch and Tesseract and RapidOCR and a full HuggingFace model cache.<
 <p>1,452 lines deleted from <code>uv.lock</code> alone.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-replaced-it">What replaced it<a href="https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#what-replaced-it" class="hash-link" aria-label="Direct link to What replaced it" title="Direct link to What replaced it" translate="no">​</a></h2>
 <p>Two parsers, one fallback chain, zero local ML models.</p>
-<p>The primary path sends the raw document bytes directly to Bedrock as a document
-content block — one API call, no pre-processing. Claude handles layout, tables,
-and embedded images natively. The only constraint is an undocumented ~4.5 MB
-limit on document blocks; files over that automatically fall through to the
-fallback.</p>
-<p>The fallback rasterises each page to an image using <code>pypdfium2</code> and sends them
-to Bedrock vision in parallel. DOCX files go through LibreOffice headless first
-to become a PDF, then hit the same rasterise-and-describe path.</p>
+<p>The primary path sends the raw document bytes directly to Bedrock as a document content block — one API call, no pre-processing. Claude handles layout, tables, and embedded images natively. The only constraint is an undocumented ~4.5 MB limit on document blocks; files over that automatically fall through to the fallback.</p>
+<p>The fallback rasterises each page to an image using <code>pypdfium2</code> and sends them to Bedrock vision in parallel. DOCX files go through LibreOffice headless first to become a PDF, then hit the same rasterise-and-describe path.</p>
 <p>The comparison:</p>
 <table><thead><tr><th>Concern</th><th>Docling</th><th>Now</th></tr></thead><tbody><tr><td>PDF text extraction</td><td>Torch + Tesseract + layout models</td><td>Bedrock document block</td></tr><tr><td>Tables</td><td>Docling HTML table mode</td><td>Claude extracts to HTML natively</td></tr><tr><td>Images / figures</td><td>SmolVLM locally</td><td>Bedrock vision per page</td></tr><tr><td>DOCX</td><td>pydocx parser</td><td>LibreOffice → PDF → same VLM path</td></tr><tr><td>Dependencies</td><td>Torch, Tesseract, RapidOCR, OpenCV, HF models</td><td>pypdfium2, LibreOffice (system)</td></tr><tr><td>Infrastructure</td><td>S3 model sync pipeline, entrypoint bootstrap</td><td>Nothing — models live in Bedrock</td></tr></tbody></table>
-<p>The entire local inference stack is gone. Parsing is now API calls with a
-lightweight rasterisation step as fallback for large files.</p>
+<p>The entire local inference stack is gone. Parsing is now API calls with a lightweight rasterisation step as fallback for large files.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-lesson-if-there-is-one">The lesson, if there is one<a href="https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#the-lesson-if-there-is-one" class="hash-link" aria-label="Direct link to The lesson, if there is one" title="Direct link to The lesson, if there is one" translate="no">​</a></h2>
-<p>Docling required bundling a mini ML stack — Torch, Tesseract, RapidOCR,
-HuggingFace models — plus a dedicated S3 sync pipeline and several rounds of
-thread-count tuning, to do PDF parsing that a Bedrock API call does better with
-zero infrastructure overhead and a thirty-line parser class.</p>
-<p>In hindsight the clue was in the very first day: merged and reverted before
-anyone had even run it in a container. The library wasn't broken — it did what
-it said. The mistake was not recognising early enough that we were running local
-inference on CPU-based nodes. Docling's layout models and OCR pipeline are
-designed for GPU workloads — on CPU they're slow by nature, not by
-misconfiguration. No amount of OMP thread tuning was going to fix that.
-We gave it a Kubernetes pod with a CPU limit and spent three weeks wondering
-why it was slow, when the answer was baked into the infrastructure choice
-from the start.</p>
-<p>To be clear: Docling is a capable library. On GPU-backed infrastructure, with
-a proper model serving layer, it likely performs well — and there are
-self-hosted or air-gapped contexts where a managed API isn't an option and
-something like Docling is exactly the right tool. We may also have missed
-configuration options that would have helped. It's entirely possible that
-with different infrastructure or more time, we'd have got there.</p>
-<p>But that's the point. The question isn't whether a tool works in the right
-environment — it's whether your environment is the right one for it. Running
-local inference on CPU nodes in an application service, when a managed API
-exists that does the job with less ops surface, is a mismatch. Not a failure
-of the tool. A failure of context.</p>
+<p>Docling required bundling a mini ML stack — Torch, Tesseract, RapidOCR, HuggingFace models — plus a dedicated S3 sync pipeline and several rounds of thread-count tuning, to do PDF parsing that a Bedrock API call does better with zero infrastructure overhead and a thirty-line parser class.</p>
+<p>In hindsight the clue was in the very first day: merged and reverted before anyone had even run it in a container. The library wasn't broken — it did what it said. The mistake was not recognising early enough that we were running local inference on CPU-based nodes. Docling's layout models and OCR pipeline are designed for GPU workloads — on CPU they're slow by nature, not by misconfiguration. No amount of OMP thread tuning was going to fix that. We gave it a Kubernetes pod with a CPU limit and spent three weeks wondering why it was slow, when the answer was baked into the infrastructure choice from the start.</p>
+<p>To be clear: Docling is a capable library. On GPU-backed infrastructure, with a proper model serving layer, it likely performs well — and there are self-hosted or air-gapped contexts where a managed API isn't an option and something like Docling is exactly the right tool. We may also have missed configuration options that would have helped. It's entirely possible that with different infrastructure or more time, we'd have got there.</p>
+<p>But that's the point. The question isn't whether a tool works in the right environment — it's whether your environment is the right one for it. Running local inference on CPU nodes in an application service, when a managed API exists that does the job with less ops surface, is a mismatch. Not a failure of the tool. A failure of context.</p>
 <p>We learnt it the expensive way.</p>]]></content:encoded>
             <category>ai-engineering</category>
             <category>python</category>
@@ -327,77 +246,33 @@ of the tool. A failure of context.</p>
             <link>https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/</link>
             <guid>https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/</guid>
             <pubDate>Thu, 21 May 2026 02:00:00 GMT</pubDate>
-            <description><![CDATA[Working on a streaming chat product taught me something: the standard]]></description>
-            <content:encoded><![CDATA[<p>Working on a streaming chat product taught me something: the standard
-latency metrics don't really describe what users experience. They're not
-waiting for a page to load or an API to return a JSON blob. They're watching
-tokens appear — and what they feel before anything appears is the thing
-most teams aren't measuring.</p>
+            <description><![CDATA[Working on a streaming chat product taught me something: the standard latency metrics don't really describe what users experience. They're not waiting for a page to load or an API to return a JSON blob. They're watching tokens appear — and what they feel before anything appears is the thing most teams aren't measuring.]]></description>
+            <content:encoded><![CDATA[<p>Working on a streaming chat product taught me something: the standard latency metrics don't really describe what users experience. They're not waiting for a page to load or an API to return a JSON blob. They're watching tokens appear — and what they feel before anything appears is the thing most teams aren't measuring.</p>
 <p>That thing is time-to-first-token. TTFT.</p>
-<p>I ran into this while load testing a streaming chat endpoint. The obvious
-thing to reach for is <code>http_req_duration</code> — it's right there in k6, it
-captures how long the request took, job done. Except it isn't. For a
-streaming LLM response, <code>http_req_duration</code> captures the entire stream from
-first byte sent to last byte received. If your model takes two seconds to
-start streaming and then streams for eight seconds, your p95 latency looks
-like ten seconds. That tells you almost nothing about whether the product
-feels responsive.</p>
-<p>What matters to the person using a chat interface is: how long until
-<em>something</em> appears? A response that starts in 800ms and streams for thirty
-seconds feels fast. A response that sits blank for four seconds then dumps
-everything at once feels broken — even if the total duration is shorter.</p>
-<p>That gap between "request sent" and "first content chunk received" is TTFT,
-and it's the metric that actually describes streaming UX.</p>
+<p>I ran into this while load testing a streaming chat endpoint. The obvious thing to reach for is <code>http_req_duration</code> — it's right there in k6, it captures how long the request took, job done. Except it isn't. For a streaming LLM response, <code>http_req_duration</code> captures the entire stream from first byte sent to last byte received. If your model takes two seconds to start streaming and then streams for eight seconds, your p95 latency looks like ten seconds. That tells you almost nothing about whether the product feels responsive.</p>
+<p>What matters to the person using a chat interface is: how long until <em>something</em> appears? A response that starts in 800ms and streams for thirty seconds feels fast. A response that sits blank for four seconds then dumps everything at once feels broken — even if the total duration is shorter.</p>
+<p>That gap between "request sent" and "first content chunk received" is TTFT, and it's the metric that actually describes streaming UX.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="measuring-it">Measuring it<a href="https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/#measuring-it" class="hash-link" aria-label="Direct link to Measuring it" title="Direct link to Measuring it" translate="no">​</a></h2>
-<p>Standard k6 doesn't parse SSE streams, so you need a custom binary built
-with <a href="https://github.com/phymbert/xk6-sse" target="_blank" rel="noopener noreferrer" class="">xk6-sse</a>:</p>
+<p>Standard k6 doesn't parse SSE streams, so you need a custom binary built with <a href="https://github.com/phymbert/xk6-sse" target="_blank" rel="noopener noreferrer" class="">xk6-sse</a>:</p>
 <div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">xk6 build --with github.com/phymbert/xk6-sse</span><br></div></code></pre></div></div>
-<p>Then define a custom <code>Trend</code> metric and record it the moment the first
-content event arrives:</p>
+<p>Then define a custom <code>Trend</code> metric and record it the moment the first content event arrives:</p>
 <div class="language-javascript codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-javascript codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token keyword module" style="color:#00009f">import</span><span class="token plain"> </span><span class="token imports">sse</span><span class="token plain"> </span><span class="token keyword module" style="color:#00009f">from</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"k6/x/sse"</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword module" style="color:#00009f">import</span><span class="token plain"> </span><span class="token imports punctuation" style="color:#393A34">{</span><span class="token imports"> </span><span class="token imports maybe-class-name">Trend</span><span class="token imports"> </span><span class="token imports punctuation" style="color:#393A34">}</span><span class="token plain"> </span><span class="token keyword module" style="color:#00009f">from</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"k6/metrics"</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">const</span><span class="token plain"> ttft </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token keyword" style="color:#00009f">new</span><span class="token plain"> </span><span class="token class-name">Trend</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">"ttft_s"</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token boolean" style="color:#36acaa">true</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword module" style="color:#00009f">export</span><span class="token plain"> </span><span class="token keyword module" style="color:#00009f">default</span><span class="token plain"> </span><span class="token keyword" style="color:#00009f">function</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token keyword" style="color:#00009f">const</span><span class="token plain"> start </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token known-class-name class-name">Date</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">now</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token keyword" style="color:#00009f">let</span><span class="token plain"> firstTokenRecorded </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token boolean" style="color:#36acaa">false</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  sse</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">open</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">url</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> params</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token parameter">client</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token arrow operator" style="color:#393A34">=&gt;</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    client</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">on</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">"event"</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token parameter">event</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token arrow operator" style="color:#393A34">=&gt;</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token keyword control-flow" style="color:#00009f">if</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token operator" style="color:#393A34">!</span><span class="token plain">firstTokenRecorded </span><span class="token operator" style="color:#393A34">&amp;&amp;</span><span class="token plain"> event</span><span class="token punctuation" style="color:#393A34">.</span><span class="token property-access">data</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">!==</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"[DONE]"</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">        ttft</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">add</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">(</span><span class="token known-class-name class-name">Date</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">now</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">-</span><span class="token plain"> start</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">/</span><span class="token plain"> </span><span class="token number" style="color:#36acaa">1000</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">        firstTokenRecorded </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token boolean" style="color:#36acaa">true</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token punctuation" style="color:#393A34">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token punctuation" style="color:#393A34">}</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token punctuation" style="color:#393A34">}</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">}</span><br></div></code></pre></div></div>
-<p>Critically: read the stream to completion even after you've recorded TTFT.
-Dropping the connection early skews the load profile — the server is still
-doing work and your test stops accounting for it.</p>
+<p>Critically: read the stream to completion even after you've recorded TTFT. Dropping the connection early skews the load profile — the server is still doing work and your test stops accounting for it.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="load-profile-design">Load profile design<a href="https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/#load-profile-design" class="hash-link" aria-label="Direct link to Load profile design" title="Direct link to Load profile design" translate="no">​</a></h2>
-<p>For observational load testing, a ramp-and-hold pattern gives you clean
-steady-state numbers to actually reason about:</p>
+<p>For observational load testing, a ramp-and-hold pattern gives you clean steady-state numbers to actually reason about:</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">VUs</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">100 ┤               ▄▄▄▄▄▄▄</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"> 50 ┤         ▄▄▄▄▄▀       ▀▄▄▄▄▄</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"> 10 ┤   ▄▄▄▄▄▀                   ▀▄▄▄▄▄</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  0 ┤──▀                               ▀──</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      ramp  hold   ramp   hold   ramp  hold</span><br></div></code></pre></div></div>
-<p>During a ramp phase, concurrency is in transition — exclude those samples
-from headline stats. During a hold phase, you have stable concurrency and
-predictable sample counts. Tag every sample with its phase and VU target
-so you can filter cleanly in post-processing.</p>
-<p>One request per VU per hold window also gives you deterministic sample
-counts: 50 VUs × 60s hold = exactly 50 requests. Reproducible, comparable
-across runs.</p>
+<p>During a ramp phase, concurrency is in transition — exclude those samples from headline stats. During a hold phase, you have stable concurrency and predictable sample counts. Tag every sample with its phase and VU target so you can filter cleanly in post-processing.</p>
+<p>One request per VU per hold window also gives you deterministic sample counts: 50 VUs × 60s hold = exactly 50 requests. Reproducible, comparable across runs.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-you-actually-learn">What you actually learn<a href="https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/#what-you-actually-learn" class="hash-link" aria-label="Direct link to What you actually learn" title="Direct link to What you actually learn" translate="no">​</a></h2>
-<p>Here's where it gets interesting. Once you have TTFT as a real metric, you
-start seeing things that <code>http_req_duration</code> completely hides.</p>
-<p>What we found was that different models have quite different characteristics.
-Some are fast to start and slow to finish. Some are the opposite. Prompt
-caching had a measurable effect in our tests — a cache hit on a large system
-prompt shaved hundreds of milliseconds off first token time, and we wouldn't
-have seen that signal at all if we'd only been watching total duration.</p>
-<p>We also saw how concurrency affects <em>perceived</em> responsiveness differently
-than it affects throughput. At low VU counts the TTFT p95 looked fine. Add
-more concurrent users and TTFT degraded before throughput did — which means
-users start feeling slowness before the dashboards register a problem.
-Your mileage will vary depending on model and infrastructure, but it's worth
-checking.</p>
-<p>These are the kinds of insights that only exist once you're measuring the
-right thing. Total request duration isn't the wrong metric — it's just the
-wrong <em>first</em> metric for a product where the UX is a stream.</p>
+<p>Here's where it gets interesting. Once you have TTFT as a real metric, you start seeing things that <code>http_req_duration</code> completely hides.</p>
+<p>What we found was that different models have quite different characteristics. Some are fast to start and slow to finish. Some are the opposite. Prompt caching had a measurable effect in our tests — a cache hit on a large system prompt shaved hundreds of milliseconds off first token time, and we wouldn't have seen that signal at all if we'd only been watching total duration.</p>
+<p>We also saw how concurrency affects <em>perceived</em> responsiveness differently than it affects throughput. At low VU counts the TTFT p95 looked fine. Add more concurrent users and TTFT degraded before throughput did — which means users start feeling slowness before the dashboards register a problem. Your mileage will vary depending on model and infrastructure, but it's worth checking.</p>
+<p>These are the kinds of insights that only exist once you're measuring the right thing. Total request duration isn't the wrong metric — it's just the wrong <em>first</em> metric for a product where the UX is a stream.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="set-a-concrete-target-before-you-test">Set a concrete target before you test<a href="https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/#set-a-concrete-target-before-you-test" class="hash-link" aria-label="Direct link to Set a concrete target before you test" title="Direct link to Set a concrete target before you test" translate="no">​</a></h2>
-<p>Before running at scale, decide what good looks like. What is an acceptable
-p95 TTFT at your expected concurrency? Write it down before you look at the
-numbers — otherwise you'll rationalise whatever you find.</p>
-<p>Your target will depend on your model, your infrastructure, your users'
-expectations, and honestly, what your provider can actually deliver under
-load. The test reveals that; it doesn't guarantee it. But without a target,
-you're just generating numbers.</p>
+<p>Before running at scale, decide what good looks like. What is an acceptable p95 TTFT at your expected concurrency? Write it down before you look at the numbers — otherwise you'll rationalise whatever you find.</p>
+<p>Your target will depend on your model, your infrastructure, your users' expectations, and honestly, what your provider can actually deliver under load. The test reveals that; it doesn't guarantee it. But without a target, you're just generating numbers.</p>
 <hr>
-<p><em>TTFT is one dimension. Token throughput — how fast the stream itself moves
-once started — is another. Both matter, and they can point in opposite
-directions. Worth measuring separately.</em></p>]]></content:encoded>
+<p><em>TTFT is one dimension. Token throughput — how fast the stream itself moves once started — is another. Both matter, and they can point in opposite directions. Worth measuring separately.</em></p>]]></content:encoded>
             <category>ai-engineering</category>
             <category>observability</category>
             <category>performance</category>
@@ -407,67 +282,29 @@ directions. Worth measuring separately.</em></p>]]></content:encoded>
             <link>https://works-in-prod.github.io/stop-arguing-with-your-terminal-about-python-versions/</link>
             <guid>https://works-in-prod.github.io/stop-arguing-with-your-terminal-about-python-versions/</guid>
             <pubDate>Thu, 21 May 2026 01:00:00 GMT</pubDate>
-            <description><![CDATA[Project setup should be boring. Not in a "this is beneath me" way — in a]]></description>
-            <content:encoded><![CDATA[<p>Project setup should be boring. Not in a "this is beneath me" way — in a
-"this takes thirty seconds and I never think about it" way.</p>
+            <description><![CDATA[Project setup should be boring. Not in a "this is beneath me" way — in a "this takes thirty seconds and I never think about it" way.]]></description>
+            <content:encoded><![CDATA[<p>Project setup should be boring. Not in a "this is beneath me" way — in a "this takes thirty seconds and I never think about it" way.</p>
 <p>Most of the time, it isn't.</p>
-<p>You clone a repo you haven't touched in six months. The README says "install
-Python 3.11". You have 3.12. Something breaks. You remember there's a
-<code>.python-version</code> file somewhere, or maybe a <code>requires-python</code> in
-<code>pyproject.toml</code>. You spend twenty minutes figuring out which version manager
-you're even supposed to be using for this project before you've written a
-single line of code.</p>
-<p>This isn't a Python problem. Terraform has <code>tfenv</code>. Node has <code>nvm</code> or <code>volta</code>
-or <code>.nvmrc</code>. Every language brings its own version manager, its own config
-file format, its own way of silently using the wrong version. And that's before
-you even get to figuring out how to run things — is it <code>make test</code>? <code>./scripts/test.sh</code>?
-Some npm script buried in a <code>package.json</code>? Nobody knows. You ask Slack.</p>
-<p>I got tired of this and started using <a href="https://mise.jdx.dev/" target="_blank" rel="noopener noreferrer" class="">mise</a>. It's a
-single tool that handles both problems: pinned runtimes and discoverable tasks,
-for any language, in one file.</p>
+<p>You clone a repo you haven't touched in six months. The README says "install Python 3.11". You have 3.12. Something breaks. You remember there's a <code>.python-version</code> file somewhere, or maybe a <code>requires-python</code> in <code>pyproject.toml</code>. You spend twenty minutes figuring out which version manager you're even supposed to be using for this project before you've written a single line of code.</p>
+<p>This isn't a Python problem. Terraform has <code>tfenv</code>. Node has <code>nvm</code> or <code>volta</code> or <code>.nvmrc</code>. Every language brings its own version manager, its own config file format, its own way of silently using the wrong version. And that's before you even get to figuring out how to run things — is it <code>make test</code>? <code>./scripts/test.sh</code>? Some npm script buried in a <code>package.json</code>? Nobody knows. You ask Slack.</p>
+<p>I got tired of this and started using <a href="https://mise.jdx.dev/" target="_blank" rel="noopener noreferrer" class="">mise</a>. It's a single tool that handles both problems: pinned runtimes and discoverable tasks, for any language, in one file.</p>
 <p>A Python service looks like this:</p>
 <div class="language-toml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-toml codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">[tools]</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">python = "3.12.3"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">[tasks.test]</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">description = "Run the test suite"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">run = "pytest"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">[tasks.verify]</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">description = "Run all checks before pushing"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">depends = ["test", "build"]</span><br></div></code></pre></div></div>
-<p>Run <code>mise install</code> and you get exactly that Python version. Run <code>mise tasks</code>
-and you see everything the project knows how to do. Run <code>mise run verify</code>
-before pushing. That's it.</p>
-<p>The part I find most satisfying is that <code>mise run &lt;task&gt;</code> becomes a stable
-interface that hides whatever's behind it. I had a project that needed a custom
-k6 binary with SSE support for load testing a streaming API. Building it
-requires Go and a tool called <code>xk6</code>, which most people have never heard of.
-With mise, that's just:</p>
+<p>Run <code>mise install</code> and you get exactly that Python version. Run <code>mise tasks</code> and you see everything the project knows how to do. Run <code>mise run verify</code> before pushing. That's it.</p>
+<p>The part I find most satisfying is that <code>mise run &lt;task&gt;</code> becomes a stable interface that hides whatever's behind it. I had a project that needed a custom k6 binary with SSE support for load testing a streaming API. Building it requires Go and a tool called <code>xk6</code>, which most people have never heard of. With mise, that's just:</p>
 <div class="language-toml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-toml codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">[tools]</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">go = "1.22.3"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">[tasks.build]</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">description = "Build k6 with xk6-sse extension"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">run = "xk6 build --with github.com/phymbert/xk6-sse"</span><br></div></code></pre></div></div>
-<p>Now <code>mise run build</code> works for everyone — the developer who knows what xk6 is,
-the one who doesn't, and the CI job. Nobody has to know what's behind it. When
-I added another extension later, I changed one line. The interface didn't move.</p>
-<p>Speaking of CI — this is where the real payoff is. A GitHub Actions workflow
-for a mise project looks like:</p>
+<p>Now <code>mise run build</code> works for everyone — the developer who knows what xk6 is, the one who doesn't, and the CI job. Nobody has to know what's behind it. When I added another extension later, I changed one line. The interface didn't move.</p>
+<p>Speaking of CI — this is where the real payoff is. A GitHub Actions workflow for a mise project looks like:</p>
 <div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token key atrule" style="color:#00a4db">jobs</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token key atrule" style="color:#00a4db">verify</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token key atrule" style="color:#00a4db">runs-on</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"> ubuntu</span><span class="token punctuation" style="color:#393A34">-</span><span class="token plain">latest</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token key atrule" style="color:#00a4db">steps</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token punctuation" style="color:#393A34">-</span><span class="token plain"> </span><span class="token key atrule" style="color:#00a4db">uses</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"> actions/checkout@v4</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token punctuation" style="color:#393A34">-</span><span class="token plain"> </span><span class="token key atrule" style="color:#00a4db">uses</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"> jdx/mise</span><span class="token punctuation" style="color:#393A34">-</span><span class="token plain">action@v4</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token punctuation" style="color:#393A34">-</span><span class="token plain"> </span><span class="token key atrule" style="color:#00a4db">run</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"> mise run verify</span><br></div></code></pre></div></div>
-<p><code>mise-action</code> reads <code>mise.toml</code>, installs the pinned versions, and puts them
-on <code>PATH</code>. Then <code>mise run verify</code> runs the exact same thing you run locally.
-No separate version install steps. No drift between what CI checks and what
-you check. This is the thing that makes it worth the setup cost — CI and local
-are no longer two separate mental models.</p>
-<p>The one thing mise can't do is install itself. You need it on the machine
-before any of this works. I solve that with <a href="https://www.chezmoi.io/" target="_blank" rel="noopener noreferrer" class="">Chezmoi</a>,
-a dotfile manager that runs once on a fresh machine. A <code>run_once_install-mise.sh</code>
-script does the bootstrap:</p>
+<p><code>mise-action</code> reads <code>mise.toml</code>, installs the pinned versions, and puts them on <code>PATH</code>. Then <code>mise run verify</code> runs the exact same thing you run locally. No separate version install steps. No drift between what CI checks and what you check. This is the thing that makes it worth the setup cost — CI and local are no longer two separate mental models.</p>
+<p>The one thing mise can't do is install itself. You need it on the machine before any of this works. I solve that with <a href="https://www.chezmoi.io/" target="_blank" rel="noopener noreferrer" class="">Chezmoi</a>, a dotfile manager that runs once on a fresh machine. A <code>run_once_install-mise.sh</code> script does the bootstrap:</p>
 <div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">#!/bin/sh</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">curl https://mise.run | sh</span><br></div></code></pre></div></div>
-<p>Then the shell hook in <code>~/.zshrc</code> (also managed by Chezmoi) activates mise
-per directory:</p>
+<p>Then the shell hook in <code>~/.zshrc</code> (also managed by Chezmoi) activates mise per directory:</p>
 <div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">eval "$(mise activate zsh)"</span><br></div></code></pre></div></div>
-<p>Chezmoi sets up the machine, mise sets up each project. Neither knows the other
-exists. You go from a blank laptop to a running project without reading a setup
-guide — which is the point.</p>
-<p>It won't fix an undocumented deployment process or a service that can't run
-locally. It encodes what's already known. And if your team is already settled
-on <code>nvm</code> + <code>make</code> for a single-language, single-runtime project, the migration
-cost might not be worth it. The value really compounds when you're working
-across multiple projects or switching between them regularly — which, in my
-experience, is most of the time.</p>
+<p>Chezmoi sets up the machine, mise sets up each project. Neither knows the other exists. You go from a blank laptop to a running project without reading a setup guide — which is the point.</p>
+<p>It won't fix an undocumented deployment process or a service that can't run locally. It encodes what's already known. And if your team is already settled on <code>nvm</code> + <code>make</code> for a single-language, single-runtime project, the migration cost might not be worth it. The value really compounds when you're working across multiple projects or switching between them regularly — which, in my experience, is most of the time.</p>
 <hr>
-<p><em><code>mise</code> replaces <code>pyenv</code>, <code>nvm</code>, <code>rbenv</code>, <code>tfenv</code>, <code>asdf</code>, and most other
-per-language version managers. If you're on <code>asdf</code> already, migration is
-painless — <code>mise</code> reads <code>.tool-versions</code> files natively.</em></p>]]></content:encoded>
+<p><em><code>mise</code> replaces <code>pyenv</code>, <code>nvm</code>, <code>rbenv</code>, <code>tfenv</code>, <code>asdf</code>, and most other per-language version managers. If you're on <code>asdf</code> already, migration is painless — <code>mise</code> reads <code>.tool-versions</code> files natively.</em></p>]]></content:encoded>
             <category>tooling</category>
             <category>developer-experience</category>
             <category>mise</category>
@@ -508,94 +345,32 @@ painless — <code>mise</code> reads <code>.tool-versions</code> files natively.
             <guid>https://works-in-prod.github.io/journey-to-the-centre-of-the-stack/</guid>
             <pubDate>Mon, 30 Nov 2020 11:00:00 GMT</pubDate>
             <description><![CDATA[Containerising legacy software has always been a journey into the unknown. What's changed is who you take with you.]]></description>
-            <content:encoded><![CDATA[<p>I first wrote this post in 2020 after spending several weeks containerising a
-legacy application I hadn't built and didn't fully understand. The experience
-was mostly archaeology — reading old config files, tracing hardcoded paths,
-figuring out what half a dozen processes actually did before touching anything.
-By the time I had a working Docker image, I'd earned it.</p>
-<p>I'm updating it now because the journey has changed, and I think it's worth
-being honest about how.</p>
-<p>The destination is the same. Legacy modernisation still means diving into
-unfamiliar depth, finding the load-bearing assumptions nobody documented, and
-making a series of architectural decisions that will outlive the sprint you're
-in. None of that has gone away.</p>
-<p>What's changed is the discovery phase. The part where you spend half a day
-grepping through twelve config files to find every hardcoded <code>/tmp</code> path. The
-part where you read three hundred lines of an entrypoint script to understand
-what order things start in. The part where you're trying to build a mental
-model of a system from first principles because the person who built it left
-two years ago.</p>
-<p>That part is cheaper now. Not free — cheaper. And for senior engineers in
-particular, that matters more than it might sound.</p>
+            <content:encoded><![CDATA[<p>I first wrote this post in 2020 after spending several weeks containerising a legacy application I hadn't built and didn't fully understand. The experience was mostly archaeology — reading old config files, tracing hardcoded paths, figuring out what half a dozen processes actually did before touching anything. By the time I had a working Docker image, I'd earned it.</p>
+<p>I'm updating it now because the journey has changed, and I think it's worth being honest about how.</p>
+<p>The destination is the same. Legacy modernisation still means diving into unfamiliar depth, finding the load-bearing assumptions nobody documented, and making a series of architectural decisions that will outlive the sprint you're in. None of that has gone away.</p>
+<p>What's changed is the discovery phase. The part where you spend half a day grepping through twelve config files to find every hardcoded <code>/tmp</code> path. The part where you read three hundred lines of an entrypoint script to understand what order things start in. The part where you're trying to build a mental model of a system from first principles because the person who built it left two years ago.</p>
+<p>That part is cheaper now. Not free — cheaper. And for senior engineers in particular, that matters more than it might sound.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-cognitive-load-is-the-real-cost">The cognitive load is the real cost<a href="https://works-in-prod.github.io/journey-to-the-centre-of-the-stack/#the-cognitive-load-is-the-real-cost" class="hash-link" aria-label="Direct link to The cognitive load is the real cost" title="Direct link to The cognitive load is the real cost" translate="no">​</a></h2>
-<p>When you're working in unfamiliar legacy code, there's a ceiling on how much
-you can think about architecture while simultaneously trying to understand what
-you're looking at. The mental budget goes to comprehension first and decision-
-making second.</p>
-<p>AI tooling shifts that balance. You can ask an agent to map the dependency
-graph, find all the places a config value is used, summarise what a given
-module does, or trace what happens to a file after it's uploaded. It doesn't
-always get this perfectly right, but it gets you oriented faster. And
-orientation is the precondition for good architectural thinking.</p>
-<p>The senior engineer's job in a legacy modernisation isn't to read every file —
-it's to understand the system well enough to make the right calls. AI handles
-more of the reading. You do more of the deciding. That's a reasonable trade.</p>
+<p>When you're working in unfamiliar legacy code, there's a ceiling on how much you can think about architecture while simultaneously trying to understand what you're looking at. The mental budget goes to comprehension first and decision- making second.</p>
+<p>AI tooling shifts that balance. You can ask an agent to map the dependency graph, find all the places a config value is used, summarise what a given module does, or trace what happens to a file after it's uploaded. It doesn't always get this perfectly right, but it gets you oriented faster. And orientation is the precondition for good architectural thinking.</p>
+<p>The senior engineer's job in a legacy modernisation isn't to read every file — it's to understand the system well enough to make the right calls. AI handles more of the reading. You do more of the deciding. That's a reasonable trade.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-still-requires-a-human">What still requires a human<a href="https://works-in-prod.github.io/journey-to-the-centre-of-the-stack/#what-still-requires-a-human" class="hash-link" aria-label="Direct link to What still requires a human" title="Direct link to What still requires a human" translate="no">​</a></h2>
-<p>This is the part worth being direct about: you cannot vibe code your way
-through a legacy containerisation.</p>
-<p>Legacy systems have accumulated tradeoffs that aren't visible in the code
-itself. A hardcoded path exists for a reason. Session storage lives in a
-particular place because of a deployment constraint nobody remembered to
-remove. An environment variable has a default that only works in production
-because of how the CI pipeline was wired up five years ago.</p>
-<p>An agent will find the path, tell you what it does, maybe suggest you move it
-to an env var. What it can't tell you is whether that change will break the
-cron job on the production server that six business processes depend on — the
-one that isn't in any of the tests because it predates the testing culture.</p>
-<p>AI tools don't have access to the organisational context: the deployment
-constraints, the team agreements, the compliance requirements, the reason
-something was done a particular way three years ago. That knowledge lives in
-people, not code. And in legacy systems, it's often the most important
-knowledge there is.</p>
-<p>That's still yours. The judgment about which changes are safe, which tradeoffs
-are real, which "quick wins" are landmines with a friendly face — that's the
-work. AI lowers the cost of getting to the point where you can make those calls.
-It doesn't make the calls for you.</p>
+<p>This is the part worth being direct about: you cannot vibe code your way through a legacy containerisation.</p>
+<p>Legacy systems have accumulated tradeoffs that aren't visible in the code itself. A hardcoded path exists for a reason. Session storage lives in a particular place because of a deployment constraint nobody remembered to remove. An environment variable has a default that only works in production because of how the CI pipeline was wired up five years ago.</p>
+<p>An agent will find the path, tell you what it does, maybe suggest you move it to an env var. What it can't tell you is whether that change will break the cron job on the production server that six business processes depend on — the one that isn't in any of the tests because it predates the testing culture.</p>
+<p>AI tools don't have access to the organisational context: the deployment constraints, the team agreements, the compliance requirements, the reason something was done a particular way three years ago. That knowledge lives in people, not code. And in legacy systems, it's often the most important knowledge there is.</p>
+<p>That's still yours. The judgment about which changes are safe, which tradeoffs are real, which "quick wins" are landmines with a friendly face — that's the work. AI lowers the cost of getting to the point where you can make those calls. It doesn't make the calls for you.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-practical-shape-of-it-now">The practical shape of it now<a href="https://works-in-prod.github.io/journey-to-the-centre-of-the-stack/#the-practical-shape-of-it-now" class="hash-link" aria-label="Direct link to The practical shape of it now" title="Direct link to The practical shape of it now" translate="no">​</a></h2>
-<p>For what it's worth, here's roughly how I'd approach a legacy containerisation
-today, with AI tooling in the picture:</p>
-<p><strong>Discovery first.</strong> Ask the agent to map the application — what processes run,
-what config files exist, what external services are referenced, what file paths
-are hardcoded. Treat this as a starting point for your own investigation, not a
-definitive answer. Legacy codebases often have behaviour that doesn't show up
-in a static read.</p>
-<p><strong>Identify the decisions, not just the tasks.</strong> The genuine work in a
-containerisation is a small number of architectural choices — how to handle
-sessions, where persistent storage lives, how secrets are managed, how the
-application handles multiple running instances. Everything else is mechanics.
-Get to the decisions faster and spend your time there.</p>
-<p><strong>Keep the base image simple.</strong> If you have multiple applications sharing a
-common runtime, extract a base image. Agent tooling is good at spotting what's
-common across applications — use it for that comparison work.</p>
-<p><strong>Externalise everything that changes between environments.</strong> File paths, URLs,
-secrets, feature flags — environment variables. Not because it's clever, but
-because it's the minimum requirement for any container to be operationally
-useful. This hasn't changed.</p>
-<p><strong>Test incrementally.</strong> Don't wait until the Dockerfile is complete to run the
-application. Run it as early as possible, find the first thing that breaks, fix
-it, repeat. The agent can help write tests for the areas you're refactoring,
-but you need to know which areas matter enough to test.</p>
-<p><strong>Understand what you're committing to.</strong> Every dependency you add to the
-container — a system library, an OCR engine, a local model — is infrastructure
-you're now responsible for. The Docling post on this blog exists because we
-learnt that lesson the long way.</p>
+<p>For what it's worth, here's roughly how I'd approach a legacy containerisation today, with AI tooling in the picture:</p>
+<p><strong>Discovery first.</strong> Ask the agent to map the application — what processes run, what config files exist, what external services are referenced, what file paths are hardcoded. Treat this as a starting point for your own investigation, not a definitive answer. Legacy codebases often have behaviour that doesn't show up in a static read.</p>
+<p><strong>Identify the decisions, not just the tasks.</strong> The genuine work in a containerisation is a small number of architectural choices — how to handle sessions, where persistent storage lives, how secrets are managed, how the application handles multiple running instances. Everything else is mechanics. Get to the decisions faster and spend your time there.</p>
+<p><strong>Keep the base image simple.</strong> If you have multiple applications sharing a common runtime, extract a base image. Agent tooling is good at spotting what's common across applications — use it for that comparison work.</p>
+<p><strong>Externalise everything that changes between environments.</strong> File paths, URLs, secrets, feature flags — environment variables. Not because it's clever, but because it's the minimum requirement for any container to be operationally useful. This hasn't changed.</p>
+<p><strong>Test incrementally.</strong> Don't wait until the Dockerfile is complete to run the application. Run it as early as possible, find the first thing that breaks, fix it, repeat. The agent can help write tests for the areas you're refactoring, but you need to know which areas matter enough to test.</p>
+<p><strong>Understand what you're committing to.</strong> Every dependency you add to the container — a system library, an OCR engine, a local model — is infrastructure you're now responsible for. The Docling post on this blog exists because we learnt that lesson the long way.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-title-still-fits">The title still fits<a href="https://works-in-prod.github.io/journey-to-the-centre-of-the-stack/#the-title-still-fits" class="hash-link" aria-label="Direct link to The title still fits" title="Direct link to The title still fits" translate="no">​</a></h2>
-<p>The journey to the centre of the stack is still a journey. The technology has
-changed, the tooling has improved, and you have better company on the way down
-than you did five years ago. But the stack is still there, and the centre of
-it still contains the decisions that matter.</p>
-<p>The difference is that you can now spend more of your cognitive budget on the
-part that actually requires experience to get right.</p>
+<p>The journey to the centre of the stack is still a journey. The technology has changed, the tooling has improved, and you have better company on the way down than you did five years ago. But the stack is still there, and the centre of it still contains the decisions that matter.</p>
+<p>The difference is that you can now spend more of your cognitive budget on the part that actually requires experience to get right.</p>
 <p>That seems like a reasonable upgrade.</p>]]></content:encoded>
             <category>docker</category>
             <category>legacy-software</category>
@@ -652,13 +427,7 @@ part that actually requires experience to get right.</p>
 <p>This then gives us something like:</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">thiseyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkFzIjoiYWRtaW4iLCJpYXQiOjE0MjI3Nzk2Mzh9.gzSraSYS8EXBxLN_oWnFSRgCzcmJmMjLiuyu5CSpyHI</span><br></div></code></pre></div></div>
 <p>Let’s expand on the claims section of JWT. The following claims are part of the RFC document:</p>
-<p><strong>iss</strong>: who is the issuer of this token auth.example.com
-<strong>sub</strong>: what is the subject of this token e.g. auth
-<strong>aud</strong>: who can use this token e.g ['client1.example.com','client2.example.com']
-<strong>exp</strong>: Defines the expiration time as unix timestamp e.g. 1488192525
-<strong>nbf</strong>: define how long after the issued token was generated we can use it e.g. 300 seconds (5 minutes)
-<strong>iat</strong>: issued at is a unix timestamp e.g. 1488192525
-<strong>jti</strong>: JWT ID unique id. This can be used to prevent a token from being replayed e.g. "xa443D"</p>
+<p><strong>iss</strong>: who is the issuer of this token auth.example.com <strong>sub</strong>: what is the subject of this token e.g. auth <strong>aud</strong>: who can use this token e.g ['client1.example.com','client2.example.com'] <strong>exp</strong>: Defines the expiration time as unix timestamp e.g. 1488192525 <strong>nbf</strong>: define how long after the issued token was generated we can use it e.g. 300 seconds (5 minutes) <strong>iat</strong>: issued at is a unix timestamp e.g. 1488192525 <strong>jti</strong>: JWT ID unique id. This can be used to prevent a token from being replayed e.g. "xa443D"</p>
 <p>The key names are case sensitive and have been kept small to keep the JSON payload compact.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-does-the-authentication-flow-work">How does the Authentication Flow work?<a href="https://works-in-prod.github.io/JSON-WEB-TOKEN/#how-does-the-authentication-flow-work" class="hash-link" aria-label="Direct link to How does the Authentication Flow work?" title="Direct link to How does the Authentication Flow work?" translate="no">​</a></h2>
 <p>In authentication, when the user successfully logs in using their credentials, a JSON Web Token will be returned and must be saved locally (typically in local storage, but cookies can be also used), instead of the traditional approach of creating a session in the server and returning a cookie.</p>
