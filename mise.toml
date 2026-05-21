@@ -1,0 +1,32 @@
+[tools]
+node = "20.19.2"
+"npm:yarn" = "1.22.22"
+
+[tasks.install]
+description = "Install locked JavaScript dependencies"
+run = "yarn install --frozen-lockfile"
+
+[tasks.dev]
+alias = "start"
+description = "Start the Docusaurus development server"
+run = "yarn start"
+
+[tasks.build]
+description = "Build the Docusaurus site"
+run = "yarn build"
+
+[tasks."publishing:test"]
+description = "Test the public-seed publishing workflow"
+run = "yarn test:publishing"
+
+[tasks."publishing:check"]
+description = "Check publishing guardrails"
+run = "yarn check:publishing"
+
+[tasks."publishing:draft"]
+description = "Generate a draft from a sanitized public seed card"
+run = "yarn draft:post"
+
+[tasks.verify]
+description = "Run publishing checks and build the site"
+depends = ["publishing:test", "publishing:check", "build"]

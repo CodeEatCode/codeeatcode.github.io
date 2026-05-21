@@ -114,7 +114,9 @@ Container’s file permissions get copied from the host machine’s file system 
 
 So when you COPY or ADD files, you can use the following
 
-    COPY [--chown=<user>:<group>] <src>... <dest>
+```dockerfile
+COPY [--chown=<user>:<group>] <src>... <dest>
+```
 
 ## Summary
 

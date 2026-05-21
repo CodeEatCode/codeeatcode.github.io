@@ -1,8 +1,7 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+const {themes: prismThemes} = require("prism-react-renderer");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -11,7 +10,11 @@ const config = {
     url: "https://codeeatcode.github.io",
     baseUrl: "/",
     onBrokenLinks: "throw",
-    onBrokenMarkdownLinks: "warn",
+    markdown: {
+        hooks: {
+            onBrokenMarkdownLinks: "warn",
+        },
+    },
     favicon: "img/logo.gif",
 
     // GitHub pages deployment config.
@@ -26,32 +29,28 @@ const config = {
         defaultLocale: "en",
         locales: ["en"],
     },
-    // plugins: [MyPlugin],
-    presets: [
+    plugins: [
         [
-            "classic",
-            /** @type {import('@docusaurus/preset-classic').Options} */
+            "@docusaurus/plugin-content-blog",
             ({
-                docs: false,
-                blog: {
-                    showReadingTime: true,
-                    routeBasePath: "/",
-                    // Please change this to your repo.
-                    // Remove this to remove the "edit this page" links.
-                    // editUrl: "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
-                    postsPerPage: 10,
-                    // blogSdebarTitle: "All posts",
-                    blogSidebarCount: "ALL",
-                },
-                theme: {
-                    customCss: require.resolve("./src/css/custom.css"),
-                },
+                showReadingTime: true,
+                routeBasePath: "/",
+                postsPerPage: 10,
+                blogSidebarCount: "ALL",
             }),
+        ],
+    ],
+    themes: [
+        [
+            "@docusaurus/theme-classic",
+            {
+                customCss: require.resolve("./src/css/custom.css"),
+            },
         ],
     ],
 
     themeConfig:
-        /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+        /** @type {import('@docusaurus/types').ThemeConfig} */
         ({
             metadata: [
                 {
@@ -122,8 +121,8 @@ const config = {
                 copyright: `Copyright © ${new Date().getFullYear()} Code Eat Code blog built with Docusaurus.`,
             },
             prism: {
-                theme: lightCodeTheme,
-                darkTheme: darkCodeTheme,
+                theme: prismThemes.github,
+                darkTheme: prismThemes.dracula,
             },
         }),
 };
