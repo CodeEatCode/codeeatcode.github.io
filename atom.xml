@@ -245,6 +245,124 @@ painless — <code>mise</code> reads <code>.tool-versions</code> files natively.
         <category label="mise" term="mise"/>
     </entry>
     <entry>
+        <title type="html"><![CDATA[We Spent Five Weeks Making Docling Work. Then We Deleted It.]]></title>
+        <id>https://codeeatcode.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/</id>
+        <link href="https://codeeatcode.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/"/>
+        <updated>2026-05-21T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[This is a post-mortem on five weeks of infrastructure work that ended with]]></summary>
+        <content type="html"><![CDATA[<p>This is a post-mortem on five weeks of infrastructure work that ended with
+<code>git rm</code> and 1,452 lines deleted from the lockfile alone.</p>
+<p>The library in question is <a href="https://github.com/DS4SD/docling" target="_blank" rel="noopener noreferrer" class="">Docling</a>. It's
+a capable open-source document parser from IBM Research — handles PDFs,
+tables, figures, DOCX, the lot. On paper it looked like exactly what we needed.
+In practice it turned out to be a small ML platform hiding inside a Python
+package, and we didn't fully appreciate that distinction until we were already
+three acts deep.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="act-i-the-optimistic-beginning">Act I: The Optimistic Beginning<a href="https://codeeatcode.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#act-i-the-optimistic-beginning" class="hash-link" aria-label="Direct link to Act I: The Optimistic Beginning" title="Direct link to Act I: The Optimistic Beginning" translate="no">​</a></h2>
+<p>The first pull request adding Docling was merged and reverted on the same day.
+A flag from the universe that was politely ignored.</p>
+<p>A couple of days later it was back in with the proper integration. The
+complications started immediately:</p>
+<ul>
+<li class="">A Docker entrypoint script was needed to pre-download HuggingFace models at
+container startup</li>
+<li class=""><code>HOME</code> and <code>HF_HOME</code> env vars had to be manually set so the image could
+write to its own cache directories</li>
+<li class="">The <code>DOCLING_MODELS</code> list kept breaking as a shell argument — positional
+args split incorrectly, then comma-separated, then space-separated — three
+separate fixes for what should have been a config value</li>
+<li class="">Tesseract OCR and OpenCV had to be added to the runtime Docker stage</li>
+<li class="">EasyOCR kept sneaking back into the model list and had to be explicitly
+excluded every time</li>
+</ul>
+<p>None of this is catastrophic. But it's the kind of friction that tells you
+something about what you're dealing with.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="act-ii-the-model-infrastructure-tax">Act II: The Model Infrastructure Tax<a href="https://codeeatcode.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#act-ii-the-model-infrastructure-tax" class="hash-link" aria-label="Direct link to Act II: The Model Infrastructure Tax" title="Direct link to Act II: The Model Infrastructure Tax" translate="no">​</a></h2>
+<p>Because Docling models can't be downloaded at cold-start in production — too
+slow, no egress — a CI/CD model sync workflow was introduced to pre-bake them
+into S3. This became its own small project: a GitHub Actions workflow to sync
+models, config to point Docling at the S3 cache path, and downstream fixes
+when the sync workflow itself had bugs.</p>
+<p>The application now had an out-of-band model synchronisation pipeline that had
+to be kept in step with the Docling version in <code>pyproject.toml</code>. Updating the
+OCR engine or parser models meant updating the Dockerfile, updating the sync
+workflow, and triggering the S3 pipeline before deploy — in that order.</p>
+<p>This is the moment where "we added a parsing library" became "we are now
+operating a small model registry."</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="act-iii-the-performance-whack-a-mole">Act III: The Performance Whack-a-Mole<a href="https://codeeatcode.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#act-iii-the-performance-whack-a-mole" class="hash-link" aria-label="Direct link to Act III: The Performance Whack-a-Mole" title="Direct link to Act III: The Performance Whack-a-Mole" translate="no">​</a></h2>
+<ul>
+<li class="">OMP thread count reduced from 4 to 2 because Docling was spawning more CPU
+threads than the pod's limit. The pod was being throttled.</li>
+<li class=""><code>images_scale</code> pinned to 1.0, accelerator switched to <code>AUTO</code></li>
+<li class="">Thread bootstrap broke entirely and had to be fixed</li>
+<li class="">The parse method was decomposed to make tuning easier</li>
+<li class="">OCR engine switched from EasyOCR to RapidOCR — which then had to be added to
+the model sync workflow and the Docker defaults</li>
+<li class="">OCR skipped entirely for native digital PDFs — meaning Docling's headline
+feature wasn't being used for the most common input type</li>
+</ul>
+<p>On the same day as that last round of fixes, a VLM-based parser was added and
+validated in a few hours. It used Bedrock's document API directly. No local
+models. No thread budget. Just an API call.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="act-iv-the-quiet-betrayal">Act IV: The Quiet Betrayal<a href="https://codeeatcode.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#act-iv-the-quiet-betrayal" class="hash-link" aria-label="Direct link to Act IV: The Quiet Betrayal" title="Direct link to Act IV: The Quiet Betrayal" translate="no">​</a></h2>
+<p>A config change silently disabled Docling routing and enabled the VLM parsers
+by default. Docling was still in the codebase, still in the Docker image, still
+pulling in Torch and Tesseract and RapidOCR and a full HuggingFace model cache.</p>
+<p>It was handling zero traffic.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="act-v-the-purge">Act V: The Purge<a href="https://codeeatcode.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#act-v-the-purge" class="hash-link" aria-label="Direct link to Act V: The Purge" title="Direct link to Act V: The Purge" translate="no">​</a></h2>
+<p>Gone. All of it.</p>
+<ul>
+<li class="">The Docling parser and all its tests</li>
+<li class="">The S3 model sync CI workflow</li>
+<li class="">All Docling-specific settings and constants</li>
+<li class="">Torch, Tesseract, OpenCV from the build</li>
+<li class="">The Docker entrypoint script</li>
+<li class="">The thread-count tuning, the <code>images_scale</code> pin, all of it</li>
+</ul>
+<p>1,452 lines deleted from <code>uv.lock</code> alone.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-replaced-it">What replaced it<a href="https://codeeatcode.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#what-replaced-it" class="hash-link" aria-label="Direct link to What replaced it" title="Direct link to What replaced it" translate="no">​</a></h2>
+<p>Two parsers, one fallback chain, zero local ML models.</p>
+<p>The primary path sends the raw document bytes directly to Bedrock as a document
+content block — one API call, no pre-processing. Claude handles layout, tables,
+and embedded images natively. The only constraint is an undocumented ~4.5 MB
+limit on document blocks; files over that automatically fall through to the
+fallback.</p>
+<p>The fallback rasterises each page to an image using <code>pypdfium2</code> and sends them
+to Bedrock vision in parallel. DOCX files go through LibreOffice headless first
+to become a PDF, then hit the same rasterise-and-describe path.</p>
+<p>The comparison:</p>
+<table><thead><tr><th>Concern</th><th>Docling</th><th>Now</th></tr></thead><tbody><tr><td>PDF text extraction</td><td>Torch + Tesseract + layout models</td><td>Bedrock document block</td></tr><tr><td>Tables</td><td>Docling HTML table mode</td><td>Claude extracts to HTML natively</td></tr><tr><td>Images / figures</td><td>SmolVLM locally</td><td>Bedrock vision per page</td></tr><tr><td>DOCX</td><td>pydocx parser</td><td>LibreOffice → PDF → same VLM path</td></tr><tr><td>Dependencies</td><td>Torch, Tesseract, RapidOCR, OpenCV, HF models</td><td>pypdfium2, LibreOffice (system)</td></tr><tr><td>Infrastructure</td><td>S3 model sync pipeline, entrypoint bootstrap</td><td>Nothing — models live in Bedrock</td></tr></tbody></table>
+<p>The entire local inference stack is gone. Parsing is now API calls with a
+lightweight rasterisation step as fallback for large files.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-lesson-if-there-is-one">The lesson, if there is one<a href="https://codeeatcode.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#the-lesson-if-there-is-one" class="hash-link" aria-label="Direct link to The lesson, if there is one" title="Direct link to The lesson, if there is one" translate="no">​</a></h2>
+<p>Docling required bundling a mini ML stack — Torch, Tesseract, RapidOCR,
+HuggingFace models — plus a dedicated S3 sync pipeline and several rounds of
+thread-count tuning, to do PDF parsing that a Bedrock API call does better with
+zero infrastructure overhead and a thirty-line parser class.</p>
+<p>In hindsight the clue was in the very first day: merged and reverted before
+anyone had even run it in a container. The library wasn't broken — it did what
+it said. The mistake was not recognising early enough that we were running local
+inference on CPU-based nodes. Docling's layout models and OCR pipeline are
+designed for GPU workloads — on CPU they're slow by nature, not by
+misconfiguration. No amount of OMP thread tuning was going to fix that.
+We gave it a Kubernetes pod with a CPU limit and spent three weeks wondering
+why it was slow, when the answer was baked into the infrastructure choice
+from the start.</p>
+<p>Heavyweight ML libraries in application services almost always cost more in ops
+than they save in capability — especially when a managed API can do the same
+job. That's not a criticism of Docling specifically. It's a lesson about
+matching the tool to the operational context you're actually working in.</p>
+<p>We learnt it the expensive way.</p>]]></content>
+        <author>
+            <name>Danish Javed</name>
+            <uri>https://github.com/ambersariya</uri>
+        </author>
+        <category label="ai-engineering" term="ai-engineering"/>
+        <category label="python" term="python"/>
+        <category label="lessons-learned" term="lessons-learned"/>
+        <category label="document-parsing" term="document-parsing"/>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[You Can't Debug What Bedrock Swallowed]]></title>
         <id>https://codeeatcode.github.io/you-cant-debug-what-bedrock-swallowed/</id>
         <link href="https://codeeatcode.github.io/you-cant-debug-what-bedrock-swallowed/"/>
