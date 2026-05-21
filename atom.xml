@@ -457,69 +457,96 @@ of the tool. A failure of context.</p>
         <id>https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/</id>
         <link href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/"/>
         <updated>2020-11-30T11:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Journey to the Centre of the stack - Dockerising the legacy]]></summary>
-        <content type="html"><![CDATA[<h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="dockerising-the-legacy">Dockerising the legacy<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#dockerising-the-legacy" class="hash-link" aria-label="Direct link to Dockerising the legacy" title="Direct link to Dockerising the legacy" translate="no">​</a></h4>
-<p>Making changes to application infrastructure can be daunting at the best of times so when it was decided that we move to the world of containers, I took on a task I didn’t know the depth of, so I am going to share my experience of getting my hands dirty.</p>
-<p>At the time, I was new to docker but very interested in the technology, as technology folks, we all love a shiny new toy to play with. Apart from that the advantages and thus the reasons for so are listed as follows in no particular order:</p>
-<ul>
-<li class="">Introducing speedier changes and testing ideas faster</li>
-<li class="">Infrastructure as code</li>
-<li class="">Simplify application/tech stack</li>
-<li class="">Be cloud-friendly</li>
-</ul>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="legacy-stack">Legacy Stack<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#legacy-stack" class="hash-link" aria-label="Direct link to Legacy Stack" title="Direct link to Legacy Stack" translate="no">​</a></h2>
-<p>Where working with the difficulty of releasing changes in the current environment that are potentially outdated, have no tests and no real dependency management, installing the dependencies and developing newer features can be a considerable effort.</p>
-<p>The monster you could be working with may consist of the spaghetti of many applications running outdated technology.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="doing-the-dirty-work">Doing the dirty work<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#doing-the-dirty-work" class="hash-link" aria-label="Direct link to Doing the dirty work" title="Direct link to Doing the dirty work" translate="no">​</a></h2>
-<p>I would, of course, start with looking at the stack diagram of sorts or create one if there’s isn’t one already and identify common things between the applications. If you have more than one application that shares a lot of common things such as language, set of libraries, webserver and OS, then extract this to a base image that each application can build on and extend.</p>
-<p>For example, what tripped me when I tested one of the apps where file upload functionality failed because the file size was larger than the one allowed. So take care to look through configs of environments &amp; language etc.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="environment-variables">Environment Variables<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#environment-variables" class="hash-link" aria-label="Direct link to Environment Variables" title="Direct link to Environment Variables" translate="no">​</a></h2>
-<p>These will be your friend when dockerising an application so I would identify various things such as follows</p>
-<ul>
-<li class="">File storage paths e.g. for static assets</li>
-<li class="">URLs</li>
-<li class="">Secrets</li>
-</ul>
-<p>Furthermore, environment variables helped me greatly in maintaining compatibility via feature flags as I wanted to maintain compatibility between the current environment and the potential new docker environment.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="file-paths">File paths<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#file-paths" class="hash-link" aria-label="Direct link to File paths" title="Direct link to File paths" translate="no">​</a></h2>
-<p>Extract these paths across the applications and move to constants or move them to environment variables. So if you have a path dependency on e.g. <strong><em>/tmp</em></strong> this could be moved to an environment variable named <strong>TMP_PATH,</strong> making it configurable which can be supplied when the container is run.</p>
-<p>In reality, you’ll likely be running multiple instances of the same container so changing this in favour of persistent storage via Kubernetes or Docker volumes would be better to allow access to any stored files to any multiple running instances. If you have the option, move files to S3 buckets or similar e.g. Min.io.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="extract-secrets">Extract secrets<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#extract-secrets" class="hash-link" aria-label="Direct link to Extract secrets" title="Direct link to Extract secrets" translate="no">​</a></h2>
-<p>Extract any secrets e.g. API Keys to Docker/Kubernetes secrets, these could be stored in your favourite secrets management solution. Although initially, you may not have an established secrets management solution, so moving these to environment variables temporarily would allow you to get on with the job at hand.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="logging-mechanism">Logging mechanism<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#logging-mechanism" class="hash-link" aria-label="Direct link to Logging mechanism" title="Direct link to Logging mechanism" translate="no">​</a></h2>
-<p>If you’re dockerising a legacy application then you’ll likely more than one process doing some important work e.g. Apache/Nginx logs, application logs, cron logs. These may also be writing to multiple different log files.</p>
-<p>In suggested practice, it’s best to write to the standard output stream to see a combined view although you’ll want to differentiate between logs of different kinds. This can be done with a centralised logging solution for later.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="language-versions">Language versions<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#language-versions" class="hash-link" aria-label="Direct link to Language versions" title="Direct link to Language versions" translate="no">​</a></h2>
-<p>This applies to any language but picking a ready-built official Docker image will go a long way to simplifying your life. Failing that, if nothing is available then look to build the language from the source on the closest os version. It should minimise any compatibility differences.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="web-server">Web Server<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#web-server" class="hash-link" aria-label="Direct link to Web Server" title="Direct link to Web Server" translate="no">​</a></h2>
-<p>Keep to the same web server and the same version where possible.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="session-storage-paths">Session storage paths<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#session-storage-paths" class="hash-link" aria-label="Direct link to Session storage paths" title="Direct link to Session storage paths" translate="no">​</a></h2>
-<p>Try to opt for a unified storage for sessions for example Database backed sessions otherwise try to go for a unified file path using persistent storage mounts.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="access-to-other-web-services">Access to other web services<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#access-to-other-web-services" class="hash-link" aria-label="Direct link to Access to other web services" title="Direct link to Access to other web services" translate="no">​</a></h2>
-<p>Be mindful of how your application talks to another in your network. Whether this is via DNS or by hardcoded IP, you’ll want to change this to access this service by service name. The address should be extracted to an environment variable also to allow for configuration.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-to-test-changes-as-you-refactor">How to test changes as you refactor?<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#how-to-test-changes-as-you-refactor" class="hash-link" aria-label="Direct link to How to test changes as you refactor?" title="Direct link to How to test changes as you refactor?" translate="no">​</a></h2>
-<p>If you’re lucky enough to have various types of tests for your application then keep running tests every so often while you make changes. Either run these locally or if you have a CI server setup to build your image and test on every push then that’s great.</p>
-<p>Failing that, test the area/feature you’re refactoring by running the application with some dummy data.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="reverse-proxying">Reverse Proxying<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#reverse-proxying" class="hash-link" aria-label="Direct link to Reverse Proxying" title="Direct link to Reverse Proxying" translate="no">​</a></h2>
-<p>Use a reverse proxy such as Nginx/HA Proxy/Traefik to act as an ingress controller for requests.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="ssl-termination">SSL Termination<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#ssl-termination" class="hash-link" aria-label="Direct link to SSL Termination" title="Direct link to SSL Termination" translate="no">​</a></h2>
-<p>Important to figure this one when you consider yourself done with Dockerisation, as this may not be your biggest problem initially where you run one container in isolation.</p>
-<p>One gotcha with this will be when, say, you go to production where your ingress is using a reverse proxy or a load balancer then if your application sets secure cookies, they may not be transmitted to the browser to be stored if you’re not using SSL with your app.</p>
-<p><img decoding="async" loading="lazy" src="https://www.nginx.com/wp-content/uploads/2014/04/nginx-decrypts-https-traffic.png" alt="SSL Termination Nginx" class="img_ev3q"></p>
-<p>Shamelessly borrowed from <a href="https://www.nginx.com/blog/nginx-ssl/" target="_blank" rel="noopener noreferrer" class="">https://www.nginx.com/blog/nginx-ssl/</a></p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="cronjobs">Cronjobs<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#cronjobs" class="hash-link" aria-label="Direct link to Cronjobs" title="Direct link to Cronjobs" translate="no">​</a></h2>
-<p>If you plan on using Kubernetes then it allows you to schedule workloads that can be scheduled using a cronjob like syntax. Please see more details here: <a href="https://www.nginx.com/blog/nginx-ssl/" target="_blank" rel="noopener noreferrer" class="">https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/</a></p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="file-permissions">File permissions<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#file-permissions" class="hash-link" aria-label="Direct link to File permissions" title="Direct link to File permissions" translate="no">​</a></h2>
-<p>Container’s file permissions get copied from the host machine’s file system while building images so be mindful when building them on environments implementing the least privilege principle on the filesystem.</p>
-<p>So when you COPY or ADD files, you can use the following</p>
-<div class="language-dockerfile codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-dockerfile codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">COPY [--chown=&lt;user&gt;:&lt;group&gt;] &lt;src&gt;... &lt;dest&gt;</span><br></div></code></pre></div></div>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="summary">Summary<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#summary" class="hash-link" aria-label="Direct link to Summary" title="Direct link to Summary" translate="no">​</a></h2>
-<p>I may have glossed over a few things but I would like to say that no matter how much I share, your own journey will give you a great bit of experience and hope I’ve shared some gotchas that may be of some help. So dive right in but with some consideration :-)</p>
-<p>Thanks for sticking with me.</p>]]></content>
+        <summary type="html"><![CDATA[Containerising legacy software has always been a journey into the unknown. What's changed is who you take with you.]]></summary>
+        <content type="html"><![CDATA[<p>I first wrote this post in 2020 after spending several weeks containerising a
+legacy application I hadn't built and didn't fully understand. The experience
+was mostly archaeology — reading old config files, tracing hardcoded paths,
+figuring out what half a dozen processes actually did before touching anything.
+By the time I had a working Docker image, I'd earned it.</p>
+<p>I'm updating it now because the journey has changed, and I think it's worth
+being honest about how.</p>
+<p>The destination is the same. Legacy modernisation still means diving into
+unfamiliar depth, finding the load-bearing assumptions nobody documented, and
+making a series of architectural decisions that will outlive the sprint you're
+in. None of that has gone away.</p>
+<p>What's changed is the discovery phase. The part where you spend half a day
+grepping through twelve config files to find every hardcoded <code>/tmp</code> path. The
+part where you read three hundred lines of an entrypoint script to understand
+what order things start in. The part where you're trying to build a mental
+model of a system from first principles because the person who built it left
+two years ago.</p>
+<p>That part is cheaper now. Not free — cheaper. And for senior engineers in
+particular, that matters more than it might sound.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-cognitive-load-is-the-real-cost">The cognitive load is the real cost<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#the-cognitive-load-is-the-real-cost" class="hash-link" aria-label="Direct link to The cognitive load is the real cost" title="Direct link to The cognitive load is the real cost" translate="no">​</a></h2>
+<p>When you're working in unfamiliar legacy code, there's a ceiling on how much
+you can think about architecture while simultaneously trying to understand what
+you're looking at. The mental budget goes to comprehension first and decision-
+making second.</p>
+<p>AI tooling shifts that balance. You can ask an agent to map the dependency
+graph, find all the places a config value is used, summarise what a given
+module does, or trace what happens to a file after it's uploaded. It doesn't
+always get this perfectly right, but it gets you oriented faster. And
+orientation is the precondition for good architectural thinking.</p>
+<p>The senior engineer's job in a legacy modernisation isn't to read every file —
+it's to understand the system well enough to make the right calls. AI handles
+more of the reading. You do more of the deciding. That's a reasonable trade.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-still-requires-a-human">What still requires a human<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#what-still-requires-a-human" class="hash-link" aria-label="Direct link to What still requires a human" title="Direct link to What still requires a human" translate="no">​</a></h2>
+<p>This is the part worth being direct about: you cannot vibe code your way
+through a legacy containerisation.</p>
+<p>Legacy systems have accumulated tradeoffs that aren't visible in the code
+itself. A hardcoded path exists for a reason. Session storage lives in a
+particular place because of a deployment constraint nobody remembered to
+remove. An environment variable has a default that only works in production
+because of how the CI pipeline was wired up five years ago.</p>
+<p>An agent will find the path, tell you what it does, maybe suggest you move it
+to an env var. What it can't tell you is whether that change will break the
+cron job on the production server that six business processes depend on — the
+one that isn't in any of the tests because it predates the testing culture.</p>
+<p>That's still yours. The judgment about which changes are safe, which tradeoffs
+are real, which "quick wins" are landmines with a friendly face — that's the
+work. AI lowers the cost of getting to the point where you can make those calls.
+It doesn't make the calls for you.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-practical-shape-of-it-now">The practical shape of it now<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#the-practical-shape-of-it-now" class="hash-link" aria-label="Direct link to The practical shape of it now" title="Direct link to The practical shape of it now" translate="no">​</a></h2>
+<p>For what it's worth, here's roughly how I'd approach a legacy containerisation
+today, with AI tooling in the picture:</p>
+<p><strong>Discovery first.</strong> Ask the agent to map the application — what processes run,
+what config files exist, what external services are referenced, what file paths
+are hardcoded. Treat this as a starting point for your own investigation, not a
+definitive answer. Legacy codebases often have behaviour that doesn't show up
+in a static read.</p>
+<p><strong>Identify the decisions, not just the tasks.</strong> The genuine work in a
+containerisation is a small number of architectural choices — how to handle
+sessions, where persistent storage lives, how secrets are managed, how the
+application handles multiple running instances. Everything else is mechanics.
+Get to the decisions faster and spend your time there.</p>
+<p><strong>Keep the base image simple.</strong> If you have multiple applications sharing a
+common runtime, extract a base image. Agent tooling is good at spotting what's
+common across applications — use it for that comparison work.</p>
+<p><strong>Externalise everything that changes between environments.</strong> File paths, URLs,
+secrets, feature flags — environment variables. Not because it's clever, but
+because it's the minimum requirement for any container to be operationally
+useful. This hasn't changed.</p>
+<p><strong>Test incrementally.</strong> Don't wait until the Dockerfile is complete to run the
+application. Run it as early as possible, find the first thing that breaks, fix
+it, repeat. The agent can help write tests for the areas you're refactoring,
+but you need to know which areas matter enough to test.</p>
+<p><strong>Understand what you're committing to.</strong> Every dependency you add to the
+container — a system library, an OCR engine, a local model — is infrastructure
+you're now responsible for. The Docling post on this blog exists because we
+learnt that lesson the long way.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-title-still-fits">The title still fits<a href="https://codeeatcode.github.io/journey-to-the-centre-of-the-stack/#the-title-still-fits" class="hash-link" aria-label="Direct link to The title still fits" title="Direct link to The title still fits" translate="no">​</a></h2>
+<p>The journey to the centre of the stack is still a journey. The technology has
+changed, the tooling has improved, and you have better company on the way down
+than you did five years ago. But the stack is still there, and the centre of
+it still contains the decisions that matter.</p>
+<p>The difference is that you can now spend more of your cognitive budget on the
+part that actually requires experience to get right.</p>
+<p>That seems like a reasonable upgrade.</p>]]></content>
         <category label="docker" term="docker"/>
         <category label="legacy-software" term="legacy-software"/>
         <category label="modernisation" term="modernisation"/>
-        <category label="containerisation" term="containerisation"/>
+        <category label="ai-engineering" term="ai-engineering"/>
+        <category label="developer-experience" term="developer-experience"/>
     </entry>
     <entry>
         <title type="html"><![CDATA[JSON Web Tokens]]></title>
