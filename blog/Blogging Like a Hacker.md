@@ -7,6 +7,8 @@ modified: 2022-05-18T12:01:34.181Z
 ---
 Hello World :earth_asia:
 
+<!-- truncate -->
+
 This is my first post, hoping there's a lot more I can write, but for now, this is me getting started with blogging.
 
 I am an experienced Software Developer from the UK. I started my first fulltime job in 2011, I never thought to share my thoughts & experience. Through this blog, I am hoping to channel my thoughts and hopefully pay forward the knowledge in the same way I've found to be useful from other bloggers.

@@ -10,6 +10,8 @@ tags:
   - how-to
 ---
 
+<!-- truncate -->
+
 1. Click on settings for VSCode
 2. Click on "User Snippets
 3. Click on "New Global Snippets File..."

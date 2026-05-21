@@ -14,6 +14,8 @@ Project setup should be boring. Not in a "this is beneath me" way — in a
 
 Most of the time, it isn't.
 
+<!-- truncate -->
+
 You clone a repo you haven't touched in six months. The README says "install
 Python 3.11". You have 3.12. Something breaks. You remember there's a
 `.python-version` file somewhere, or maybe a `requires-python` in

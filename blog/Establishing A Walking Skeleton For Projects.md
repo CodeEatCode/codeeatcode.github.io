@@ -7,6 +7,8 @@ modified: 2022-05-18T13:29:31.906Z
 
 I've been reading the excellent book [Growing Object-Oriented Software, Guided By Tests](https://www.goodreads.com/en/book/show/4268826-growing-object-oriented-software-guided-by-tests "Growing Object-Oriented Software, Guided By Tests") and there's so much that resonated with me about starting work on a new project.
 
+<!-- truncate -->
+
 As with anything new, give developers some shiny new something to work on and there's always the temptation to dive right in and get started with code. This often means that you're starting from the inside-out of a problem space and often some operational details are overlooked. When we're done solving that problem, trying to release that or to push that to production is often a problem nobody had perceived.
 
 I recently experienced this on a project where we'd resorted to creating the application locally to put that online later. We had an idea of things like tech limitations and choices at the time, and deferring that decision seemed right, but it later came to bite us when we wanted to release the first feature.
