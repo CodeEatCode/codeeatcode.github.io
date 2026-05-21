@@ -76,6 +76,98 @@
             <category>walking-skeleton</category>
         </item>
         <item>
+            <title><![CDATA[The Classic 'Works on My Machine' — Now With Neural Networks]]></title>
+            <link>https://codeeatcode.github.io/the-classic-works-on-my-machine-now-with-neural-networks/</link>
+            <guid>https://codeeatcode.github.io/the-classic-works-on-my-machine-now-with-neural-networks/</guid>
+            <pubDate>Thu, 21 May 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[I built the evaluation harness first. Ten libraries, same documents, same]]></description>
+            <content:encoded><![CDATA[<p>I built the evaluation harness first. Ten libraries, same documents, same
+metrics, timestamped results, HTML report. Proper engineering. And I still
+ended up in a five-week infrastructure nightmare.</p>
+<p>This is about why.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-requirements-were-genuinely-hard">The requirements were genuinely hard<a href="https://codeeatcode.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-requirements-were-genuinely-hard" class="hash-link" aria-label="Direct link to The requirements were genuinely hard" title="Direct link to The requirements were genuinely hard" translate="no">​</a></h2>
+<p>It's easy to read the <a class="" href="https://codeeatcode.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/">Docling post-mortem</a>
+on this blog and conclude that we reached for the wrong tool. But the
+requirements weren't trivial, and I want to be honest about that.</p>
+<p>We needed a parser that could handle:</p>
+<ul>
+<li class=""><strong>Rasterised PDFs</strong> — scanned documents with no embedded text</li>
+<li class=""><strong>Table detection</strong> — not just "there is a table here" but structure extraction</li>
+<li class=""><strong>Merged cells</strong> — tables where cells span multiple rows or columns</li>
+<li class=""><strong>Layout detection</strong> — understanding headings, sections, figures as distinct elements</li>
+<li class=""><strong>Picture descriptions</strong> — extracting meaning from embedded images</li>
+</ul>
+<p>Most PDF parsing libraries handle one or two of these. The lightweight ones
+— pdfplumber, pypdf, PyMuPDF — are excellent for native digital PDFs with
+clean text, but they're not designed for the document complexity we were
+dealing with. We needed something that understood documents as structured
+objects, not as streams of text.</p>
+<p>Docling handled all of it.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-harness-said-so">The harness said so<a href="https://codeeatcode.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-harness-said-so" class="hash-link" aria-label="Direct link to The harness said so" title="Direct link to The harness said so" translate="no">​</a></h2>
+<p>I built a comparison harness before committing to anything — ten parsers, a
+standardised subprocess-based runner, isolated output per library, metrics
+covering wall-clock time, peak memory, word counts, table detection, heading
+extraction. You can find it here:
+<a href="https://github.com/ambersariya/pdf-parsing-comparison" target="_blank" rel="noopener noreferrer" class="">github.com/ambersariya/pdf-parsing-comparison</a>.</p>
+<p>I ran it against a set of representative documents. Docling won on every
+qualitative dimension that mattered: table structure, merged cells, layout
+comprehension, image handling. It wasn't close. The other libraries produced
+flat text extractions. Docling produced structured, readable Markdown that
+actually reflected the document's intent.</p>
+<p>The harness was doing its job. The numbers were real.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-problem-was-the-machine">The problem was the machine<a href="https://codeeatcode.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-problem-was-the-machine" class="hash-link" aria-label="Direct link to The problem was the machine" title="Direct link to The problem was the machine" translate="no">​</a></h2>
+<p>I ran all of this on an M4 Pro MacBook. Apple Silicon with MPS
+acceleration — for PyTorch workloads, that's not far off GPU performance.
+Docling's layout models, its table structure analysis, its OCR pipeline — all
+of it ran fast. Fast enough that performance never became a question worth
+asking.</p>
+<p>Production ran on CPU-based Kubernetes nodes.</p>
+<p>The gap between those two environments for an ML inference workload is not
+a percentage difference. It's a different order of magnitude. What took
+seconds on the M4 took minutes on a CPU pod. The OMP thread throttling,
+the concurrency tuning, the performance whack-a-mole documented in the
+post-mortem — all of it was a consequence of running local ML inference on
+hardware it wasn't designed for.</p>
+<p>The harness was correct. The harness environment was not representative.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-pressure-factor">The pressure factor<a href="https://codeeatcode.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-pressure-factor" class="hash-link" aria-label="Direct link to The pressure factor" title="Direct link to The pressure factor" translate="no">​</a></h2>
+<p>There's a human element worth naming too. We were under pressure to find a
+solution that met those qualitative requirements, and Docling met them
+convincingly. When you're looking for something specific and you find it, the
+instinct is to commit — not to ask what happens when you move it to a
+different machine.</p>
+<p>That instinct is understandable. It's also exactly when the infrastructure
+question matters most. The harder the requirements, the more likely you're
+reaching for a heavy tool — and heavy tools are the ones most sensitive to
+the hardware they run on.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-the-evaluation-was-missing">What the evaluation was missing<a href="https://codeeatcode.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#what-the-evaluation-was-missing" class="hash-link" aria-label="Direct link to What the evaluation was missing" title="Direct link to What the evaluation was missing" translate="no">​</a></h2>
+<p>In hindsight, the harness needed one more dimension: a production-equivalent
+environment. Running the same comparison on a CPU-constrained container would
+have surfaced the performance characteristics immediately. The qualitative
+winners would have been the same. The decision might not have been.</p>
+<p>For ML-heavy libraries specifically, the evaluation environment is part of the
+evaluation. A benchmark on Apple Silicon is not a benchmark for a CPU pod.
+That sounds obvious written down. It was not obvious in the moment.</p>
+<p>The other thing worth checking earlier: whether a managed API could meet the
+same qualitative bar. In our case, Claude via Bedrock handled rasterised pages,
+tables, merged cells, layout, and picture descriptions — via the same vision
+pipeline we use for everything else. No local models. No infrastructure. We
+didn't know that when we started, but we could have found out faster.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-harness-is-still-worth-building">The harness is still worth building<a href="https://codeeatcode.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-harness-is-still-worth-building" class="hash-link" aria-label="Direct link to The harness is still worth building" title="Direct link to The harness is still worth building" translate="no">​</a></h2>
+<p>None of this is an argument against evaluation harnesses. Building one before
+committing to a library is still the right instinct — it forces you to define
+what "good" means before you've seen any results, and it makes the comparison
+repeatable and shareable.</p>
+<p>The lesson is narrower: for any library that runs local inference, add hardware
+parity to the checklist. Run it on something that resembles production before
+you wire it into the Dockerfile.</p>
+<p>The harness told the truth. We just didn't ask it the right question.</p>]]></content:encoded>
+            <category>ai-engineering</category>
+            <category>python</category>
+            <category>lessons-learned</category>
+            <category>document-parsing</category>
+            <category>testing</category>
+        </item>
+        <item>
             <title><![CDATA[The Metric Your Users Feel Before You Measure It]]></title>
             <link>https://codeeatcode.github.io/the-metric-your-users-feel-before-you-measure-it/</link>
             <guid>https://codeeatcode.github.io/the-metric-your-users-feel-before-you-measure-it/</guid>
