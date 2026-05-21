@@ -71,6 +71,12 @@ to an env var. What it can't tell you is whether that change will break the
 cron job on the production server that six business processes depend on — the
 one that isn't in any of the tests because it predates the testing culture.
 
+AI tools don't have access to the organisational context: the deployment
+constraints, the team agreements, the compliance requirements, the reason
+something was done a particular way three years ago. That knowledge lives in
+people, not code. And in legacy systems, it's often the most important
+knowledge there is.
+
 That's still yours. The judgment about which changes are safe, which tradeoffs
 are real, which "quick wins" are landmines with a friendly face — that's the
 work. AI lowers the cost of getting to the point where you can make those calls.
