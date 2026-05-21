@@ -13,10 +13,8 @@
             <link>https://works-in-prod.github.io/the-classic-works-on-my-machine-now-with-neural-networks/</link>
             <guid>https://works-in-prod.github.io/the-classic-works-on-my-machine-now-with-neural-networks/</guid>
             <pubDate>Thu, 21 May 2026 09:00:00 GMT</pubDate>
-            <description><![CDATA[I built the evaluation harness first. Ten libraries, same documents, same]]></description>
-            <content:encoded><![CDATA[<p>I built the evaluation harness first. Ten libraries, same documents, same
-metrics, timestamped results, HTML report. Proper engineering. And I still
-ended up in a five-week infrastructure nightmare.</p>
+            <description><![CDATA[I built the evaluation harness first. Ten libraries, same documents, same metrics, timestamped results, HTML report. Proper engineering. And I still ended up in a five-week infrastructure nightmare.]]></description>
+            <content:encoded><![CDATA[<p>I built the evaluation harness first. Ten libraries, same documents, same metrics, timestamped results, HTML report. Proper engineering. And I still ended up in a five-week infrastructure nightmare.</p>
 <p>This is about why.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-requirements-were-genuinely-hard">The requirements were genuinely hard<a href="https://works-in-prod.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-requirements-were-genuinely-hard" class="hash-link" aria-label="Direct link to The requirements were genuinely hard" title="Direct link to The requirements were genuinely hard" translate="no">​</a></h2>
 <p>It's easy to read the <a class="" href="https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/">Docling post-mortem</a>
@@ -41,26 +39,20 @@ objects, not as streams of text.</p>
 standardised subprocess-based runner, isolated output per library, metrics
 covering wall-clock time, peak memory, word counts, table detection, heading
 extraction. You can find it here:
-<a href="https://github.com/ambersariya/pdf-parsing-comparison" target="_blank" rel="noopener noreferrer" class="">github.com/ambersariya/pdf-parsing-comparison</a>.</p>
+<a href="https://github.com/ambersariya/pdf-parsing-comparison" target="_blank" rel="noopener noreferrer" class="">github.com/ambersariya/pdf-parsing-comparison</a>.
+<em>(I was fairly pleased with how it turned out.)</em></p>
 <p>I ran it against a set of representative documents. Docling won on every
 qualitative dimension that mattered: table structure, merged cells, layout
 comprehension, image handling. It wasn't close. The other libraries produced
 flat text extractions. Docling produced structured, readable Markdown that
-actually reflected the document's intent.</p>
+actually reflected the document's intent; the caveat was that it was a memory hog.</p>
 <p>The harness was doing its job. The numbers were real.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-problem-was-the-machine">The problem was the machine<a href="https://works-in-prod.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-problem-was-the-machine" class="hash-link" aria-label="Direct link to The problem was the machine" title="Direct link to The problem was the machine" translate="no">​</a></h2>
-<p>I ran all of this on an M4 Pro MacBook. Apple Silicon with MPS
-acceleration — for PyTorch workloads, that's not far off GPU performance.
-Docling's layout models, its table structure analysis, its OCR pipeline — all
-of it ran fast. Fast enough that performance never became a question worth
-asking.</p>
+<p>I ran all of this on an M4 Pro MacBook. Apple Silicon with MPS acceleration — for PyTorch workloads, that's not far off GPU performance. Docling's layout models, its table structure analysis, its OCR pipeline — all of it ran fast. Fast enough that performance never became a question worth asking.</p>
 <p>Production ran on CPU-based Kubernetes nodes.</p>
 <p>The gap between those two environments for an ML inference workload is not
 a percentage difference. It's a different order of magnitude. What took
-seconds on the M4 took minutes on a CPU pod. The OMP thread throttling,
-the concurrency tuning, the performance whack-a-mole documented in the
-post-mortem — all of it was a consequence of running local ML inference on
-hardware it wasn't designed for.</p>
+seconds on the M4 took minutes on a CPU pod. So much that the ALB on AWS cried and killed my requests. The OMP thread throttling, the concurrency tuning, the performance whack-a-mole documented in the post-mortem — all of it was a consequence of running local ML inference on hardware it wasn't designed for.</p>
 <p>The harness was correct. The harness environment was not representative.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-pressure-factor">The pressure factor<a href="https://works-in-prod.github.io/the-classic-works-on-my-machine-now-with-neural-networks/#the-pressure-factor" class="hash-link" aria-label="Direct link to The pressure factor" title="Direct link to The pressure factor" translate="no">​</a></h2>
 <p>There's a human element worth naming too. We were under pressure to find a
@@ -134,11 +126,8 @@ excluded every time</li>
 <p>None of this is catastrophic. But it's the kind of friction that tells you
 something about what you're dealing with.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="act-ii-the-model-infrastructure-tax">Act II: The Model Infrastructure Tax<a href="https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/#act-ii-the-model-infrastructure-tax" class="hash-link" aria-label="Direct link to Act II: The Model Infrastructure Tax" title="Direct link to Act II: The Model Infrastructure Tax" translate="no">​</a></h2>
-<p>Because Docling models can't be downloaded at cold-start in production — too
-slow, no egress — a CI/CD model sync workflow was introduced to pre-bake them
-into S3. This became its own small project: a GitHub Actions workflow to sync
-models, config to point Docling at the S3 cache path, and downstream fixes
-when the sync workflow itself had bugs.</p>
+<p>Because Docling models can't be downloaded at cold-start in production — far too
+slow (EKS health checks started failing almost immediately) — a CI/CD model sync workflow was introduced to pre-bake them into the Docker image. The container ballooned from a small fish to a blowfish, which led to caching the models in S3 with an InitContainer. This became its own small project: a GitHub Actions workflow to sync models, config to point Docling at the S3 cache path, and downstream fixes when the sync workflow itself had bugs.</p>
 <p>The application now had an out-of-band model synchronisation pipeline that had
 to be kept in step with the Docling version in <code>pyproject.toml</code>. Updating the
 OCR engine or parser models meant updating the Dockerfile, updating the sync

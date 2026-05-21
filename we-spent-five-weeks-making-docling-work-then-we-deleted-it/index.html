@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap"><link rel="stylesheet" href="/assets/css/styles.cf294bb1.css">
-<script src="/assets/js/runtime~main.d3b05053.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.3667c313.js" defer="defer"></script>
 <script src="/assets/js/main.f30dcd47.js" defer="defer"></script>
 </head>
 <body>
@@ -44,11 +44,8 @@ excluded every time</li>
 <p>None of this is catastrophic. But it&#x27;s the kind of friction that tells you
 something about what you&#x27;re dealing with.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="act-ii-the-model-infrastructure-tax">Act II: The Model Infrastructure Tax<a href="#act-ii-the-model-infrastructure-tax" class="hash-link" aria-label="Direct link to Act II: The Model Infrastructure Tax" title="Direct link to Act II: The Model Infrastructure Tax" translate="no">​</a></h2>
-<p>Because Docling models can&#x27;t be downloaded at cold-start in production — too
-slow, no egress — a CI/CD model sync workflow was introduced to pre-bake them
-into S3. This became its own small project: a GitHub Actions workflow to sync
-models, config to point Docling at the S3 cache path, and downstream fixes
-when the sync workflow itself had bugs.</p>
+<p>Because Docling models can&#x27;t be downloaded at cold-start in production — far too
+slow (EKS health checks started failing almost immediately) — a CI/CD model sync workflow was introduced to pre-bake them into the Docker image. The container ballooned from a small fish to a blowfish, which led to caching the models in S3 with an InitContainer. This became its own small project: a GitHub Actions workflow to sync models, config to point Docling at the S3 cache path, and downstream fixes when the sync workflow itself had bugs.</p>
 <p>The application now had an out-of-band model synchronisation pipeline that had
 to be kept in step with the Docling version in <code>pyproject.toml</code>. Updating the
 OCR engine or parser models meant updating the Dockerfile, updating the sync
