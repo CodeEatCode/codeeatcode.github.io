@@ -142,9 +142,17 @@ We gave it a Kubernetes pod with a CPU limit and spent three weeks wondering
 why it was slow, when the answer was baked into the infrastructure choice
 from the start.
 
-Heavyweight ML libraries in application services almost always cost more in ops
-than they save in capability — especially when a managed API can do the same
-job. That's not a criticism of Docling specifically. It's a lesson about
-matching the tool to the operational context you're actually working in.
+To be clear: Docling is a capable library. On GPU-backed infrastructure, with
+a proper model serving layer, it likely performs well — and there are
+self-hosted or air-gapped contexts where a managed API isn't an option and
+something like Docling is exactly the right tool. We may also have missed
+configuration options that would have helped. It's entirely possible that
+with different infrastructure or more time, we'd have got there.
+
+But that's the point. The question isn't whether a tool works in the right
+environment — it's whether your environment is the right one for it. Running
+local inference on CPU nodes in an application service, when a managed API
+exists that does the job with less ops surface, is a mismatch. Not a failure
+of the tool. A failure of context.
 
 We learnt it the expensive way.
