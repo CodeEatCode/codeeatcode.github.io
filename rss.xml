@@ -4,10 +4,80 @@
         <title>Code Eat Code Blog</title>
         <link>https://codeeatcode.github.io/</link>
         <description>Code Eat Code Blog</description>
-        <lastBuildDate>Thu, 19 May 2022 11:46:52 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 21 May 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Stop Arguing With Your Terminal About Python Versions]]></title>
+            <link>https://codeeatcode.github.io/stop-arguing-with-your-terminal-about-python-versions/</link>
+            <guid>https://codeeatcode.github.io/stop-arguing-with-your-terminal-about-python-versions/</guid>
+            <pubDate>Thu, 21 May 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Project setup should be boring. Not in a "this is beneath me" way — in a]]></description>
+            <content:encoded><![CDATA[<p>Project setup should be boring. Not in a "this is beneath me" way — in a
+"this takes thirty seconds and I never think about it" way.</p>
+<p>Most of the time, it isn't.</p>
+<p>You clone a repo you haven't touched in six months. The README says "install
+Python 3.11". You have 3.12. Something breaks. You remember there's a
+<code>.python-version</code> file somewhere, or maybe a <code>requires-python</code> in
+<code>pyproject.toml</code>. You spend twenty minutes figuring out which version manager
+you're even supposed to be using for this project before you've written a
+single line of code.</p>
+<p>This isn't a Python problem. Terraform has <code>tfenv</code>. Node has <code>nvm</code> or <code>volta</code>
+or <code>.nvmrc</code>. Every language brings its own version manager, its own config
+file format, its own way of silently using the wrong version. And that's before
+you even get to figuring out how to run things — is it <code>make test</code>? <code>./scripts/test.sh</code>?
+Some npm script buried in a <code>package.json</code>? Nobody knows. You ask Slack.</p>
+<p>I got tired of this and started using <a href="https://mise.jdx.dev/" target="_blank" rel="noopener noreferrer" class="">mise</a>. It's a
+single tool that handles both problems: pinned runtimes and discoverable tasks,
+for any language, in one file.</p>
+<p>A Python service looks like this:</p>
+<div class="language-toml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-toml codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">[tools]</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">python = "3.12.3"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">[tasks.test]</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">description = "Run the test suite"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">run = "pytest"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">[tasks.verify]</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">description = "Run all checks before pushing"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">depends = ["test", "build"]</span><br></div></code></pre></div></div>
+<p>Run <code>mise install</code> and you get exactly that Python version. Run <code>mise tasks</code>
+and you see everything the project knows how to do. Run <code>mise run verify</code>
+before pushing. That's it.</p>
+<p>The part I find most satisfying is that <code>mise run &lt;task&gt;</code> becomes a stable
+interface that hides whatever's behind it. I had a project that needed a custom
+k6 binary with SSE support for load testing a streaming API. Building it
+requires Go and a tool called <code>xk6</code>, which most people have never heard of.
+With mise, that's just:</p>
+<div class="language-toml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-toml codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">[tools]</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">go = "1.22.3"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">[tasks.build]</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">description = "Build k6 with xk6-sse extension"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">run = "xk6 build --with github.com/phymbert/xk6-sse"</span><br></div></code></pre></div></div>
+<p>Now <code>mise run build</code> works for everyone — the developer who knows what xk6 is,
+the one who doesn't, and the CI job. Nobody has to know what's behind it. When
+I added another extension later, I changed one line. The interface didn't move.</p>
+<p>Speaking of CI — this is where the real payoff is. A GitHub Actions workflow
+for a mise project looks like:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token key atrule" style="color:#00a4db">jobs</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token key atrule" style="color:#00a4db">verify</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token key atrule" style="color:#00a4db">runs-on</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"> ubuntu</span><span class="token punctuation" style="color:#393A34">-</span><span class="token plain">latest</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token key atrule" style="color:#00a4db">steps</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token punctuation" style="color:#393A34">-</span><span class="token plain"> </span><span class="token key atrule" style="color:#00a4db">uses</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"> actions/checkout@v4</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token punctuation" style="color:#393A34">-</span><span class="token plain"> </span><span class="token key atrule" style="color:#00a4db">uses</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"> jdx/mise</span><span class="token punctuation" style="color:#393A34">-</span><span class="token plain">action@v2</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token punctuation" style="color:#393A34">-</span><span class="token plain"> </span><span class="token key atrule" style="color:#00a4db">run</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"> mise run verify</span><br></div></code></pre></div></div>
+<p><code>mise-action</code> reads <code>mise.toml</code>, installs the pinned versions, and puts them
+on <code>PATH</code>. Then <code>mise run verify</code> runs the exact same thing you run locally.
+No separate version install steps. No drift between what CI checks and what
+you check. This is the thing that makes it worth the setup cost — CI and local
+are no longer two separate mental models.</p>
+<p>The one thing mise can't do is install itself. You need it on the machine
+before any of this works. I solve that with <a href="https://www.chezmoi.io/" target="_blank" rel="noopener noreferrer" class="">Chezmoi</a>,
+a dotfile manager that runs once on a fresh machine. A <code>run_once_install-mise.sh</code>
+script does the bootstrap:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">#!/bin/sh</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">curl https://mise.run | sh</span><br></div></code></pre></div></div>
+<p>Then the shell hook in <code>~/.zshrc</code> (also managed by Chezmoi) activates mise
+per directory:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">eval "$(mise activate zsh)"</span><br></div></code></pre></div></div>
+<p>Chezmoi sets up the machine, mise sets up each project. Neither knows the other
+exists. You go from a blank laptop to a running project without reading a setup
+guide — which is the point.</p>
+<p>It won't fix an undocumented deployment process or a service that can't run
+locally. It encodes what's already known. And if your team is already settled
+on <code>nvm</code> + <code>make</code> for a single-language, single-runtime project, the migration
+cost might not be worth it. The value really compounds when you're working
+across multiple projects or switching between them regularly — which, in my
+experience, is most of the time.</p>
+<hr>
+<p><em><code>mise</code> replaces <code>pyenv</code>, <code>nvm</code>, <code>rbenv</code>, <code>tfenv</code>, <code>asdf</code>, and most other
+per-language version managers. If you're on <code>asdf</code> already, migration is
+painless — <code>mise</code> reads <code>.tool-versions</code> files natively.</em></p>]]></content:encoded>
+            <category>tooling</category>
+            <category>developer-experience</category>
+            <category>mise</category>
+        </item>
         <item>
             <title><![CDATA[Vscode Snippet To Add Markdown Frontmatter]]></title>
             <link>https://codeeatcode.github.io/vscode-snippet-to-add-markdown-frontmatter/</link>
