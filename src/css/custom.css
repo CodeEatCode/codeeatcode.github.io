@@ -1,11 +1,10 @@
 /**
- * Works in Prod — custom theme
- * Built on Docusaurus Infima. Clean, readable, not flashy.
+ * Works in Prod — editorial-terminal theme
+ * Instrument Serif italic × IBM Plex Mono × IBM Plex Sans
  */
 
-/* ── Colour palette ──────────────────────────────────────────────────────── */
+/* ── Tokens ──────────────────────────────────────────────────────────────── */
 :root {
-  /* Deep blue — professional, not the default green */
   --ifm-color-primary: #1d4ed8;
   --ifm-color-primary-dark: #1a45c2;
   --ifm-color-primary-darker: #1840b8;
@@ -14,18 +13,32 @@
   --ifm-color-primary-lighter: #2b5fe3;
   --ifm-color-primary-lightest: #4272e8;
 
-  --ifm-code-font-size: 90%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.08);
+  --ifm-code-font-size: 88%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.07);
 
-  /* Typography */
+  /* Fonts */
+  --ifm-font-family-base: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --ifm-font-family-monospace: 'IBM Plex Mono', 'Menlo', 'Monaco', monospace;
+  --font-display: 'Instrument Serif', Georgia, serif;
+
+  /* Scale */
   --ifm-font-size-base: 17px;
-  --ifm-line-height-base: 1.75;
-  --ifm-font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  --ifm-heading-font-weight: 700;
+  --ifm-line-height-base: 1.8;
+  --ifm-heading-font-weight: 600;
+
+  /* Surfaces — warm off-white, not clinical */
+  --wip-bg: #F9F8F6;
+  --wip-bg-alt: #F3F2EF;
+  --wip-border: #E5E3DE;
+  --wip-text-muted: #6B6860;
+  --wip-accent: #B45309;
+
+  --ifm-background-color: var(--wip-bg);
+  --ifm-navbar-background-color: var(--wip-bg);
+  --ifm-footer-background-color: var(--wip-bg-alt);
 }
 
 [data-theme='dark'] {
-  /* Softer blue for dark mode */
   --ifm-color-primary: #60a5fa;
   --ifm-color-primary-dark: #3b91f9;
   --ifm-color-primary-darker: #2988f8;
@@ -35,79 +48,189 @@
   --ifm-color-primary-lightest: #bcd7fd;
 
   --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.08);
-  --ifm-background-color: #0f172a;
-  --ifm-navbar-background-color: #0f172a;
-  --ifm-footer-background-color: #0a0f1e;
+
+  --wip-bg: #111110;
+  --wip-bg-alt: #1A1A18;
+  --wip-border: #2A2A27;
+  --wip-text-muted: #888780;
+  --wip-accent: #F59E0B;
+
+  --ifm-background-color: var(--wip-bg);
+  --ifm-navbar-background-color: var(--wip-bg);
+  --ifm-footer-background-color: var(--wip-bg-alt);
+  --ifm-color-content: #E8E6E1;
 }
 
 /* ── Navbar ──────────────────────────────────────────────────────────────── */
 .navbar {
-  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  border-bottom: 1px solid var(--wip-border);
   box-shadow: none;
+  background-color: var(--wip-bg);
 }
 
 .navbar__title {
-  font-weight: 800;
-  letter-spacing: -0.02em;
-}
-
-/* ── Navbar tagline ──────────────────────────────────────────────────────── */
-.navbar__tagline {
-  font-size: 0.75rem;
-  color: var(--ifm-color-emphasis-600);
+  font-family: var(--font-display);
   font-style: italic;
-  letter-spacing: 0.01em;
-}
-
-/* ── Blog post typography ────────────────────────────────────────────────── */
-.markdown h1 {
-  letter-spacing: -0.02em;
-}
-
-.markdown h2 {
+  font-size: 1.35rem;
+  font-weight: 400;
   letter-spacing: -0.01em;
-  margin-top: 2.5rem;
 }
 
-.markdown p {
-  margin-bottom: 1.25rem;
+.navbar__tagline {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.7rem;
+  color: var(--wip-text-muted);
+  letter-spacing: 0.02em;
+  margin-left: 0.25rem;
+}
+
+/* ── Blog list ───────────────────────────────────────────────────────────── */
+.blog-list-page .container {
+  max-width: 800px;
+}
+
+/* Post title on list */
+article header h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
 }
 
 article header h2 a {
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  color: var(--ifm-color-content);
+  text-decoration: none;
+  transition: opacity 0.15s ease;
 }
 
 article header h2 a:hover {
+  opacity: 0.7;
   text-decoration: none;
-  opacity: 0.8;
 }
 
-/* ── Inline code ─────────────────────────────────────────────────────────── */
+/* Post metadata — monospace, muted */
+.blog-post-page .avatar__subtitle,
+article .col--2 time,
+article footer .avatar__subtitle,
+.blog__readingTime,
+.blogPostData_node_modules-\\@docusaurus-theme-classic-lib-theme-BlogPostItem-Header-Info-styles-module {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.8rem;
+  color: var(--wip-text-muted);
+}
+
+/* ── Blog post ───────────────────────────────────────────────────────────── */
+.blog-post-page .container {
+  max-width: 800px;
+}
+
+.blog-post-page article > header h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 2.6rem;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+.markdown h2 {
+  font-family: var(--ifm-font-family-base);
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--wip-text-muted);
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--wip-border);
+  padding-bottom: 0.4rem;
+}
+
+.markdown h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-style: italic;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+  margin-top: 2rem;
+}
+
+.markdown p {
+  margin-bottom: 1.3rem;
+}
+
+/* Inline code */
 .markdown code {
-  background-color: var(--ifm-color-emphasis-100);
-  border-radius: 4px;
-  padding: 0.15em 0.4em;
-  font-size: 0.875em;
+  font-family: var(--ifm-font-family-monospace);
+  background-color: var(--wip-bg-alt);
+  border: 1px solid var(--wip-border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: var(--wip-accent);
+}
+
+/* Code blocks */
+.prism-code {
+  border: 1px solid var(--wip-border) !important;
+  border-radius: 6px !important;
+}
+
+/* ── Blockquote ──────────────────────────────────────────────────────────── */
+.markdown blockquote {
+  border-left: 3px solid var(--ifm-color-primary);
+  background: var(--wip-bg-alt);
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border-radius: 0 4px 4px 0;
+  font-style: italic;
+  color: var(--wip-text-muted);
 }
 
 /* ── Tables ──────────────────────────────────────────────────────────────── */
 .markdown table {
-  display: table;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.85em;
   width: 100%;
-  font-size: 0.9em;
+  border: 1px solid var(--wip-border);
+  border-radius: 6px;
+  overflow: hidden;
 }
 
 .markdown table th {
-  background-color: var(--ifm-color-emphasis-100);
-  font-weight: 600;
+  background-color: var(--wip-bg-alt);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 0.75em;
+}
+
+.markdown table tr:nth-child(even) {
+  background-color: var(--wip-bg-alt);
+}
+
+/* ── Horizontal rule ─────────────────────────────────────────────────────── */
+.markdown hr {
+  border: none;
+  border-top: 1px solid var(--wip-border);
+  margin: 2.5rem 0;
 }
 
 /* ── Footer ──────────────────────────────────────────────────────────────── */
 .footer {
-  border-top: 1px solid var(--ifm-color-emphasis-200);
+  border-top: 1px solid var(--wip-border);
+  background-color: var(--wip-bg-alt);
 }
 
-.footer--dark {
-  --ifm-footer-background-color: #0a0f1e;
+.footer__copyright {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+  color: var(--wip-text-muted);
+}
+
+/* ── Reading width ───────────────────────────────────────────────────────── */
+@media (min-width: 997px) {
+  .blog-post-page .col.col--7 {
+    max-width: 720px;
+  }
 }

@@ -12,6 +12,11 @@ module.exports = async function () {
         tagline: "Vibe-posted. Fact-checked. Mostly.",
         url: "https://works-in-prod.github.io",
         baseUrl: "/",
+        headTags: [
+            { tagName: "link", attributes: { rel: "preconnect", href: "https://fonts.googleapis.com" } },
+            { tagName: "link", attributes: { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "anonymous" } },
+            { tagName: "link", attributes: { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" } },
+        ],
         onBrokenLinks: "throw",
         markdown: {
             hooks: {
