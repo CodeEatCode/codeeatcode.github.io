@@ -86,13 +86,7 @@ thiseyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkFzIjoiYWRtaW4iLCJpYXQiOjE
 
 Let’s expand on the claims section of JWT. The following claims are part of the RFC document:
 
-**iss**: who is the issuer of this token auth.example.com
-**sub**: what is the subject of this token e.g. auth
-**aud**: who can use this token e.g ['client1.example.com','client2.example.com']
-**exp**: Defines the expiration time as unix timestamp e.g. 1488192525
-**nbf**: define how long after the issued token was generated we can use it e.g. 300 seconds (5 minutes)
-**iat**: issued at is a unix timestamp e.g. 1488192525
-**jti**: JWT ID unique id. This can be used to prevent a token from being replayed e.g. "xa443D"
+**iss**: who is the issuer of this token auth.example.com **sub**: what is the subject of this token e.g. auth **aud**: who can use this token e.g ['client1.example.com','client2.example.com'] **exp**: Defines the expiration time as unix timestamp e.g. 1488192525 **nbf**: define how long after the issued token was generated we can use it e.g. 300 seconds (5 minutes) **iat**: issued at is a unix timestamp e.g. 1488192525 **jti**: JWT ID unique id. This can be used to prevent a token from being replayed e.g. "xa443D"
 
 The key names are case sensitive and have been kept small to keep the JSON payload compact.
 
