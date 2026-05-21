@@ -4,82 +4,15 @@
         <title>Works in Prod Blog</title>
         <link>https://works-in-prod.github.io/</link>
         <description>Works in Prod Blog</description>
-        <lastBuildDate>Thu, 21 May 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 21 May 2026 09:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
-            <title><![CDATA[TDD Was Solving the Agent Problem Before Agents Existed]]></title>
-            <link>https://works-in-prod.github.io/tdd-was-solving-the-agent-problem-before-agents-existed/</link>
-            <guid>https://works-in-prod.github.io/tdd-was-solving-the-agent-problem-before-agents-existed/</guid>
-            <pubDate>Thu, 21 May 2026 00:00:00 GMT</pubDate>
-            <description><![CDATA[The first time I set an agent loose on a real codebase, it ran out of context before it had done anything useful. That's a clarifying experience.]]></description>
-            <content:encoded><![CDATA[<p>The first time I set an agent loose on a real codebase, it ran out of context before it had done anything useful. That's a clarifying experience.</p>
-<p>The repository wasn't exotic — a Python monorepo with shared libraries and some infrastructure code. I drew a diagram to understand what was happening. A rectangle for the full context window; blocks for what was already consumed just from loading the codebase: directory tree, CLAUDE.md, relevant modules, config, dependencies. The bar was more than half full before the agent had read a single line of task context or seen a single error message.</p>
-<p>That image stuck with me. Half the agent's working memory gone on orientation alone. And the uncomfortable follow-up question: whose fault is that?</p>
-<p>Mostly ours, it turns out.</p>
-<p>A codebase with fuzzy boundaries, large unfocused modules, and implicit conventions forces the agent to do the same orientation work a new engineer would do — except a new engineer can ask questions, build intuition over weeks, and remember what they learned yesterday. With the tools I've been using, there's no persistent memory between sessions by default. Every session is effectively day one. The codebase has to compensate for what the agent can't retain.</p>
-<p>There's a body of practice — going back about twenty-five years — that points in exactly this direction. We just didn't know we were solving this particular problem at the time.</p>
-<p>TDD and the XP practices around it — simple design, ruthless refactoring, tests as documentation — produce exactly the properties that make a codebase agent-readable. Small focused units with explicit interfaces. Behaviour described in tests rather than buried in implementation. No accidental complexity quietly accumulating in corners. Clear boundaries that tell you where one thing ends and another begins.</p>
-<p>None of this is new. But the agentic era has made the value of it more visible. The "too much to hold in your head at once" problem that TDD was designed to address is the same problem the context window makes concrete. A codebase with small focused units and tests that describe behaviour fits into an agent's context cleanly. One where complexity has accumulated unchecked — regardless of how it got there — does not.</p>
-<p>Tests also do something specific for agents that code alone can't: they describe intended behaviour without requiring the agent to read the implementation. A test called <code>test_chat_service_returns_error_on_empty_prompt</code> tells the agent more in one line than several hundred lines of service code could. When an agent needs to understand a boundary, it reads the tests. Targeted context. Problem contained.</p>
-<p>The cost angle is real too. Context is billed by the token. An agent flailing around a poorly structured codebase — re-reading files, tracing implicit dependencies, inferring conventions that should be explicit — is burning money before it's produced anything. Good structure isn't just clean, it's cheap.</p>
-<p>This also connects to the current conversation around "vibe-coding" and agents generating code freely. From what I've seen, the concern isn't really about whether the agent can write working code — it often can. The concern is whether the codebase it's writing into has enough structure to keep the output coherent over time. Architecture tests help here too: codify the rules, and both human and agent get immediate feedback when something drifts from the intended shape.</p>
-<p>The agentic era didn't invent a new problem. It gave us a new, very legible way to feel the cost of one we'd been politely ignoring for years.</p>
-<p>TDD and XP have always pushed toward properties — small units, explicit interfaces, behaviour-as-tests — that turn out to be just as valuable for agents as they are for humans. The reasons stack up.</p>]]></content:encoded>
-            <category>ai-engineering</category>
-            <category>tdd</category>
-            <category>developer-experience</category>
-            <category>agile</category>
-        </item>
-        <item>
-            <title><![CDATA[The Art of the Architecture Diagram Is Knowing What to Leave Out]]></title>
-            <link>https://works-in-prod.github.io/the-art-of-the-architecture-diagram-is-knowing-what-to-leave-out/</link>
-            <guid>https://works-in-prod.github.io/the-art-of-the-architecture-diagram-is-knowing-what-to-leave-out/</guid>
-            <pubDate>Thu, 21 May 2026 00:00:00 GMT</pubDate>
-            <description><![CDATA[There's a particular type of diagram that engineers love producing and nobody can read. It has boxes for every service, arrows for every dependency, labels on each arrow explaining the protocol, and a legend in the corner that requires its own legend. It is, technically speaking, accurate. It is also completely useless.]]></description>
-            <content:encoded><![CDATA[<p>There's a particular type of diagram that engineers love producing and nobody can read. It has boxes for every service, arrows for every dependency, labels on each arrow explaining the protocol, and a legend in the corner that requires its own legend. It is, technically speaking, accurate. It is also completely useless.</p>
-<p>I've been doing C4 modelling for a while now and I genuinely love it — not because it's fashionable, but because it gives you a proper mental model for what a diagram is actually <em>for</em>. System Context, Container, Component, Code. Four levels. Each one answers a different question for a different audience. The mistake most teams make is picking the wrong level, or worse, mixing levels in the same diagram because they couldn't decide and nobody wanted to have the argument.</p>
-<p>The tooling has always been a headache. I tried a few diagram-as-code options and they all seemed to get in the way more than they helped. Recently switched to <a href="https://d2lang.com/" target="_blank" rel="noopener noreferrer" class="">D2</a> and it's been noticeably better. Minimal syntax, clean output, doesn't try to do seventeen things at once. It renders the diagram and gets out of your way.</p>
-<p>The discipline isn't in drawing the boxes though — it's in deciding what <em>not</em> to draw. Engineers instinctively want to put everything in. Every dependency. Every call. Every integration they personally wired up at 11pm on a Thursday and feel a certain proprietary affection for. The result is a diagram that documents institutional knowledge and communicates nothing.</p>
-<p>Here's the difference in practice. The noisy version — everything that's technically true:</p>
-<img decoding="async" loading="lazy" src="https://works-in-prod.github.io/d2/blog/The%20Art%20of%20the%20Architecture%20Diagram%20Is%20Knowing%20What%20to%20Leave%20Out/0.svg" alt="d2 diagram" class="img_ev3q">
-<p>The clean version — what the Container diagram should actually say:</p>
-<img decoding="async" loading="lazy" src="https://works-in-prod.github.io/d2/blog/The%20Art%20of%20the%20Architecture%20Diagram%20Is%20Knowing%20What%20to%20Leave%20Out/1.svg" alt="d2 diagram" class="img_ev3q">
-<p>Same system. The second one takes thirty seconds to understand. The first takes thirty minutes and a whiteboard session that everyone leaves more confused than when they arrived.</p>
-<p>My preference is top-down layout — things flow downward, dependencies point in one direction, you can scan it. It's a small thing that makes a significant difference to whether a diagram reads as a story or as a pub quiz question.</p>
-<p>AI tools make the arrows problem considerably worse. They're very close to the code — that's their whole thing — and if you ask one to generate an architecture diagram, it will dutifully render every import, every function call, every database relationship it can find. The result looks impressively comprehensive. It communicates approximately nothing.</p>
-<p>Simplification requires a judgement call about what matters to the reader. That depends on who the reader is, what decision they're trying to make, and what level of detail actually serves them. Current AI tools don't have access to any of that context. A human has to make the call. That judgement is the actual skill the diagram is expressing.</p>
-<p>The test I use: if someone new to the team can look at your diagram and explain back what the system does — without you hovering over their shoulder narrating — the diagram is doing its job. If they need you to explain the diagram, you've drawn a very expensive set of notes.</p>
-<p>Pick your level. Remove the noise. Push back on the arrows.</p>]]></content:encoded>
-            <category>architecture</category>
-            <category>diagrams</category>
-            <category>c4</category>
-            <category>d2</category>
-        </item>
-        <item>
-            <title><![CDATA[The Blockers Don't Care That You're Using AI]]></title>
-            <link>https://works-in-prod.github.io/the-blockers-dont-care-that-youre-using-ai/</link>
-            <guid>https://works-in-prod.github.io/the-blockers-dont-care-that-youre-using-ai/</guid>
-            <pubDate>Thu, 21 May 2026 00:00:00 GMT</pubDate>
-            <description><![CDATA[I wrote a post back in 2021 about walking skeletons — the idea that before you go deep on features, you ship something thin and deployable end-to-end. Not because it's useful to users, but because it flushes out the real blockers while the cost of finding them is still low. Permissions. Pipelines. Infrastructure assumptions that looked fine on a whiteboard.]]></description>
-            <content:encoded><![CDATA[<p>I wrote a post back in 2021 about walking skeletons — the idea that before you go deep on features, you ship something thin and deployable end-to-end. Not because it's useful to users, but because it flushes out the real blockers while the cost of finding them is still low. Permissions. Pipelines. Infrastructure assumptions that looked fine on a whiteboard.</p>
-<p>That advice hasn't aged out. If anything, AI projects have made it more relevant, not less.</p>
-<p>Here's the thing about AI systems specifically: the surface area for things to silently go wrong is larger. You've got model integrations, inference infrastructure, data pipelines, prompt management, evaluation loops, and whatever cloud hoops your organisation has decided to add on top. Any one of those can be perfectly fine in isolation and a disaster when wired together in a real environment. The feedback loop — getting something running end-to-end early — serves exactly the same purpose it always did. You learn what's actually broken before you've written ten thousand lines of feature code around it.</p>
-<p>I saw this recently on an AI project. We pushed to establish the skeleton early, before anyone could argue we weren't ready. And yes, we hit the usual suspects: IAM permissions that looked correct until they didn't, model API access that needed a different approval path than expected, tooling that worked locally and had strong opinions about containers. None of it was AI-specific. I've been burned by the same class of problems in every non-trivial project I've worked on since before "AI engineering" was a job title.</p>
-<p>What was different was the speed at which we got through it. That's where the AI era genuinely does change things — not the nature of the blockers, but the time between "we found the problem" and "we fixed it." Digging through IAM policies, drafting the right internal request, figuring out the correct incantation for whichever cloud service had opinions today — all of it moved faster with AI tooling alongside. It's a multiplier on the resolution side, not the discovery side.</p>
-<p>Which is worth saying plainly: AI tooling doesn't help you find blockers you never looked for. The skeleton is still the mechanism for surfacing them. You still have to commit to the discipline of doing it early, before the temptation to just build features wins.</p>
-<p>That temptation is strong. AI tooling makes feature development feel fast. You can go from idea to working prototype in a morning. That speed makes it very easy to go deep before you've established whether any of it will actually run in production. And then you've got a lot of impressive-looking code and a pipeline that doesn't exist yet.</p>
-<p>The honest caveat: this is still a discipline problem more than a tooling problem. AI makes the fixing faster, but it can't make you look for trouble before you think you need to. The teams that skipped the walking skeleton before will probably still skip it now — just with faster excuses.</p>]]></content:encoded>
-            <category>ai-engineering</category>
-            <category>software-delivery</category>
-            <category>walking-skeleton</category>
-        </item>
-        <item>
             <title><![CDATA[The Classic 'Works on My Machine' — Now With Neural Networks]]></title>
             <link>https://works-in-prod.github.io/the-classic-works-on-my-machine-now-with-neural-networks/</link>
             <guid>https://works-in-prod.github.io/the-classic-works-on-my-machine-now-with-neural-networks/</guid>
-            <pubDate>Thu, 21 May 2026 00:00:00 GMT</pubDate>
+            <pubDate>Thu, 21 May 2026 09:00:00 GMT</pubDate>
             <description><![CDATA[I built the evaluation harness first. Ten libraries, same documents, same]]></description>
             <content:encoded><![CDATA[<p>I built the evaluation harness first. Ten libraries, same documents, same
 metrics, timestamped results, HTML report. Proper engineering. And I still
@@ -168,160 +101,10 @@ you wire it into the Dockerfile.</p>
             <category>testing</category>
         </item>
         <item>
-            <title><![CDATA[The Metric Your Users Feel Before You Measure It]]></title>
-            <link>https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/</link>
-            <guid>https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/</guid>
-            <pubDate>Thu, 21 May 2026 00:00:00 GMT</pubDate>
-            <description><![CDATA[Working on a streaming chat product taught me something: the standard]]></description>
-            <content:encoded><![CDATA[<p>Working on a streaming chat product taught me something: the standard
-latency metrics don't really describe what users experience. They're not
-waiting for a page to load or an API to return a JSON blob. They're watching
-tokens appear — and what they feel before anything appears is the thing
-most teams aren't measuring.</p>
-<p>That thing is time-to-first-token. TTFT.</p>
-<p>I ran into this while load testing a streaming chat endpoint. The obvious
-thing to reach for is <code>http_req_duration</code> — it's right there in k6, it
-captures how long the request took, job done. Except it isn't. For a
-streaming LLM response, <code>http_req_duration</code> captures the entire stream from
-first byte sent to last byte received. If your model takes two seconds to
-start streaming and then streams for eight seconds, your p95 latency looks
-like ten seconds. That tells you almost nothing about whether the product
-feels responsive.</p>
-<p>What matters to the person using a chat interface is: how long until
-<em>something</em> appears? A response that starts in 800ms and streams for thirty
-seconds feels fast. A response that sits blank for four seconds then dumps
-everything at once feels broken — even if the total duration is shorter.</p>
-<p>That gap between "request sent" and "first content chunk received" is TTFT,
-and it's the metric that actually describes streaming UX.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="measuring-it">Measuring it<a href="https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/#measuring-it" class="hash-link" aria-label="Direct link to Measuring it" title="Direct link to Measuring it" translate="no">​</a></h2>
-<p>Standard k6 doesn't parse SSE streams, so you need a custom binary built
-with <a href="https://github.com/phymbert/xk6-sse" target="_blank" rel="noopener noreferrer" class="">xk6-sse</a>:</p>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">xk6 build --with github.com/phymbert/xk6-sse</span><br></div></code></pre></div></div>
-<p>Then define a custom <code>Trend</code> metric and record it the moment the first
-content event arrives:</p>
-<div class="language-javascript codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-javascript codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token keyword module" style="color:#00009f">import</span><span class="token plain"> </span><span class="token imports">sse</span><span class="token plain"> </span><span class="token keyword module" style="color:#00009f">from</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"k6/x/sse"</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword module" style="color:#00009f">import</span><span class="token plain"> </span><span class="token imports punctuation" style="color:#393A34">{</span><span class="token imports"> </span><span class="token imports maybe-class-name">Trend</span><span class="token imports"> </span><span class="token imports punctuation" style="color:#393A34">}</span><span class="token plain"> </span><span class="token keyword module" style="color:#00009f">from</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"k6/metrics"</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">const</span><span class="token plain"> ttft </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token keyword" style="color:#00009f">new</span><span class="token plain"> </span><span class="token class-name">Trend</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">"ttft_s"</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token boolean" style="color:#36acaa">true</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword module" style="color:#00009f">export</span><span class="token plain"> </span><span class="token keyword module" style="color:#00009f">default</span><span class="token plain"> </span><span class="token keyword" style="color:#00009f">function</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token keyword" style="color:#00009f">const</span><span class="token plain"> start </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token known-class-name class-name">Date</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">now</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token keyword" style="color:#00009f">let</span><span class="token plain"> firstTokenRecorded </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token boolean" style="color:#36acaa">false</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  sse</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">open</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">url</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> params</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token parameter">client</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token arrow operator" style="color:#393A34">=&gt;</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    client</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">on</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">"event"</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token parameter">event</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token arrow operator" style="color:#393A34">=&gt;</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token keyword control-flow" style="color:#00009f">if</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token operator" style="color:#393A34">!</span><span class="token plain">firstTokenRecorded </span><span class="token operator" style="color:#393A34">&amp;&amp;</span><span class="token plain"> event</span><span class="token punctuation" style="color:#393A34">.</span><span class="token property-access">data</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">!==</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"[DONE]"</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">        ttft</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">add</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">(</span><span class="token known-class-name class-name">Date</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">now</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">-</span><span class="token plain"> start</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">/</span><span class="token plain"> </span><span class="token number" style="color:#36acaa">1000</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">        firstTokenRecorded </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token boolean" style="color:#36acaa">true</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token punctuation" style="color:#393A34">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token punctuation" style="color:#393A34">}</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token punctuation" style="color:#393A34">}</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">}</span><br></div></code></pre></div></div>
-<p>Critically: read the stream to completion even after you've recorded TTFT.
-Dropping the connection early skews the load profile — the server is still
-doing work and your test stops accounting for it.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="load-profile-design">Load profile design<a href="https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/#load-profile-design" class="hash-link" aria-label="Direct link to Load profile design" title="Direct link to Load profile design" translate="no">​</a></h2>
-<p>For observational load testing, a ramp-and-hold pattern gives you clean
-steady-state numbers to actually reason about:</p>
-<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">VUs</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">100 ┤               ▄▄▄▄▄▄▄</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"> 50 ┤         ▄▄▄▄▄▀       ▀▄▄▄▄▄</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"> 10 ┤   ▄▄▄▄▄▀                   ▀▄▄▄▄▄</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  0 ┤──▀                               ▀──</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      ramp  hold   ramp   hold   ramp  hold</span><br></div></code></pre></div></div>
-<p>During a ramp phase, concurrency is in transition — exclude those samples
-from headline stats. During a hold phase, you have stable concurrency and
-predictable sample counts. Tag every sample with its phase and VU target
-so you can filter cleanly in post-processing.</p>
-<p>One request per VU per hold window also gives you deterministic sample
-counts: 50 VUs × 60s hold = exactly 50 requests. Reproducible, comparable
-across runs.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-you-actually-learn">What you actually learn<a href="https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/#what-you-actually-learn" class="hash-link" aria-label="Direct link to What you actually learn" title="Direct link to What you actually learn" translate="no">​</a></h2>
-<p>Here's where it gets interesting. Once you have TTFT as a real metric, you
-start seeing things that <code>http_req_duration</code> completely hides.</p>
-<p>What we found was that different models have quite different characteristics.
-Some are fast to start and slow to finish. Some are the opposite. Prompt
-caching had a measurable effect in our tests — a cache hit on a large system
-prompt shaved hundreds of milliseconds off first token time, and we wouldn't
-have seen that signal at all if we'd only been watching total duration.</p>
-<p>We also saw how concurrency affects <em>perceived</em> responsiveness differently
-than it affects throughput. At low VU counts the TTFT p95 looked fine. Add
-more concurrent users and TTFT degraded before throughput did — which means
-users start feeling slowness before the dashboards register a problem.
-Your mileage will vary depending on model and infrastructure, but it's worth
-checking.</p>
-<p>These are the kinds of insights that only exist once you're measuring the
-right thing. Total request duration isn't the wrong metric — it's just the
-wrong <em>first</em> metric for a product where the UX is a stream.</p>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="set-a-concrete-target-before-you-test">Set a concrete target before you test<a href="https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/#set-a-concrete-target-before-you-test" class="hash-link" aria-label="Direct link to Set a concrete target before you test" title="Direct link to Set a concrete target before you test" translate="no">​</a></h2>
-<p>Before running at scale, decide what good looks like. What is an acceptable
-p95 TTFT at your expected concurrency? Write it down before you look at the
-numbers — otherwise you'll rationalise whatever you find.</p>
-<p>Your target will depend on your model, your infrastructure, your users'
-expectations, and honestly, what your provider can actually deliver under
-load. The test reveals that; it doesn't guarantee it. But without a target,
-you're just generating numbers.</p>
-<hr>
-<p><em>TTFT is one dimension. Token throughput — how fast the stream itself moves
-once started — is another. Both matter, and they can point in opposite
-directions. Worth measuring separately.</em></p>]]></content:encoded>
-            <category>ai-engineering</category>
-            <category>observability</category>
-            <category>performance</category>
-        </item>
-        <item>
-            <title><![CDATA[Stop Arguing With Your Terminal About Python Versions]]></title>
-            <link>https://works-in-prod.github.io/stop-arguing-with-your-terminal-about-python-versions/</link>
-            <guid>https://works-in-prod.github.io/stop-arguing-with-your-terminal-about-python-versions/</guid>
-            <pubDate>Thu, 21 May 2026 00:00:00 GMT</pubDate>
-            <description><![CDATA[Project setup should be boring. Not in a "this is beneath me" way — in a]]></description>
-            <content:encoded><![CDATA[<p>Project setup should be boring. Not in a "this is beneath me" way — in a
-"this takes thirty seconds and I never think about it" way.</p>
-<p>Most of the time, it isn't.</p>
-<p>You clone a repo you haven't touched in six months. The README says "install
-Python 3.11". You have 3.12. Something breaks. You remember there's a
-<code>.python-version</code> file somewhere, or maybe a <code>requires-python</code> in
-<code>pyproject.toml</code>. You spend twenty minutes figuring out which version manager
-you're even supposed to be using for this project before you've written a
-single line of code.</p>
-<p>This isn't a Python problem. Terraform has <code>tfenv</code>. Node has <code>nvm</code> or <code>volta</code>
-or <code>.nvmrc</code>. Every language brings its own version manager, its own config
-file format, its own way of silently using the wrong version. And that's before
-you even get to figuring out how to run things — is it <code>make test</code>? <code>./scripts/test.sh</code>?
-Some npm script buried in a <code>package.json</code>? Nobody knows. You ask Slack.</p>
-<p>I got tired of this and started using <a href="https://mise.jdx.dev/" target="_blank" rel="noopener noreferrer" class="">mise</a>. It's a
-single tool that handles both problems: pinned runtimes and discoverable tasks,
-for any language, in one file.</p>
-<p>A Python service looks like this:</p>
-<div class="language-toml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-toml codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">[tools]</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">python = "3.12.3"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">[tasks.test]</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">description = "Run the test suite"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">run = "pytest"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">[tasks.verify]</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">description = "Run all checks before pushing"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">depends = ["test", "build"]</span><br></div></code></pre></div></div>
-<p>Run <code>mise install</code> and you get exactly that Python version. Run <code>mise tasks</code>
-and you see everything the project knows how to do. Run <code>mise run verify</code>
-before pushing. That's it.</p>
-<p>The part I find most satisfying is that <code>mise run &lt;task&gt;</code> becomes a stable
-interface that hides whatever's behind it. I had a project that needed a custom
-k6 binary with SSE support for load testing a streaming API. Building it
-requires Go and a tool called <code>xk6</code>, which most people have never heard of.
-With mise, that's just:</p>
-<div class="language-toml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-toml codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">[tools]</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">go = "1.22.3"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">[tasks.build]</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">description = "Build k6 with xk6-sse extension"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">run = "xk6 build --with github.com/phymbert/xk6-sse"</span><br></div></code></pre></div></div>
-<p>Now <code>mise run build</code> works for everyone — the developer who knows what xk6 is,
-the one who doesn't, and the CI job. Nobody has to know what's behind it. When
-I added another extension later, I changed one line. The interface didn't move.</p>
-<p>Speaking of CI — this is where the real payoff is. A GitHub Actions workflow
-for a mise project looks like:</p>
-<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token key atrule" style="color:#00a4db">jobs</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token key atrule" style="color:#00a4db">verify</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token key atrule" style="color:#00a4db">runs-on</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"> ubuntu</span><span class="token punctuation" style="color:#393A34">-</span><span class="token plain">latest</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token key atrule" style="color:#00a4db">steps</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token punctuation" style="color:#393A34">-</span><span class="token plain"> </span><span class="token key atrule" style="color:#00a4db">uses</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"> actions/checkout@v4</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token punctuation" style="color:#393A34">-</span><span class="token plain"> </span><span class="token key atrule" style="color:#00a4db">uses</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"> jdx/mise</span><span class="token punctuation" style="color:#393A34">-</span><span class="token plain">action@v4</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token punctuation" style="color:#393A34">-</span><span class="token plain"> </span><span class="token key atrule" style="color:#00a4db">run</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"> mise run verify</span><br></div></code></pre></div></div>
-<p><code>mise-action</code> reads <code>mise.toml</code>, installs the pinned versions, and puts them
-on <code>PATH</code>. Then <code>mise run verify</code> runs the exact same thing you run locally.
-No separate version install steps. No drift between what CI checks and what
-you check. This is the thing that makes it worth the setup cost — CI and local
-are no longer two separate mental models.</p>
-<p>The one thing mise can't do is install itself. You need it on the machine
-before any of this works. I solve that with <a href="https://www.chezmoi.io/" target="_blank" rel="noopener noreferrer" class="">Chezmoi</a>,
-a dotfile manager that runs once on a fresh machine. A <code>run_once_install-mise.sh</code>
-script does the bootstrap:</p>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">#!/bin/sh</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">curl https://mise.run | sh</span><br></div></code></pre></div></div>
-<p>Then the shell hook in <code>~/.zshrc</code> (also managed by Chezmoi) activates mise
-per directory:</p>
-<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">eval "$(mise activate zsh)"</span><br></div></code></pre></div></div>
-<p>Chezmoi sets up the machine, mise sets up each project. Neither knows the other
-exists. You go from a blank laptop to a running project without reading a setup
-guide — which is the point.</p>
-<p>It won't fix an undocumented deployment process or a service that can't run
-locally. It encodes what's already known. And if your team is already settled
-on <code>nvm</code> + <code>make</code> for a single-language, single-runtime project, the migration
-cost might not be worth it. The value really compounds when you're working
-across multiple projects or switching between them regularly — which, in my
-experience, is most of the time.</p>
-<hr>
-<p><em><code>mise</code> replaces <code>pyenv</code>, <code>nvm</code>, <code>rbenv</code>, <code>tfenv</code>, <code>asdf</code>, and most other
-per-language version managers. If you're on <code>asdf</code> already, migration is
-painless — <code>mise</code> reads <code>.tool-versions</code> files natively.</em></p>]]></content:encoded>
-            <category>tooling</category>
-            <category>developer-experience</category>
-            <category>mise</category>
-        </item>
-        <item>
             <title><![CDATA[We Spent Five Weeks Making Docling Work. Then We Deleted It.]]></title>
             <link>https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/</link>
             <guid>https://works-in-prod.github.io/we-spent-five-weeks-making-docling-work-then-we-deleted-it/</guid>
-            <pubDate>Thu, 21 May 2026 00:00:00 GMT</pubDate>
+            <pubDate>Thu, 21 May 2026 08:00:00 GMT</pubDate>
             <description><![CDATA[This is a post-mortem on five weeks of infrastructure work that ended with]]></description>
             <content:encoded><![CDATA[<p>This is a post-mortem on five weeks of infrastructure work that ended with
 <code>git rm</code> and 1,452 lines deleted from the lockfile alone.</p>
@@ -439,10 +222,58 @@ of the tool. A failure of context.</p>
             <category>document-parsing</category>
         </item>
         <item>
+            <title><![CDATA[The Art of the Architecture Diagram Is Knowing What to Leave Out]]></title>
+            <link>https://works-in-prod.github.io/the-art-of-the-architecture-diagram-is-knowing-what-to-leave-out/</link>
+            <guid>https://works-in-prod.github.io/the-art-of-the-architecture-diagram-is-knowing-what-to-leave-out/</guid>
+            <pubDate>Thu, 21 May 2026 07:00:00 GMT</pubDate>
+            <description><![CDATA[There's a particular type of diagram that engineers love producing and nobody can read. It has boxes for every service, arrows for every dependency, labels on each arrow explaining the protocol, and a legend in the corner that requires its own legend. It is, technically speaking, accurate. It is also completely useless.]]></description>
+            <content:encoded><![CDATA[<p>There's a particular type of diagram that engineers love producing and nobody can read. It has boxes for every service, arrows for every dependency, labels on each arrow explaining the protocol, and a legend in the corner that requires its own legend. It is, technically speaking, accurate. It is also completely useless.</p>
+<p>I've been doing C4 modelling for a while now and I genuinely love it — not because it's fashionable, but because it gives you a proper mental model for what a diagram is actually <em>for</em>. System Context, Container, Component, Code. Four levels. Each one answers a different question for a different audience. The mistake most teams make is picking the wrong level, or worse, mixing levels in the same diagram because they couldn't decide and nobody wanted to have the argument.</p>
+<p>The tooling has always been a headache. I tried a few diagram-as-code options and they all seemed to get in the way more than they helped. Recently switched to <a href="https://d2lang.com/" target="_blank" rel="noopener noreferrer" class="">D2</a> and it's been noticeably better. Minimal syntax, clean output, doesn't try to do seventeen things at once. It renders the diagram and gets out of your way.</p>
+<p>The discipline isn't in drawing the boxes though — it's in deciding what <em>not</em> to draw. Engineers instinctively want to put everything in. Every dependency. Every call. Every integration they personally wired up at 11pm on a Thursday and feel a certain proprietary affection for. The result is a diagram that documents institutional knowledge and communicates nothing.</p>
+<p>Here's the difference in practice. The noisy version — everything that's technically true:</p>
+<img decoding="async" loading="lazy" src="https://works-in-prod.github.io/d2/blog/The%20Art%20of%20the%20Architecture%20Diagram%20Is%20Knowing%20What%20to%20Leave%20Out/0.svg" alt="d2 diagram" class="img_ev3q">
+<p>The clean version — what the Container diagram should actually say:</p>
+<img decoding="async" loading="lazy" src="https://works-in-prod.github.io/d2/blog/The%20Art%20of%20the%20Architecture%20Diagram%20Is%20Knowing%20What%20to%20Leave%20Out/1.svg" alt="d2 diagram" class="img_ev3q">
+<p>Same system. The second one takes thirty seconds to understand. The first takes thirty minutes and a whiteboard session that everyone leaves more confused than when they arrived.</p>
+<p>My preference is top-down layout — things flow downward, dependencies point in one direction, you can scan it. It's a small thing that makes a significant difference to whether a diagram reads as a story or as a pub quiz question.</p>
+<p>AI tools make the arrows problem considerably worse. They're very close to the code — that's their whole thing — and if you ask one to generate an architecture diagram, it will dutifully render every import, every function call, every database relationship it can find. The result looks impressively comprehensive. It communicates approximately nothing.</p>
+<p>Simplification requires a judgement call about what matters to the reader. That depends on who the reader is, what decision they're trying to make, and what level of detail actually serves them. Current AI tools don't have access to any of that context. A human has to make the call. That judgement is the actual skill the diagram is expressing.</p>
+<p>The test I use: if someone new to the team can look at your diagram and explain back what the system does — without you hovering over their shoulder narrating — the diagram is doing its job. If they need you to explain the diagram, you've drawn a very expensive set of notes.</p>
+<p>Pick your level. Remove the noise. Push back on the arrows.</p>]]></content:encoded>
+            <category>architecture</category>
+            <category>diagrams</category>
+            <category>c4</category>
+            <category>d2</category>
+        </item>
+        <item>
+            <title><![CDATA[Your Codebase Has Rules. Does CI Know That?]]></title>
+            <link>https://works-in-prod.github.io/your-codebase-has-rules-does-ci-know-that/</link>
+            <guid>https://works-in-prod.github.io/your-codebase-has-rules-does-ci-know-that/</guid>
+            <pubDate>Thu, 21 May 2026 06:00:00 GMT</pubDate>
+            <description><![CDATA[There's a particular kind of meeting that happens on mixed teams. Someone's opened a pull request, and two engineers are staring at the same diff with completely different facial expressions. One is confused. The other is quietly furious. Neither is wrong, exactly — they just have entirely different mental models of what the codebase is supposed to look like.]]></description>
+            <content:encoded><![CDATA[<p>There's a particular kind of meeting that happens on mixed teams. Someone's opened a pull request, and two engineers are staring at the same diff with completely different facial expressions. One is confused. The other is quietly furious. Neither is wrong, exactly — they just have entirely different mental models of what the codebase is <em>supposed</em> to look like.</p>
+<p>That's the drift I'm talking about. Not bugs. Not broken tests. Just two people who've been building in the same repository for months and have somehow ended up with incompatible ideas about what goes where.</p>
+<p>The friction tends to come from different professional histories. Engineers who came up through software development often have layered architecture drilled in early. Engineers who came up through data science and ML often optimised for iteration speed over structure. Neither background is wrong — they just don't automatically agree on where things belong.</p>
+<p>The answer, at least in part, is <a href="https://github.com/jwbargsten/pytest-archonon" target="_blank" rel="noopener noreferrer" class="">pytest-archon</a>. It lets you write tests that assert structural rules about your codebase. Not "does this function return the right value" — more like "nothing in the API layer should reach directly into the database layer." Rules you'd normally write in a wiki nobody reads, enforced as a test that CI will actually fail on.</p>
+<p>Here's what that looks like:</p>
+<div class="language-python codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-python codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token keyword" style="color:#00009f">from</span><span class="token plain"> pytest_archon </span><span class="token keyword" style="color:#00009f">import</span><span class="token plain"> archrule</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">def</span><span class="token plain"> </span><span class="token function" style="color:#d73a49">test_api_does_not_import_database</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">        archrule</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">"api-layer-isolation"</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">        </span><span class="token punctuation" style="color:#393A34">.</span><span class="token keyword" style="color:#00009f">match</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">"myapp.api.*"</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">        </span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">should_not_import</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">"myapp.database.*"</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">        </span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">check</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">"myapp"</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token punctuation" style="color:#393A34">)</span><br></div></code></pre></div></div>
+<p>That's it. That test will fail if anyone — human or otherwise — writes an API handler that imports a database model directly. No relying on the comment thread getting resolved. No wiki page that's accurate until it isn't. The build fails. The feedback is immediate.</p>
+<p>Which brings me to the agentic angle, because this isn't just about human engineers anymore. When you're vibe-coding with an agent generating chunks of your codebase, the agent doesn't inherently know your architectural rules. It knows how to write Python. It does not know that your team decided six months ago that services should never instantiate repositories directly. Architecture tests give it the same feedback signal they give a human: <em>that's not how we do it here, try again.</em></p>
+<p>The rules become the documentation. Living documentation, with teeth. If the structure is correct, the tests pass. If it drifts — whether from a human in a hurry or an agent that didn't know better — they don't.</p>
+<p>We caught no bugs this way. We caught something slower and harder to fix than bugs: a gradual divergence in how the team understood the system. An AI engineer pulling in a service directly from an API handler because that's how you'd do it in a notebook. A software engineer quietly losing the will to review it because the conversation about why it's wrong is long and the PR queue is longer.</p>
+<p>Architecture tests remove the conversation. The boundary is in the codebase. The codebase enforces it. Everyone, human and agent alike, gets the same feedback.</p>
+<p>Getting ahead of drift is worth more than most people give it credit for.</p>]]></content:encoded>
+            <category>python</category>
+            <category>testing</category>
+            <category>architecture</category>
+            <category>ai-engineering</category>
+        </item>
+        <item>
             <title><![CDATA[You Can't Debug What Bedrock Swallowed]]></title>
             <link>https://works-in-prod.github.io/you-cant-debug-what-bedrock-swallowed/</link>
             <guid>https://works-in-prod.github.io/you-cant-debug-what-bedrock-swallowed/</guid>
-            <pubDate>Thu, 21 May 2026 00:00:00 GMT</pubDate>
+            <pubDate>Thu, 21 May 2026 05:00:00 GMT</pubDate>
             <description><![CDATA[There's a particular kind of hell reserved for debugging LLM-backed systems that nobody bothered to instrument. You've got a request that took twelve seconds and you don't know if the slow part was your retrieval pipeline, the prompt construction, the Bedrock call itself, or the post-processing that turned the model's output into something you'd actually show a user. You have logs. You have vibes. You have, essentially, nothing.]]></description>
             <content:encoded><![CDATA[<p>There's a particular kind of hell reserved for debugging LLM-backed systems that nobody bothered to instrument. You've got a request that took twelve seconds and you don't know if the slow part was your retrieval pipeline, the prompt construction, the Bedrock call itself, or the post-processing that turned the model's output into something you'd actually show a user. You have logs. You have vibes. You have, essentially, nothing.</p>
 <p>We hit this early on an LLM project and it focused the mind quickly.</p>
@@ -461,27 +292,196 @@ of the tool. A failure of context.</p>
             <category>opentelemetry</category>
         </item>
         <item>
-            <title><![CDATA[Your Codebase Has Rules. Does CI Know That?]]></title>
-            <link>https://works-in-prod.github.io/your-codebase-has-rules-does-ci-know-that/</link>
-            <guid>https://works-in-prod.github.io/your-codebase-has-rules-does-ci-know-that/</guid>
-            <pubDate>Thu, 21 May 2026 00:00:00 GMT</pubDate>
-            <description><![CDATA[There's a particular kind of meeting that happens on mixed teams. Someone's opened a pull request, and two engineers are staring at the same diff with completely different facial expressions. One is confused. The other is quietly furious. Neither is wrong, exactly — they just have entirely different mental models of what the codebase is supposed to look like.]]></description>
-            <content:encoded><![CDATA[<p>There's a particular kind of meeting that happens on mixed teams. Someone's opened a pull request, and two engineers are staring at the same diff with completely different facial expressions. One is confused. The other is quietly furious. Neither is wrong, exactly — they just have entirely different mental models of what the codebase is <em>supposed</em> to look like.</p>
-<p>That's the drift I'm talking about. Not bugs. Not broken tests. Just two people who've been building in the same repository for months and have somehow ended up with incompatible ideas about what goes where.</p>
-<p>The friction tends to come from different professional histories. Engineers who came up through software development often have layered architecture drilled in early. Engineers who came up through data science and ML often optimised for iteration speed over structure. Neither background is wrong — they just don't automatically agree on where things belong.</p>
-<p>The answer, at least in part, is <a href="https://github.com/jwbargsten/pytest-archonon" target="_blank" rel="noopener noreferrer" class="">pytest-archon</a>. It lets you write tests that assert structural rules about your codebase. Not "does this function return the right value" — more like "nothing in the API layer should reach directly into the database layer." Rules you'd normally write in a wiki nobody reads, enforced as a test that CI will actually fail on.</p>
-<p>Here's what that looks like:</p>
-<div class="language-python codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-python codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token keyword" style="color:#00009f">from</span><span class="token plain"> pytest_archon </span><span class="token keyword" style="color:#00009f">import</span><span class="token plain"> archrule</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">def</span><span class="token plain"> </span><span class="token function" style="color:#d73a49">test_api_does_not_import_database</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">        archrule</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">"api-layer-isolation"</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">        </span><span class="token punctuation" style="color:#393A34">.</span><span class="token keyword" style="color:#00009f">match</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">"myapp.api.*"</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">        </span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">should_not_import</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">"myapp.database.*"</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">        </span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">check</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">"myapp"</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token punctuation" style="color:#393A34">)</span><br></div></code></pre></div></div>
-<p>That's it. That test will fail if anyone — human or otherwise — writes an API handler that imports a database model directly. No relying on the comment thread getting resolved. No wiki page that's accurate until it isn't. The build fails. The feedback is immediate.</p>
-<p>Which brings me to the agentic angle, because this isn't just about human engineers anymore. When you're vibe-coding with an agent generating chunks of your codebase, the agent doesn't inherently know your architectural rules. It knows how to write Python. It does not know that your team decided six months ago that services should never instantiate repositories directly. Architecture tests give it the same feedback signal they give a human: <em>that's not how we do it here, try again.</em></p>
-<p>The rules become the documentation. Living documentation, with teeth. If the structure is correct, the tests pass. If it drifts — whether from a human in a hurry or an agent that didn't know better — they don't.</p>
-<p>We caught no bugs this way. We caught something slower and harder to fix than bugs: a gradual divergence in how the team understood the system. An AI engineer pulling in a service directly from an API handler because that's how you'd do it in a notebook. A software engineer quietly losing the will to review it because the conversation about why it's wrong is long and the PR queue is longer.</p>
-<p>Architecture tests remove the conversation. The boundary is in the codebase. The codebase enforces it. Everyone, human and agent alike, gets the same feedback.</p>
-<p>Getting ahead of drift is worth more than most people give it credit for.</p>]]></content:encoded>
-            <category>python</category>
-            <category>testing</category>
-            <category>architecture</category>
+            <title><![CDATA[TDD Was Solving the Agent Problem Before Agents Existed]]></title>
+            <link>https://works-in-prod.github.io/tdd-was-solving-the-agent-problem-before-agents-existed/</link>
+            <guid>https://works-in-prod.github.io/tdd-was-solving-the-agent-problem-before-agents-existed/</guid>
+            <pubDate>Thu, 21 May 2026 04:00:00 GMT</pubDate>
+            <description><![CDATA[The first time I set an agent loose on a real codebase, it ran out of context before it had done anything useful. That's a clarifying experience.]]></description>
+            <content:encoded><![CDATA[<p>The first time I set an agent loose on a real codebase, it ran out of context before it had done anything useful. That's a clarifying experience.</p>
+<p>The repository wasn't exotic — a Python monorepo with shared libraries and some infrastructure code. I drew a diagram to understand what was happening. A rectangle for the full context window; blocks for what was already consumed just from loading the codebase: directory tree, CLAUDE.md, relevant modules, config, dependencies. The bar was more than half full before the agent had read a single line of task context or seen a single error message.</p>
+<p>That image stuck with me. Half the agent's working memory gone on orientation alone. And the uncomfortable follow-up question: whose fault is that?</p>
+<p>Mostly ours, it turns out.</p>
+<p>A codebase with fuzzy boundaries, large unfocused modules, and implicit conventions forces the agent to do the same orientation work a new engineer would do — except a new engineer can ask questions, build intuition over weeks, and remember what they learned yesterday. With the tools I've been using, there's no persistent memory between sessions by default. Every session is effectively day one. The codebase has to compensate for what the agent can't retain.</p>
+<p>There's a body of practice — going back about twenty-five years — that points in exactly this direction. We just didn't know we were solving this particular problem at the time.</p>
+<p>TDD and the XP practices around it — simple design, ruthless refactoring, tests as documentation — produce exactly the properties that make a codebase agent-readable. Small focused units with explicit interfaces. Behaviour described in tests rather than buried in implementation. No accidental complexity quietly accumulating in corners. Clear boundaries that tell you where one thing ends and another begins.</p>
+<p>None of this is new. But the agentic era has made the value of it more visible. The "too much to hold in your head at once" problem that TDD was designed to address is the same problem the context window makes concrete. A codebase with small focused units and tests that describe behaviour fits into an agent's context cleanly. One where complexity has accumulated unchecked — regardless of how it got there — does not.</p>
+<p>Tests also do something specific for agents that code alone can't: they describe intended behaviour without requiring the agent to read the implementation. A test called <code>test_chat_service_returns_error_on_empty_prompt</code> tells the agent more in one line than several hundred lines of service code could. When an agent needs to understand a boundary, it reads the tests. Targeted context. Problem contained.</p>
+<p>The cost angle is real too. Context is billed by the token. An agent flailing around a poorly structured codebase — re-reading files, tracing implicit dependencies, inferring conventions that should be explicit — is burning money before it's produced anything. Good structure isn't just clean, it's cheap.</p>
+<p>This also connects to the current conversation around "vibe-coding" and agents generating code freely. From what I've seen, the concern isn't really about whether the agent can write working code — it often can. The concern is whether the codebase it's writing into has enough structure to keep the output coherent over time. Architecture tests help here too: codify the rules, and both human and agent get immediate feedback when something drifts from the intended shape.</p>
+<p>The agentic era didn't invent a new problem. It gave us a new, very legible way to feel the cost of one we'd been politely ignoring for years.</p>
+<p>TDD and XP have always pushed toward properties — small units, explicit interfaces, behaviour-as-tests — that turn out to be just as valuable for agents as they are for humans. The reasons stack up.</p>]]></content:encoded>
             <category>ai-engineering</category>
+            <category>tdd</category>
+            <category>developer-experience</category>
+            <category>agile</category>
+        </item>
+        <item>
+            <title><![CDATA[The Blockers Don't Care That You're Using AI]]></title>
+            <link>https://works-in-prod.github.io/the-blockers-dont-care-that-youre-using-ai/</link>
+            <guid>https://works-in-prod.github.io/the-blockers-dont-care-that-youre-using-ai/</guid>
+            <pubDate>Thu, 21 May 2026 03:00:00 GMT</pubDate>
+            <description><![CDATA[I wrote a post back in 2021 about walking skeletons — the idea that before you go deep on features, you ship something thin and deployable end-to-end. Not because it's useful to users, but because it flushes out the real blockers while the cost of finding them is still low. Permissions. Pipelines. Infrastructure assumptions that looked fine on a whiteboard.]]></description>
+            <content:encoded><![CDATA[<p>I wrote a post back in 2021 about walking skeletons — the idea that before you go deep on features, you ship something thin and deployable end-to-end. Not because it's useful to users, but because it flushes out the real blockers while the cost of finding them is still low. Permissions. Pipelines. Infrastructure assumptions that looked fine on a whiteboard.</p>
+<p>That advice hasn't aged out. If anything, AI projects have made it more relevant, not less.</p>
+<p>Here's the thing about AI systems specifically: the surface area for things to silently go wrong is larger. You've got model integrations, inference infrastructure, data pipelines, prompt management, evaluation loops, and whatever cloud hoops your organisation has decided to add on top. Any one of those can be perfectly fine in isolation and a disaster when wired together in a real environment. The feedback loop — getting something running end-to-end early — serves exactly the same purpose it always did. You learn what's actually broken before you've written ten thousand lines of feature code around it.</p>
+<p>I saw this recently on an AI project. We pushed to establish the skeleton early, before anyone could argue we weren't ready. And yes, we hit the usual suspects: IAM permissions that looked correct until they didn't, model API access that needed a different approval path than expected, tooling that worked locally and had strong opinions about containers. None of it was AI-specific. I've been burned by the same class of problems in every non-trivial project I've worked on since before "AI engineering" was a job title.</p>
+<p>What was different was the speed at which we got through it. That's where the AI era genuinely does change things — not the nature of the blockers, but the time between "we found the problem" and "we fixed it." Digging through IAM policies, drafting the right internal request, figuring out the correct incantation for whichever cloud service had opinions today — all of it moved faster with AI tooling alongside. It's a multiplier on the resolution side, not the discovery side.</p>
+<p>Which is worth saying plainly: AI tooling doesn't help you find blockers you never looked for. The skeleton is still the mechanism for surfacing them. You still have to commit to the discipline of doing it early, before the temptation to just build features wins.</p>
+<p>That temptation is strong. AI tooling makes feature development feel fast. You can go from idea to working prototype in a morning. That speed makes it very easy to go deep before you've established whether any of it will actually run in production. And then you've got a lot of impressive-looking code and a pipeline that doesn't exist yet.</p>
+<p>The honest caveat: this is still a discipline problem more than a tooling problem. AI makes the fixing faster, but it can't make you look for trouble before you think you need to. The teams that skipped the walking skeleton before will probably still skip it now — just with faster excuses.</p>]]></content:encoded>
+            <category>ai-engineering</category>
+            <category>software-delivery</category>
+            <category>walking-skeleton</category>
+        </item>
+        <item>
+            <title><![CDATA[The Metric Your Users Feel Before You Measure It]]></title>
+            <link>https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/</link>
+            <guid>https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/</guid>
+            <pubDate>Thu, 21 May 2026 02:00:00 GMT</pubDate>
+            <description><![CDATA[Working on a streaming chat product taught me something: the standard]]></description>
+            <content:encoded><![CDATA[<p>Working on a streaming chat product taught me something: the standard
+latency metrics don't really describe what users experience. They're not
+waiting for a page to load or an API to return a JSON blob. They're watching
+tokens appear — and what they feel before anything appears is the thing
+most teams aren't measuring.</p>
+<p>That thing is time-to-first-token. TTFT.</p>
+<p>I ran into this while load testing a streaming chat endpoint. The obvious
+thing to reach for is <code>http_req_duration</code> — it's right there in k6, it
+captures how long the request took, job done. Except it isn't. For a
+streaming LLM response, <code>http_req_duration</code> captures the entire stream from
+first byte sent to last byte received. If your model takes two seconds to
+start streaming and then streams for eight seconds, your p95 latency looks
+like ten seconds. That tells you almost nothing about whether the product
+feels responsive.</p>
+<p>What matters to the person using a chat interface is: how long until
+<em>something</em> appears? A response that starts in 800ms and streams for thirty
+seconds feels fast. A response that sits blank for four seconds then dumps
+everything at once feels broken — even if the total duration is shorter.</p>
+<p>That gap between "request sent" and "first content chunk received" is TTFT,
+and it's the metric that actually describes streaming UX.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="measuring-it">Measuring it<a href="https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/#measuring-it" class="hash-link" aria-label="Direct link to Measuring it" title="Direct link to Measuring it" translate="no">​</a></h2>
+<p>Standard k6 doesn't parse SSE streams, so you need a custom binary built
+with <a href="https://github.com/phymbert/xk6-sse" target="_blank" rel="noopener noreferrer" class="">xk6-sse</a>:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">xk6 build --with github.com/phymbert/xk6-sse</span><br></div></code></pre></div></div>
+<p>Then define a custom <code>Trend</code> metric and record it the moment the first
+content event arrives:</p>
+<div class="language-javascript codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-javascript codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token keyword module" style="color:#00009f">import</span><span class="token plain"> </span><span class="token imports">sse</span><span class="token plain"> </span><span class="token keyword module" style="color:#00009f">from</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"k6/x/sse"</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword module" style="color:#00009f">import</span><span class="token plain"> </span><span class="token imports punctuation" style="color:#393A34">{</span><span class="token imports"> </span><span class="token imports maybe-class-name">Trend</span><span class="token imports"> </span><span class="token imports punctuation" style="color:#393A34">}</span><span class="token plain"> </span><span class="token keyword module" style="color:#00009f">from</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"k6/metrics"</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">const</span><span class="token plain"> ttft </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token keyword" style="color:#00009f">new</span><span class="token plain"> </span><span class="token class-name">Trend</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">"ttft_s"</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token boolean" style="color:#36acaa">true</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword module" style="color:#00009f">export</span><span class="token plain"> </span><span class="token keyword module" style="color:#00009f">default</span><span class="token plain"> </span><span class="token keyword" style="color:#00009f">function</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token keyword" style="color:#00009f">const</span><span class="token plain"> start </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token known-class-name class-name">Date</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">now</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token keyword" style="color:#00009f">let</span><span class="token plain"> firstTokenRecorded </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token boolean" style="color:#36acaa">false</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  sse</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">open</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">url</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> params</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token parameter">client</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token arrow operator" style="color:#393A34">=&gt;</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    client</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">on</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">"event"</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token parameter">event</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token arrow operator" style="color:#393A34">=&gt;</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token keyword control-flow" style="color:#00009f">if</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">(</span><span class="token operator" style="color:#393A34">!</span><span class="token plain">firstTokenRecorded </span><span class="token operator" style="color:#393A34">&amp;&amp;</span><span class="token plain"> event</span><span class="token punctuation" style="color:#393A34">.</span><span class="token property-access">data</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">!==</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"[DONE]"</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">        ttft</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">add</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">(</span><span class="token known-class-name class-name">Date</span><span class="token punctuation" style="color:#393A34">.</span><span class="token method function property-access" style="color:#d73a49">now</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">-</span><span class="token plain"> start</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token operator" style="color:#393A34">/</span><span class="token plain"> </span><span class="token number" style="color:#36acaa">1000</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">        firstTokenRecorded </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token boolean" style="color:#36acaa">true</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token punctuation" style="color:#393A34">}</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token punctuation" style="color:#393A34">}</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token punctuation" style="color:#393A34">}</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">}</span><br></div></code></pre></div></div>
+<p>Critically: read the stream to completion even after you've recorded TTFT.
+Dropping the connection early skews the load profile — the server is still
+doing work and your test stops accounting for it.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="load-profile-design">Load profile design<a href="https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/#load-profile-design" class="hash-link" aria-label="Direct link to Load profile design" title="Direct link to Load profile design" translate="no">​</a></h2>
+<p>For observational load testing, a ramp-and-hold pattern gives you clean
+steady-state numbers to actually reason about:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">VUs</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">100 ┤               ▄▄▄▄▄▄▄</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"> 50 ┤         ▄▄▄▄▄▀       ▀▄▄▄▄▄</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain"> 10 ┤   ▄▄▄▄▄▀                   ▀▄▄▄▄▄</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  0 ┤──▀                               ▀──</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      ramp  hold   ramp   hold   ramp  hold</span><br></div></code></pre></div></div>
+<p>During a ramp phase, concurrency is in transition — exclude those samples
+from headline stats. During a hold phase, you have stable concurrency and
+predictable sample counts. Tag every sample with its phase and VU target
+so you can filter cleanly in post-processing.</p>
+<p>One request per VU per hold window also gives you deterministic sample
+counts: 50 VUs × 60s hold = exactly 50 requests. Reproducible, comparable
+across runs.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-you-actually-learn">What you actually learn<a href="https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/#what-you-actually-learn" class="hash-link" aria-label="Direct link to What you actually learn" title="Direct link to What you actually learn" translate="no">​</a></h2>
+<p>Here's where it gets interesting. Once you have TTFT as a real metric, you
+start seeing things that <code>http_req_duration</code> completely hides.</p>
+<p>What we found was that different models have quite different characteristics.
+Some are fast to start and slow to finish. Some are the opposite. Prompt
+caching had a measurable effect in our tests — a cache hit on a large system
+prompt shaved hundreds of milliseconds off first token time, and we wouldn't
+have seen that signal at all if we'd only been watching total duration.</p>
+<p>We also saw how concurrency affects <em>perceived</em> responsiveness differently
+than it affects throughput. At low VU counts the TTFT p95 looked fine. Add
+more concurrent users and TTFT degraded before throughput did — which means
+users start feeling slowness before the dashboards register a problem.
+Your mileage will vary depending on model and infrastructure, but it's worth
+checking.</p>
+<p>These are the kinds of insights that only exist once you're measuring the
+right thing. Total request duration isn't the wrong metric — it's just the
+wrong <em>first</em> metric for a product where the UX is a stream.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="set-a-concrete-target-before-you-test">Set a concrete target before you test<a href="https://works-in-prod.github.io/the-metric-your-users-feel-before-you-measure-it/#set-a-concrete-target-before-you-test" class="hash-link" aria-label="Direct link to Set a concrete target before you test" title="Direct link to Set a concrete target before you test" translate="no">​</a></h2>
+<p>Before running at scale, decide what good looks like. What is an acceptable
+p95 TTFT at your expected concurrency? Write it down before you look at the
+numbers — otherwise you'll rationalise whatever you find.</p>
+<p>Your target will depend on your model, your infrastructure, your users'
+expectations, and honestly, what your provider can actually deliver under
+load. The test reveals that; it doesn't guarantee it. But without a target,
+you're just generating numbers.</p>
+<hr>
+<p><em>TTFT is one dimension. Token throughput — how fast the stream itself moves
+once started — is another. Both matter, and they can point in opposite
+directions. Worth measuring separately.</em></p>]]></content:encoded>
+            <category>ai-engineering</category>
+            <category>observability</category>
+            <category>performance</category>
+        </item>
+        <item>
+            <title><![CDATA[Stop Arguing With Your Terminal About Python Versions]]></title>
+            <link>https://works-in-prod.github.io/stop-arguing-with-your-terminal-about-python-versions/</link>
+            <guid>https://works-in-prod.github.io/stop-arguing-with-your-terminal-about-python-versions/</guid>
+            <pubDate>Thu, 21 May 2026 01:00:00 GMT</pubDate>
+            <description><![CDATA[Project setup should be boring. Not in a "this is beneath me" way — in a]]></description>
+            <content:encoded><![CDATA[<p>Project setup should be boring. Not in a "this is beneath me" way — in a
+"this takes thirty seconds and I never think about it" way.</p>
+<p>Most of the time, it isn't.</p>
+<p>You clone a repo you haven't touched in six months. The README says "install
+Python 3.11". You have 3.12. Something breaks. You remember there's a
+<code>.python-version</code> file somewhere, or maybe a <code>requires-python</code> in
+<code>pyproject.toml</code>. You spend twenty minutes figuring out which version manager
+you're even supposed to be using for this project before you've written a
+single line of code.</p>
+<p>This isn't a Python problem. Terraform has <code>tfenv</code>. Node has <code>nvm</code> or <code>volta</code>
+or <code>.nvmrc</code>. Every language brings its own version manager, its own config
+file format, its own way of silently using the wrong version. And that's before
+you even get to figuring out how to run things — is it <code>make test</code>? <code>./scripts/test.sh</code>?
+Some npm script buried in a <code>package.json</code>? Nobody knows. You ask Slack.</p>
+<p>I got tired of this and started using <a href="https://mise.jdx.dev/" target="_blank" rel="noopener noreferrer" class="">mise</a>. It's a
+single tool that handles both problems: pinned runtimes and discoverable tasks,
+for any language, in one file.</p>
+<p>A Python service looks like this:</p>
+<div class="language-toml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-toml codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">[tools]</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">python = "3.12.3"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">[tasks.test]</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">description = "Run the test suite"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">run = "pytest"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">[tasks.verify]</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">description = "Run all checks before pushing"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">depends = ["test", "build"]</span><br></div></code></pre></div></div>
+<p>Run <code>mise install</code> and you get exactly that Python version. Run <code>mise tasks</code>
+and you see everything the project knows how to do. Run <code>mise run verify</code>
+before pushing. That's it.</p>
+<p>The part I find most satisfying is that <code>mise run &lt;task&gt;</code> becomes a stable
+interface that hides whatever's behind it. I had a project that needed a custom
+k6 binary with SSE support for load testing a streaming API. Building it
+requires Go and a tool called <code>xk6</code>, which most people have never heard of.
+With mise, that's just:</p>
+<div class="language-toml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-toml codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">[tools]</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">go = "1.22.3"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">[tasks.build]</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">description = "Build k6 with xk6-sse extension"</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">run = "xk6 build --with github.com/phymbert/xk6-sse"</span><br></div></code></pre></div></div>
+<p>Now <code>mise run build</code> works for everyone — the developer who knows what xk6 is,
+the one who doesn't, and the CI job. Nobody has to know what's behind it. When
+I added another extension later, I changed one line. The interface didn't move.</p>
+<p>Speaking of CI — this is where the real payoff is. A GitHub Actions workflow
+for a mise project looks like:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token key atrule" style="color:#00a4db">jobs</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token key atrule" style="color:#00a4db">verify</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token key atrule" style="color:#00a4db">runs-on</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"> ubuntu</span><span class="token punctuation" style="color:#393A34">-</span><span class="token plain">latest</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token key atrule" style="color:#00a4db">steps</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"></span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token punctuation" style="color:#393A34">-</span><span class="token plain"> </span><span class="token key atrule" style="color:#00a4db">uses</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"> actions/checkout@v4</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token punctuation" style="color:#393A34">-</span><span class="token plain"> </span><span class="token key atrule" style="color:#00a4db">uses</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"> jdx/mise</span><span class="token punctuation" style="color:#393A34">-</span><span class="token plain">action@v4</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">      </span><span class="token punctuation" style="color:#393A34">-</span><span class="token plain"> </span><span class="token key atrule" style="color:#00a4db">run</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"> mise run verify</span><br></div></code></pre></div></div>
+<p><code>mise-action</code> reads <code>mise.toml</code>, installs the pinned versions, and puts them
+on <code>PATH</code>. Then <code>mise run verify</code> runs the exact same thing you run locally.
+No separate version install steps. No drift between what CI checks and what
+you check. This is the thing that makes it worth the setup cost — CI and local
+are no longer two separate mental models.</p>
+<p>The one thing mise can't do is install itself. You need it on the machine
+before any of this works. I solve that with <a href="https://www.chezmoi.io/" target="_blank" rel="noopener noreferrer" class="">Chezmoi</a>,
+a dotfile manager that runs once on a fresh machine. A <code>run_once_install-mise.sh</code>
+script does the bootstrap:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">#!/bin/sh</span><br></div><div class="token-line" style="color:#393A34"><span class="token plain">curl https://mise.run | sh</span><br></div></code></pre></div></div>
+<p>Then the shell hook in <code>~/.zshrc</code> (also managed by Chezmoi) activates mise
+per directory:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><div class="token-line" style="color:#393A34"><span class="token plain">eval "$(mise activate zsh)"</span><br></div></code></pre></div></div>
+<p>Chezmoi sets up the machine, mise sets up each project. Neither knows the other
+exists. You go from a blank laptop to a running project without reading a setup
+guide — which is the point.</p>
+<p>It won't fix an undocumented deployment process or a service that can't run
+locally. It encodes what's already known. And if your team is already settled
+on <code>nvm</code> + <code>make</code> for a single-language, single-runtime project, the migration
+cost might not be worth it. The value really compounds when you're working
+across multiple projects or switching between them regularly — which, in my
+experience, is most of the time.</p>
+<hr>
+<p><em><code>mise</code> replaces <code>pyenv</code>, <code>nvm</code>, <code>rbenv</code>, <code>tfenv</code>, <code>asdf</code>, and most other
+per-language version managers. If you're on <code>asdf</code> already, migration is
+painless — <code>mise</code> reads <code>.tool-versions</code> files natively.</em></p>]]></content:encoded>
+            <category>tooling</category>
+            <category>developer-experience</category>
+            <category>mise</category>
         </item>
         <item>
             <title><![CDATA[Vscode Snippet To Add Markdown Frontmatter]]></title>
