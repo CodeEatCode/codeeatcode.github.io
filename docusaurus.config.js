@@ -8,7 +8,7 @@ module.exports = async function () {
     const remarkD2 = (await import("remark-d2")).default;
 
     return {
-        title: "Code Eat Code",
+        title: "Mostly Works",
         tagline: "Vibe-posted. Fact-checked. Mostly.",
         url: "https://codeeatcode.github.io",
         baseUrl: "/",
@@ -76,9 +76,9 @@ module.exports = async function () {
                     respectPrefersColorScheme: true,
                 },
                 navbar: {
-                    title: "Code Eat Code",
+                    title: "Mostly Works",
                     logo: {
-                        alt: "Code Eat Ccode",
+                        alt: "Mostly Works",
                         src: "img/logo.gif",
                     },
                     items: [
@@ -116,7 +116,7 @@ module.exports = async function () {
                             ],
                         },
                     ],
-                    copyright: `Copyright © ${new Date().getFullYear()} Code Eat Code blog built with Docusaurus.`,
+                    copyright: `Copyright © ${new Date().getFullYear()} Mostly Works`,
                 },
                 prism: {
                     theme: prismThemes.github,
