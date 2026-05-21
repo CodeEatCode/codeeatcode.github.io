@@ -29,32 +29,28 @@ const config = {
         defaultLocale: "en",
         locales: ["en"],
     },
-    // plugins: [MyPlugin],
-    presets: [
+    plugins: [
         [
-            "classic",
-            /** @type {import('@docusaurus/preset-classic').Options} */
+            "@docusaurus/plugin-content-blog",
             ({
-                docs: false,
-                blog: {
-                    showReadingTime: true,
-                    routeBasePath: "/",
-                    // Please change this to your repo.
-                    // Remove this to remove the "edit this page" links.
-                    // editUrl: "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
-                    postsPerPage: 10,
-                    // blogSdebarTitle: "All posts",
-                    blogSidebarCount: "ALL",
-                },
-                theme: {
-                    customCss: require.resolve("./src/css/custom.css"),
-                },
+                showReadingTime: true,
+                routeBasePath: "/",
+                postsPerPage: 10,
+                blogSidebarCount: "ALL",
             }),
+        ],
+    ],
+    themes: [
+        [
+            "@docusaurus/theme-classic",
+            {
+                customCss: require.resolve("./src/css/custom.css"),
+            },
         ],
     ],
 
     themeConfig:
-        /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+        /** @type {import('@docusaurus/theme-classic').ThemeConfig} */
         ({
             metadata: [
                 {
