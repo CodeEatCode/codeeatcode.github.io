@@ -20,7 +20,7 @@ That image stuck with me. Half the agent's working memory gone on orientation al
 
 Mostly ours, it turns out.
 
-A codebase with fuzzy boundaries, large unfocused modules, and implicit conventions forces the agent to do the same orientation work a new engineer would do — except a new engineer can ask questions, build intuition over weeks, and remember what they learned yesterday. Agents can't. There's no persistent memory between sessions by default. Every session is day one. The codebase has to compensate for what the agent can't retain.
+A codebase with fuzzy boundaries, large unfocused modules, and implicit conventions forces the agent to do the same orientation work a new engineer would do — except a new engineer can ask questions, build intuition over weeks, and remember what they learned yesterday. With the tools I've been using, there's no persistent memory between sessions by default. Every session is effectively day one. The codebase has to compensate for what the agent can't retain.
 
 There's a body of practice — going back about twenty-five years — that points in exactly this direction. We just didn't know we were solving this particular problem at the time.
 
@@ -32,7 +32,7 @@ Tests also do something specific for agents that code alone can't: they describe
 
 The cost angle is real too. Context is billed by the token. An agent flailing around a poorly structured codebase — re-reading files, tracing implicit dependencies, inferring conventions that should be explicit — is burning money before it's produced anything. Good structure isn't just clean, it's cheap.
 
-This also reframes some of the current conversation around "vibe-coding" and agents generating code freely. The concern isn't really about whether the agent can write working code — it often can. The concern is whether the codebase it's writing into has enough structure to keep the output coherent over time. Architecture tests help here too: codify the rules, and both human and agent get immediate feedback when something drifts from the intended shape.
+This also connects to the current conversation around "vibe-coding" and agents generating code freely. From what I've seen, the concern isn't really about whether the agent can write working code — it often can. The concern is whether the codebase it's writing into has enough structure to keep the output coherent over time. Architecture tests help here too: codify the rules, and both human and agent get immediate feedback when something drifts from the intended shape.
 
 The agentic era didn't invent a new problem. It gave us a new, very legible way to feel the cost of one we'd been politely ignoring for years.
 

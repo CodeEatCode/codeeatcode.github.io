@@ -16,7 +16,7 @@ We hit this early on an LLM project and it focused the mind quickly.
 
 <!-- truncate -->
 
-AWS Bedrock — and really, any managed LLM API — is opaque by design. You send a prompt, you get tokens back. What happens between those two events is not your concern and never will be. That opacity is fine. It's not your model; you don't get to look inside.
+AWS Bedrock is opaque by design. You send a prompt, you get tokens back, and what happens between those two events isn't your concern. That's fine — it's not your model to look inside.
 
 The problem is when that opacity bleeds into the code *you* wrote. Your retrieval logic, your prompt templates, your retry handling, your fallback paths — none of that needs to be a mystery. But without deliberate instrumentation, it becomes one anyway. You end up with a black box you built yourself, which is a considerably more embarrassing situation than the one Bedrock put you in.
 
@@ -58,4 +58,4 @@ Here's the thing that surprised me most: a well-instrumented LLM pipeline can ac
 
 The opacity was never really about the LLM. It was about the code around the LLM that we hadn't bothered to make visible.
 
-Observability in an LLM system isn't something you add later when things go wrong. It's part of how the system works — the interface you build for yourself so that when Bedrock starts behaving oddly at 11pm, you have structured data to work with rather than a twelve-second request duration and a shrug.
+What I took from this: don't leave observability as something to add later when things go wrong. Wire it in from the start — it's the interface you build for yourself so that when Bedrock starts behaving oddly at 11pm, you have structured data to work with rather than a twelve-second request duration and a shrug.

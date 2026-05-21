@@ -9,10 +9,11 @@ tags:
   - performance
 ---
 
-When you're building a product backed by an LLM, the UX has fundamentally
-changed. Users aren't waiting for a page to load or an API to return a JSON
-blob. They're watching tokens appear — and what they feel before anything
-appears is the thing most teams aren't measuring.
+Working on a streaming chat product taught me something: the standard
+latency metrics don't really describe what users experience. They're not
+waiting for a page to load or an API to return a JSON blob. They're watching
+tokens appear — and what they feel before anything appears is the thing
+most teams aren't measuring.
 
 That thing is time-to-first-token. TTFT.
 
@@ -100,17 +101,18 @@ across runs.
 Here's where it gets interesting. Once you have TTFT as a real metric, you
 start seeing things that `http_req_duration` completely hides.
 
-Different models have different characteristics. Some are fast to start and
-slow to finish. Some are the opposite. Prompt caching has a measurable
-effect on TTFT — a cache hit on a large system prompt can take hundreds of
-milliseconds off your first token time, and you won't see that signal at
-all if you're only watching total duration.
+What we found was that different models have quite different characteristics.
+Some are fast to start and slow to finish. Some are the opposite. Prompt
+caching had a measurable effect in our tests — a cache hit on a large system
+prompt shaved hundreds of milliseconds off first token time, and we wouldn't
+have seen that signal at all if we'd only been watching total duration.
 
-You also start to see how concurrency affects *perceived* responsiveness
-differently than it affects throughput. At low VU counts your TTFT p95 might
-look fine. Add more concurrent users and TTFT degrades before throughput
-does — which means users start feeling slowness before your dashboards
-register a problem.
+We also saw how concurrency affects *perceived* responsiveness differently
+than it affects throughput. At low VU counts the TTFT p95 looked fine. Add
+more concurrent users and TTFT degraded before throughput did — which means
+users start feeling slowness before the dashboards register a problem.
+Your mileage will vary depending on model and infrastructure, but it's worth
+checking.
 
 These are the kinds of insights that only exist once you're measuring the
 right thing. Total request duration isn't the wrong metric — it's just the
