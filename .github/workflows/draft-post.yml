@@ -1,0 +1,40 @@
+name: Generate public-seed draft
+
+on:
+  workflow_dispatch:
+    inputs:
+      seed:
+        description: Sanitized public seed card
+        required: true
+        type: choice
+        options:
+          - using-mise-to-make-project-setup-boring
+          - self-hosted-coverage-badges-for-private-python-repos
+          - measuring-ttft-for-streaming-apis
+
+jobs:
+  draft:
+    name: Generate draft artifact
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Generate draft from public seed
+        run: yarn draft:post --seed ${{ inputs.seed }}
+      - name: Test publishing workflow
+        run: yarn test:publishing
+      - name: Check publishing guardrails
+        run: yarn check:publishing
+      - name: Verify website build
+        run: yarn build
+      - name: Upload generated draft
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-seed-draft-${{ inputs.seed }}
+          path: blog/drafts/*.md

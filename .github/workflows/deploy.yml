@@ -20,6 +20,10 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
+      - name: Test publishing workflow
+        run: yarn test:publishing
+      - name: Check publishing guardrails
+        run: yarn check:publishing
       - name: Build website
         run: yarn build
 

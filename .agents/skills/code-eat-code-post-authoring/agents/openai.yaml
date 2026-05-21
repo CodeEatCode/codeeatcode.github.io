@@ -1,0 +1,7 @@
+interface:
+  display_name: "Code Eat Code Post Authoring"
+  short_description: "Draft public-safe engineering field notes"
+  default_prompt: "Use $code-eat-code-post-authoring to draft a public-safe Code Eat Code post from this approved seed card."
+
+policy:
+  allow_implicit_invocation: true
