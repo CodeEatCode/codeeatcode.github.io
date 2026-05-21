@@ -11,9 +11,7 @@ tags:
   - testing
 ---
 
-I built the evaluation harness first. Ten libraries, same documents, same
-metrics, timestamped results, HTML report. Proper engineering. And I still
-ended up in a five-week infrastructure nightmare.
+I built the evaluation harness first. Ten libraries, same documents, same metrics, timestamped results, HTML report. Proper engineering. And I still ended up in a five-week infrastructure nightmare.
 
 This is about why.
 
@@ -48,31 +46,25 @@ standardised subprocess-based runner, isolated output per library, metrics
 covering wall-clock time, peak memory, word counts, table detection, heading
 extraction. You can find it here:
 [github.com/ambersariya/pdf-parsing-comparison](https://github.com/ambersariya/pdf-parsing-comparison).
+_(I was fairly pleased with how it turned out.)_
 
 I ran it against a set of representative documents. Docling won on every
 qualitative dimension that mattered: table structure, merged cells, layout
 comprehension, image handling. It wasn't close. The other libraries produced
 flat text extractions. Docling produced structured, readable Markdown that
-actually reflected the document's intent.
+actually reflected the document's intent; the caveat was that it was a memory hog.
 
 The harness was doing its job. The numbers were real.
 
 ## The problem was the machine
 
-I ran all of this on an M4 Pro MacBook. Apple Silicon with MPS
-acceleration — for PyTorch workloads, that's not far off GPU performance.
-Docling's layout models, its table structure analysis, its OCR pipeline — all
-of it ran fast. Fast enough that performance never became a question worth
-asking.
+I ran all of this on an M4 Pro MacBook. Apple Silicon with MPS acceleration — for PyTorch workloads, that's not far off GPU performance. Docling's layout models, its table structure analysis, its OCR pipeline — all of it ran fast. Fast enough that performance never became a question worth asking.
 
 Production ran on CPU-based Kubernetes nodes.
 
 The gap between those two environments for an ML inference workload is not
 a percentage difference. It's a different order of magnitude. What took
-seconds on the M4 took minutes on a CPU pod. The OMP thread throttling,
-the concurrency tuning, the performance whack-a-mole documented in the
-post-mortem — all of it was a consequence of running local ML inference on
-hardware it wasn't designed for.
+seconds on the M4 took minutes on a CPU pod. So much that the ALB on AWS cried and killed my requests. The OMP thread throttling, the concurrency tuning, the performance whack-a-mole documented in the post-mortem — all of it was a consequence of running local ML inference on hardware it wasn't designed for.
 
 The harness was correct. The harness environment was not representative.
 

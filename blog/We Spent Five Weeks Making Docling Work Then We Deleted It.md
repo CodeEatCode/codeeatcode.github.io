@@ -46,11 +46,8 @@ something about what you're dealing with.
 
 ## Act II: The Model Infrastructure Tax
 
-Because Docling models can't be downloaded at cold-start in production — too
-slow, no egress — a CI/CD model sync workflow was introduced to pre-bake them
-into S3. This became its own small project: a GitHub Actions workflow to sync
-models, config to point Docling at the S3 cache path, and downstream fixes
-when the sync workflow itself had bugs.
+Because Docling models can't be downloaded at cold-start in production — far too
+slow (EKS health checks started failing almost immediately) — a CI/CD model sync workflow was introduced to pre-bake them into the Docker image. The container ballooned from a small fish to a blowfish, which led to caching the models in S3 with an InitContainer. This became its own small project: a GitHub Actions workflow to sync models, config to point Docling at the S3 cache path, and downstream fixes when the sync workflow itself had bugs.
 
 The application now had an out-of-band model synchronisation pipeline that had
 to be kept in step with the Docling version in `pyproject.toml`. Updating the
@@ -113,14 +110,14 @@ to become a PDF, then hit the same rasterise-and-describe path.
 
 The comparison:
 
-| Concern | Docling | Now |
-|---|---|---|
-| PDF text extraction | Torch + Tesseract + layout models | Bedrock document block |
-| Tables | Docling HTML table mode | Claude extracts to HTML natively |
-| Images / figures | SmolVLM locally | Bedrock vision per page |
-| DOCX | pydocx parser | LibreOffice → PDF → same VLM path |
-| Dependencies | Torch, Tesseract, RapidOCR, OpenCV, HF models | pypdfium2, LibreOffice (system) |
-| Infrastructure | S3 model sync pipeline, entrypoint bootstrap | Nothing — models live in Bedrock |
+| Concern             | Docling                                       | Now                               |
+| ------------------- | --------------------------------------------- | --------------------------------- |
+| PDF text extraction | Torch + Tesseract + layout models             | Bedrock document block            |
+| Tables              | Docling HTML table mode                       | Claude extracts to HTML natively  |
+| Images / figures    | SmolVLM locally                               | Bedrock vision per page           |
+| DOCX                | pydocx parser                                 | LibreOffice → PDF → same VLM path |
+| Dependencies        | Torch, Tesseract, RapidOCR, OpenCV, HF models | pypdfium2, LibreOffice (system)   |
+| Infrastructure      | S3 model sync pipeline, entrypoint bootstrap  | Nothing — models live in Bedrock  |
 
 The entire local inference stack is gone. Parsing is now API calls with a
 lightweight rasterisation step as fallback for large files.
