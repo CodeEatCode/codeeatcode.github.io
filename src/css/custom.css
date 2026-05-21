@@ -86,7 +86,7 @@
 
 /* ── Blog list ───────────────────────────────────────────────────────────── */
 .blog-list-page .container {
-  max-width: 800px;
+  max-width: 1280px;
 }
 
 /* Post title on list */
@@ -122,7 +122,7 @@ article footer .avatar__subtitle,
 
 /* ── Blog post ───────────────────────────────────────────────────────────── */
 .blog-post-page .container {
-  max-width: 800px;
+  max-width: 1280px;
 }
 
 .blog-post-page article > header h1 {
@@ -231,6 +231,6 @@ article footer .avatar__subtitle,
 /* ── Reading width ───────────────────────────────────────────────────────── */
 @media (min-width: 997px) {
   .blog-post-page .col.col--7 {
-    max-width: 720px;
+    max-width: 780px;
   }
 }
