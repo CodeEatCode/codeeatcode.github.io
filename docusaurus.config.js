@@ -9,7 +9,7 @@ module.exports = async function () {
 
     return {
         title: "Code Eat Code",
-        tagline: "It's a Code eat Code world",
+        tagline: "Vibe-posted. Fact-checked. Mostly.",
         url: "https://codeeatcode.github.io",
         baseUrl: "/",
         onBrokenLinks: "throw",
