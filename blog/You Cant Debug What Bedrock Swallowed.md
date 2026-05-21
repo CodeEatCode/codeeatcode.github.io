@@ -54,7 +54,7 @@ Apply it to the functions you care about and suddenly your trace reads like a st
 
 The part I didn't anticipate: OpenTelemetry handles both technical traces *and* business metrics through the same pipeline. We used it to answer latency questions ("why did this request take four seconds?") and business questions at the same time ("how many users hit the fallback path today?", "what's our prompt cache hit rate this week?"). Same instrumentation layer, different dimensions. There's something satisfying about a monitoring setup that doesn't require you to maintain two separate systems with two separate mental models.
 
-Here's the thing that surprised me most: a well-instrumented LLM system is actually easier to debug than a lot of traditional systems. Not despite the complexity — because of how structured the data becomes when you instrument properly. A conventional API might have failure points scattered across four services with no clear sequence. An LLM pipeline tends to have a cleaner order of operations, and when every step emits a span, you can read a trace like a timeline.
+Here's the thing that surprised me most: a well-instrumented LLM pipeline can actually be easier to reason about than a lot of distributed systems. The order of operations is relatively clear, and when every step emits a span, you can read a trace like a timeline. The non-determinism of the model itself is a different problem — spans won't tell you why the model said what it said — but at least the plumbing stops being a mystery.
 
 The opacity was never really about the LLM. It was about the code around the LLM that we hadn't bothered to make visible.
 

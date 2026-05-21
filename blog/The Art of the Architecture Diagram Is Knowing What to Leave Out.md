@@ -61,7 +61,7 @@ My preference is top-down layout — things flow downward, dependencies point in
 
 AI tools make the arrows problem considerably worse. They're very close to the code — that's their whole thing — and if you ask one to generate an architecture diagram, it will dutifully render every import, every function call, every database relationship it can find. The result looks impressively comprehensive. It communicates approximately nothing.
 
-Simplification requires a judgement call about what matters to the reader. That depends on who the reader is, what decision they're trying to make, and what level of detail is actually useful for that purpose. An AI tool doesn't know any of that. A human has to make the call. Human in the loop here isn't a nice-to-have — it's the entire point of the exercise.
+Simplification requires a judgement call about what matters to the reader. That depends on who the reader is, what decision they're trying to make, and what level of detail actually serves them. Current AI tools don't have access to any of that context. A human has to make the call. That judgement is the actual skill the diagram is expressing.
 
 The test I use: if someone new to the team can look at your diagram and explain back what the system does — without you hovering over their shoulder narrating — the diagram is doing its job. If they need you to explain the diagram, you've drawn a very expensive set of notes.
 

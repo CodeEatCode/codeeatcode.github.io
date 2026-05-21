@@ -22,11 +22,11 @@ Mostly ours, it turns out.
 
 A codebase with fuzzy boundaries, large unfocused modules, and implicit conventions forces the agent to do the same orientation work a new engineer would do — except a new engineer can ask questions, build intuition over weeks, and remember what they learned yesterday. Agents can't. There's no persistent memory between sessions by default. Every session is day one. The codebase has to compensate for what the agent can't retain.
 
-Here's the thing: we already know how to build codebases that compensate for this. We've known for about twenty-five years. We just didn't know we were solving this particular problem at the time.
+There's a body of practice — going back about twenty-five years — that points in exactly this direction. We just didn't know we were solving this particular problem at the time.
 
 TDD and the XP practices around it — simple design, ruthless refactoring, tests as documentation — produce exactly the properties that make a codebase agent-readable. Small focused units with explicit interfaces. Behaviour described in tests rather than buried in implementation. No accidental complexity quietly accumulating in corners. Clear boundaries that tell you where one thing ends and another begins.
 
-None of this is new. But the agentic era has made the value of it more visible. The "too much to hold in your head at once" problem that TDD was designed to address is the same problem the context window makes concrete. A codebase that TDD kept small and coherent fits into context cleanly. One that skipped TDD because the tests were always going to be written later — you know the kind — does not.
+None of this is new. But the agentic era has made the value of it more visible. The "too much to hold in your head at once" problem that TDD was designed to address is the same problem the context window makes concrete. A codebase with small focused units and tests that describe behaviour fits into an agent's context cleanly. One where complexity has accumulated unchecked — regardless of how it got there — does not.
 
 Tests also do something specific for agents that code alone can't: they describe intended behaviour without requiring the agent to read the implementation. A test called `test_chat_service_returns_error_on_empty_prompt` tells the agent more in one line than several hundred lines of service code could. When an agent needs to understand a boundary, it reads the tests. Targeted context. Problem contained.
 
@@ -36,4 +36,4 @@ This also reframes some of the current conversation around "vibe-coding" and age
 
 The agentic era didn't invent a new problem. It gave us a new, very legible way to feel the cost of one we'd been politely ignoring for years.
 
-TDD and XP were right all along. Turns out for more reasons than we thought.
+TDD and XP have always pushed toward properties — small units, explicit interfaces, behaviour-as-tests — that turn out to be just as valuable for agents as they are for humans. The reasons stack up.

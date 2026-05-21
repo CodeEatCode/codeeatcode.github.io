@@ -16,7 +16,7 @@ That's the drift I'm talking about. Not bugs. Not broken tests. Just two people 
 
 <!-- truncate -->
 
-It happens a lot when you mix software engineers and AI engineers. Software engineers have typically spent years worrying about layered architecture, separation of concerns, not importing your database layer into your API handler — all the stuff that feels obvious once it's been drilled into you by a senior who winced at your first PR. AI engineers have spent years writing scripts, notebooks, and pipelines that get the job done. Both are legitimate ways to work. They're just not the same way.
+The friction tends to come from different professional histories. Engineers who came up through software development often have layered architecture drilled in early. Engineers who came up through data science and ML often optimised for iteration speed over structure. Neither background is wrong — they just don't automatically agree on where things belong.
 
 The answer, at least in part, is [pytest-archon](https://github.com/jwbargsten/pytest-archonon). It lets you write tests that assert structural rules about your codebase. Not "does this function return the right value" — more like "nothing in the API layer should reach directly into the database layer." Rules you'd normally write in a wiki nobody reads, enforced as a test that CI will actually fail on.
 
@@ -34,7 +34,7 @@ def test_api_does_not_import_database():
     )
 ```
 
-That's it. That test will fail if anyone — human or otherwise — writes an API handler that imports a database model directly. No argument needed. No code review comment that gets ignored. No Confluence page gathering digital dust. The build fails. The feedback is immediate.
+That's it. That test will fail if anyone — human or otherwise — writes an API handler that imports a database model directly. No relying on the comment thread getting resolved. No wiki page that's accurate until it isn't. The build fails. The feedback is immediate.
 
 Which brings me to the agentic angle, because this isn't just about human engineers anymore. When you're vibe-coding with an agent generating chunks of your codebase, the agent doesn't inherently know your architectural rules. It knows how to write Python. It does not know that your team decided six months ago that services should never instantiate repositories directly. Architecture tests give it the same feedback signal they give a human: *that's not how we do it here, try again.*
 
